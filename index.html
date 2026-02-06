@@ -5,239 +5,263 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>전현우 · 웹개발자</title>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap");
 
-    :root {
-      --bg: #0b0e14;
-      --bg-2: #101521;
-      --card: #131a28;
-      --card-2: #0f1420;
-      --text: #e8edf5;
-      --muted: #9aa6b2;
-      --accent: #ff7a2f;
-      --accent-2: #ffb36b;
-      --line: #1e2738;
-      --glow: rgba(255, 122, 47, 0.2);
+    :root{
+      --dark:#1f1f1f;
+      --light:#ffffff;
+      --accent:#ff7a2f;
+      --yellow:#f3c42c;
+      --gray:#f6f6f6;
+      --line:#e3e3e3;
     }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      background: radial-gradient(1200px 600px at 85% -10%, rgba(255,122,47,0.15), transparent 60%),
-                  radial-gradient(900px 500px at -5% 0%, rgba(95,122,255,0.12), transparent 55%),
-                  var(--bg);
-      color: var(--text);
-      font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:"Noto Sans KR", sans-serif; color:#111; background:#fff;
     }
-    a { color: var(--accent); text-decoration: none; }
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 22px 120px; }
-    .hero {
-      display: grid;
-      gap: 14px;
-      margin-bottom: 34px;
+    a{color:#111; text-decoration:none}
+    .container{max-width:1100px; margin:0 auto; padding:0 20px;}
+
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:10;
+      background:rgba(255,255,255,0.95);
+      border-bottom:1px solid #eee;
     }
-    .title {
-      font-family: "Space Grotesk", "Noto Sans KR", sans-serif;
-      font-size: 42px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      height:60px;
     }
-    .subtitle { color: var(--muted); font-size: 16px; }
-    .badge-row { display: flex; gap: 10px; flex-wrap: wrap; }
-    .badge {
-      font-size: 12px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, #121827, #0f1420);
-      color: var(--muted);
+    .brand{font-weight:700; letter-spacing:0.5px;}
+    .menu{display:flex; gap:20px; font-size:14px; color:#666;}
+
+    /* HERO */
+    .hero{
+      height:420px; display:flex; align-items:center; justify-content:center;
+      text-align:center; color:#fff;
+      background:
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url("hero.jpg") center/cover no-repeat;
     }
-    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
-    .cta {
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: #151c2b;
-      color: var(--text);
-      font-size: 14px;
+    .hero h1{
+      font-family:"Black Han Sans", sans-serif;
+      font-size:46px; margin:0 0 10px;
+      letter-spacing:1px;
     }
-    .cta.primary {
-      background: linear-gradient(135deg, #ff7a2f, #ff9a4a);
-      color: #111;
-      border: none;
-      box-shadow: 0 8px 24px var(--glow);
-      font-weight: 700;
+    .hero h2{
+      font-family:"Black Han Sans", sans-serif;
+      font-size:34px; margin:0 0 20px;
+      letter-spacing:1px;
+    }
+    .hero .intro{font-size:15px; color:#f3f3f3;}
+    .hero .btn{
+      display:inline-block; margin-top:18px; padding:10px 24px;
+      background:var(--accent); color:#fff; border-radius:24px;
+      font-weight:600;
     }
 
-    .grid { display: grid; gap: 16px; }
-    .section {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 20px 22px;
-      background: linear-gradient(180deg, var(--card), var(--card-2));
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    /* SECTION TITLE */
+    .section-title{
+      font-family:"Black Han Sans", sans-serif;
+      font-size:28px; text-align:center; margin:50px 0 20px;
+      letter-spacing:1px;
     }
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      font-family: "Space Grotesk", "Noto Sans KR", sans-serif;
-    }
-    .muted { color: var(--muted); }
-    .split {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 16px;
-    }
-    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tag {
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: #151b29;
-      color: var(--muted);
-    }
-    .project {
-      border-left: 4px solid var(--accent);
-      padding-left: 14px;
-    }
-    .kv {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      gap: 6px 12px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-    .list {
-      margin: 0;
-      padding-left: 18px;
-      color: var(--muted);
-    }
-    .timeline {
-      display: grid;
-      gap: 12px;
-    }
-    .timeline-item {
-      padding: 14px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--line);
-      background: #121828;
-    }
-    .footer-note {
-      margin-top: 24px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-    .divider {
-      height: 1px;
-      background: var(--line);
-      margin: 18px 0;
+    .section-title::after{
+      content:""; display:block; width:60px; height:3px; margin:10px auto 0;
+      background:var(--accent);
     }
 
-    @media (max-width: 860px) {
-      .split { grid-template-columns: 1fr; }
-      .title { font-size: 34px; }
+    /* ABOUT */
+    .about{
+      background:#fff; padding:40px 0;
+    }
+    .about-grid{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+    }
+    .about-card{
+      border:1px solid var(--line); border-radius:12px;
+      padding:20px; background:#fff; text-align:center;
+      min-height:120px;
+    }
+    .about-card h4{margin:8px 0 6px; font-size:14px; color:#777;}
+    .about-card p{margin:0; font-weight:600;}
+
+    /* SKILLS */
+    .skills{
+      background:var(--yellow); padding:50px 0;
+    }
+    .skills-box{
+      background:#fff3cc; border-radius:16px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,0.15);
+    }
+    .skill-row{
+      display:grid; grid-template-columns:120px 1fr; gap:12px; align-items:center; padding:10px 0;
+      border-bottom:1px dashed #e5d9b2;
+    }
+    .skill-row:last-child{border-bottom:none}
+    .skill-title{font-weight:700;}
+    .tag{display:inline-block; padding:6px 10px; margin:4px; border-radius:10px; background:#f1f1f1; font-size:13px;}
+
+    /* ARCHIVING */
+    .archiving{
+      background:var(--dark); color:#fff; padding:50px 0;
+    }
+    .archive-grid{
+      display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
+    }
+    .archive-card{
+      background:#2a2a2a; border-radius:12px; padding:20px; color:#fff;
+      min-height:120px;
+    }
+    .archive-card h3{margin:0 0 8px;}
+    .archive-card a{color:#fff;}
+
+    /* PROJECTS */
+    .projects{background:#fff; padding:50px 0;}
+    .project-card{
+      border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    }
+    .project-card h3{margin:0 0 8px;}
+    .project-card ul{margin:0; padding-left:20px; color:#555;}
+
+    /* CAREER */
+    .career{background:#fff; padding:50px 0;}
+    .career-box{
+      display:grid; grid-template-columns:200px 1fr; gap:30px;
+      border-top:1px solid var(--line); padding-top:30px;
+    }
+    .logo{
+      width:180px; height:180px; border-radius:50%; background:#f1f1f1;
+      display:flex; align-items:center; justify-content:center; font-weight:700;
+    }
+    .career-list{color:#555;}
+    .career-item{margin:12px 0;}
+
+    .footer{
+      background:#222; color:#aaa; text-align:center; padding:20px 0; font-size:12px;
+    }
+
+    @media(max-width:900px){
+      .about-grid, .archive-grid{grid-template-columns:1fr;}
+      .career-box{grid-template-columns:1fr;}
+      .hero h1{font-size:36px}
+      .hero h2{font-size:26px}
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="hero">
-      <div class="badge-row">
-        <span class="badge">신입 · 실무 7개월</span>
-        <span class="badge">ERP 연동</span>
-        <span class="badge">React 전담</span>
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand">JEON HYUNWOO</div>
+      <div class="menu">
+        <a href="#about">About me</a>
+        <a href="#skills">Skills</a>
+        <a href="#archiving">Archiving</a>
+        <a href="#projects">Projects</a>
+        <a href="#career">Career</a>
       </div>
-      <div class="title">전현우 · 웹개발자</div>
-      <div class="subtitle">
-        ERP 연동 웹 프로젝트에서 React 프론트를 전담하며 실서비스 기능을 구현해온 신입 개발자입니다.
-      </div>
-      <div class="hero-actions">
-        <a class="cta primary" href="mailto:gusdntkd2@naver.com">메일 보내기</a>
-        <a class="cta" href="https://github.com/wjsgusdn12">GitHub</a>
-        <span class="cta">010-5056-4577</span>
-      </div>
-    </section>
-
-    <section class="grid">
-      <div class="section">
-        <div class="section-title">About</div>
-        <p class="muted">
-          전표 입력/검토, 결재·권한, 첨부, 대량 처리 UI 등 핵심 흐름을 사용자 관점에서 개선했고,
-          판매·정산 엑셀 업로드의 백엔드 처리까지 맡았습니다.
-          거래처별 분기·다중/병합 헤더·컬럼 매핑 등 복잡한 엑셀 구조를 처리해 안정적인 업로드 흐름을 구축했으며,
-          로컬 → Demo AWS → 운영 AWS 배포까지 경험했습니다.
-        </p>
-      </div>
-
-      <div class="section split">
-        <div>
-          <div class="section-title">Skills</div>
-          <div class="tags">
-            <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span>
-            <span class="tag">React Router</span><span class="tag">Axios</span>
-            <span class="tag">Spring Boot</span><span class="tag">Java</span><span class="tag">JPA</span>
-            <span class="tag">PostgreSQL</span><span class="tag">Oracle</span><span class="tag">MSSQL</span>
-            <span class="tag">AWS EC2</span><span class="tag">AWS S3</span><span class="tag">CloudFront</span>
-            <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">IntelliJ</span>
-          </div>
-        </div>
-        <div>
-          <div class="section-title">Profile</div>
-          <div class="kv">
-            <div>이메일</div><div>gusdntkd2@naver.com</div>
-            <div>전화</div><div>010-5056-4577</div>
-            <div>GitHub</div><div>github.com/wjsgusdn12</div>
-            <div>개발 경력</div><div>7개월 (2025.07 ~ 2026.03)</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section project">
-        <div class="section-title">Project · PioSync (ERP 연동 웹)</div>
-        <div class="muted">기간: 2025.09 ~ 2026.03.31 예정 · 역할: React 프론트 전담 / Spring Boot 일부</div>
-        <div class="divider"></div>
-        <ul class="list">
-          <li>엑셀형 전표 입력/검토 UI 구현 (헤더·라인 분리, 스플릿 뷰, 컬럼 리사이징)</li>
-          <li>다중 파일 업로드 + SSE 진행률/ETA 표시</li>
-          <li>권한관리 3열 매핑 UI 설계 (사용자–Role–권한)</li>
-          <li>대량 입력/검색 모달 (드롭다운 필터/키보드 탐색/일괄 적용)</li>
-          <li>판매·정산 엑셀 업로드 풀스택 구현 (거래처 분기·헤더 매핑·DB 적재)</li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Key Highlights</div>
-        <div class="timeline">
-          <div class="timeline-item">
-            <strong>업무 효율 개선</strong>
-            <div class="muted">대량 입력/검색 모달과 일괄 적용 UX로 반복 작업 시간을 단축.</div>
-          </div>
-          <div class="timeline-item">
-            <strong>실무형 UI 구현</strong>
-            <div class="muted">전표 입력/검토 화면의 복잡한 입력 구조를 엑셀형 그리드로 설계.</div>
-          </div>
-          <div class="timeline-item">
-            <strong>배포 경험</strong>
-            <div class="muted">로컬 테스트 → Demo AWS → 운영 AWS 배포, 주 1~2회 배포 경험.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="section-title">Deployment</div>
-        <p class="muted">
-          로컬 테스트 → Demo AWS 배포 → 운영 AWS 배포  
-          <span style="color:var(--accent); font-weight:700;">주 1~2회 배포 경험</span>
-        </p>
-      </div>
-    </section>
-
-    <div class="footer-note">
-      © 2026 Jeon Hyunwoo · Portfolio
     </div>
   </div>
+
+  <section class="hero">
+    <div>
+      <h1>- 전현우 -</h1>
+      <h2>웹 개발자 포트폴리오</h2>
+      <div class="intro">ERP 연동 웹 프로젝트에서 실서비스 기능을 구현해온 신입 개발자입니다.</div>
+      <a class="btn" href="#about">더 알아보기 ↓</a>
+    </div>
+  </section>
+
+  <section id="about" class="about container">
+    <div class="section-title">ABOUT ME</div>
+    <div class="about-grid">
+      <div class="about-card"><h4>이름</h4><p>전현우</p></div>
+      <div class="about-card"><h4>이메일</h4><p>gusdntkd2@naver.com</p></div>
+      <div class="about-card"><h4>연락처</h4><p>010-5056-4577</p></div>
+      <div class="about-card"><h4>직무</h4><p>웹 개발자</p></div>
+      <div class="about-card"><h4>학력</h4><p>Shanghai Jiao Tong Univ.</p></div>
+      <div class="about-card"><h4>경력</h4><p>실무 7개월</p></div>
+    </div>
+  </section>
+
+  <section id="skills" class="skills">
+    <div class="container">
+      <div class="section-title">SKILLS</div>
+      <div class="skills-box">
+        <div class="skill-row">
+          <div class="skill-title">Frontend</div>
+          <div>
+            <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span>
+            <span class="tag">React Router</span><span class="tag">Axios</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-title">Backend</div>
+          <div>
+            <span class="tag">Spring Boot</span><span class="tag">Java</span><span class="tag">JPA</span><span class="tag">Gradle</span><span class="tag">YAML</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-title">DB</div>
+          <div><span class="tag">PostgreSQL</span><span class="tag">Oracle</span><span class="tag">MSSQL</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-title">DevOps</div>
+          <div><span class="tag">AWS EC2</span><span class="tag">S3</span><span class="tag">CloudFront</span></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-title">Tools</div>
+          <div><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">IntelliJ</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="archiving" class="archiving">
+    <div class="container">
+      <div class="section-title">ARCHIVING</div>
+      <div class="archive-grid">
+        <div class="archive-card">
+          <h3>GitHub</h3>
+          <div><a href="https://github.com/wjsgusdn12">github.com/wjsgusdn12</a></div>
+          <div style="margin-top:6px; color:#bbb;">프로젝트 코드 및 기록</div>
+        </div>
+        <div class="archive-card">
+          <h3>Portfolio PDF</h3>
+          <div style="color:#bbb;">추후 첨부 예정</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects container">
+    <div class="section-title">PROJECTS</div>
+    <div class="project-card">
+      <h3>PioSync (ERP 연동 웹)</h3>
+      <div class="muted">2025.09 ~ 2026.03.31 예정 · React 프론트 전담 / Spring Boot 일부</div>
+      <ul>
+        <li>엑셀형 전표 입력/검토 UI 구현 (헤더·라인 분리, 스플릿 뷰, 컬럼 리사이징)</li>
+        <li>다중 파일 업로드 + SSE 진행률/ETA 표시</li>
+        <li>권한관리 3열 매핑 UI 설계</li>
+        <li>대량 입력/검색 모달 개발</li>
+        <li>판매·정산 엑셀 업로드 풀스택 구현</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="career" class="career container">
+    <div class="section-title">CAREER</div>
+    <div class="career-box">
+      <div class="logo">PioSolution</div>
+      <div class="career-list">
+        <div class="career-item"><strong>㈜피오솔루션</strong> (2025.07 ~ 2026.03.31 예정)</div>
+        <div class="career-item">React 프론트 전담, Spring Boot 일부 개발</div>
+        <div class="career-item">전표/결재/권한/첨부 등 핵심 업무 화면 설계·구현</div>
+        <div class="career-item">배포: 로컬 → Demo AWS → 운영 AWS (주 1~2회)</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">© 2026 Jeon Hyunwoo. All rights reserved.</div>
 </body>
 </html>
