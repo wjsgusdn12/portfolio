@@ -5,147 +5,177 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>전현우 · 웹개발자</title>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap");
 
     :root{
-      --dark:#1f1f1f;
-      --light:#ffffff;
-      --accent:#ff7a2f;
-      --yellow:#f3c42c;
-      --gray:#f6f6f6;
-      --line:#e3e3e3;
+      --bg: #0d0f14;
+      --bg-2: #111525;
+      --card: #151a2b;
+      --card-2: #121625;
+      --text: #eef1f7;
+      --muted: #a4aec2;
+      --accent: #8b8dff;
+      --accent-2: #5ad2ff;
+      --line: #242c44;
+      --glow: rgba(139,141,255,0.25);
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; font-family:"Noto Sans KR", sans-serif; color:#111; background:#fff;
+      margin:0;
+      font-family:"Noto Sans KR", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(800px 400px at 10% -10%, rgba(90,210,255,0.18), transparent 55%),
+        radial-gradient(900px 500px at 90% 0%, rgba(139,141,255,0.20), transparent 60%),
+        linear-gradient(180deg, #0c0f16, #0a0d12 45%, #0b0e14);
+      letter-spacing:0.1px;
     }
-    a{color:#111; text-decoration:none}
-    .container{max-width:1100px; margin:0 auto; padding:0 20px;}
+    a{color:var(--accent-2); text-decoration:none}
+    .container{max-width:1100px; margin:0 auto; padding:0 22px;}
 
     /* NAV */
     .nav{
-      position:sticky; top:0; z-index:10;
-      background:rgba(255,255,255,0.95);
-      border-bottom:1px solid #eee;
+      position:sticky; top:0; z-index:20;
+      background:rgba(13,15,20,0.85);
+      border-bottom:1px solid var(--line);
+      backdrop-filter: blur(8px);
     }
     .nav-inner{
       display:flex; align-items:center; justify-content:space-between;
-      height:60px;
+      height:64px;
     }
-    .brand{font-weight:700; letter-spacing:0.5px;}
-    .menu{display:flex; gap:20px; font-size:14px; color:#666;}
+    .brand{
+      font-family:"Space Grotesk", sans-serif;
+      font-weight:700; font-size:18px; letter-spacing:0.8px;
+    }
+    .menu{display:flex; gap:22px; font-size:14px; color:var(--muted);}
+    .menu a{color:var(--muted)}
+    .menu a:hover{color:var(--text)}
 
     /* HERO */
     .hero{
-      height:420px; display:flex; align-items:center; justify-content:center;
-      text-align:center; color:#fff;
+      height:440px; display:flex; align-items:center; justify-content:center;
+      text-align:center; position:relative; overflow:hidden;
       background:
-        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        linear-gradient(180deg, rgba(17,21,37,0.85), rgba(9,12,18,0.95)),
         url("hero.jpg") center/cover no-repeat;
     }
+    .hero::after{
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(120deg, rgba(139,141,255,0.15), rgba(90,210,255,0.1));
+      mix-blend-mode:screen; pointer-events:none;
+    }
     .hero h1{
-      font-family:"Black Han Sans", sans-serif;
-      font-size:46px; margin:0 0 10px;
-      letter-spacing:1px;
+      font-family:"Space Grotesk","Noto Sans KR", sans-serif;
+      font-size:52px; margin:0 0 10px; letter-spacing:1px;
     }
     .hero h2{
-      font-family:"Black Han Sans", sans-serif;
-      font-size:34px; margin:0 0 20px;
-      letter-spacing:1px;
+      font-size:34px; margin:0 0 18px; font-weight:800;
     }
-    .hero .intro{font-size:15px; color:#f3f3f3;}
+    .hero .intro{font-size:18px; color:#dfe6f5;}
     .hero .btn{
-      display:inline-block; margin-top:18px; padding:10px 24px;
-      background:var(--accent); color:#fff; border-radius:24px;
-      font-weight:600;
+      display:inline-block; margin-top:22px; padding:12px 28px;
+      background:linear-gradient(135deg, var(--accent), var(--accent-2));
+      color:#0b0f14; border-radius:26px; font-weight:800;
+      box-shadow:0 10px 30px var(--glow);
     }
 
-    /* SECTION TITLE */
+    /* SECTION */
     .section-title{
-      font-family:"Black Han Sans", sans-serif;
-      font-size:28px; text-align:center; margin:50px 0 20px;
+      font-family:"Space Grotesk","Noto Sans KR", sans-serif;
+      font-size:32px; text-align:center; margin:60px 0 22px;
       letter-spacing:1px;
     }
     .section-title::after{
-      content:""; display:block; width:60px; height:3px; margin:10px auto 0;
-      background:var(--accent);
+      content:""; display:block; width:70px; height:4px; margin:12px auto 0;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius:4px;
     }
 
     /* ABOUT */
-    .about{
-      background:#fff; padding:40px 0;
-    }
+    .about{padding:40px 0;}
     .about-grid{
       display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
     }
     .about-card{
-      border:1px solid var(--line); border-radius:12px;
-      padding:20px; background:#fff; text-align:center;
-      min-height:120px;
+      border:1px solid var(--line); border-radius:14px;
+      padding:22px; background:linear-gradient(180deg, var(--card), var(--card-2));
+      text-align:center; min-height:130px; font-size:16px;
+      box-shadow:0 10px 24px rgba(0,0,0,0.25);
     }
-    .about-card h4{margin:8px 0 6px; font-size:14px; color:#777;}
-    .about-card p{margin:0; font-weight:600;}
+    .about-card h4{margin:8px 0 6px; font-size:14px; color:var(--muted);}
+    .about-card p{margin:0; font-weight:700; font-size:17px;}
 
     /* SKILLS */
-    .skills{
-      background:var(--yellow); padding:50px 0;
-    }
+    .skills{padding:60px 0; background:linear-gradient(180deg, #0f1322, #0b0f18);}
     .skills-box{
-      background:#fff3cc; border-radius:16px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,0.15);
+      background:linear-gradient(180deg, #1a1f35, #141a2b);
+      border-radius:18px; padding:26px; box-shadow:0 12px 32px rgba(0,0,0,0.35);
+      border:1px solid var(--line);
     }
     .skill-row{
-      display:grid; grid-template-columns:120px 1fr; gap:12px; align-items:center; padding:10px 0;
-      border-bottom:1px dashed #e5d9b2;
+      display:grid; grid-template-columns:140px 1fr; gap:14px; align-items:center; padding:12px 0;
+      border-bottom:1px dashed #2b3555;
     }
     .skill-row:last-child{border-bottom:none}
-    .skill-title{font-weight:700;}
-    .tag{display:inline-block; padding:6px 10px; margin:4px; border-radius:10px; background:#f1f1f1; font-size:13px;}
+    .skill-title{font-weight:800; font-size:16px;}
+    .tag{
+      display:inline-block; padding:7px 12px; margin:5px; border-radius:12px;
+      background:#1f2740; border:1px solid #2b3555; color:#cdd6ea; font-size:14px;
+    }
 
     /* ARCHIVING */
-    .archiving{
-      background:var(--dark); color:#fff; padding:50px 0;
-    }
-    .archive-grid{
-      display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
-    }
+    .archiving{padding:60px 0; background:#0b0e14;}
+    .archive-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
     .archive-card{
-      background:#2a2a2a; border-radius:12px; padding:20px; color:#fff;
-      min-height:120px;
+      background:linear-gradient(180deg,#171c2d,#121727);
+      border:1px solid var(--line); border-radius:14px; padding:24px; min-height:140px;
+      box-shadow:0 10px 28px rgba(0,0,0,0.3);
+      font-size:16px;
     }
-    .archive-card h3{margin:0 0 8px;}
-    .archive-card a{color:#fff;}
+    .archive-card h3{margin:0 0 8px; font-size:20px;}
+    .archive-card a{color:#cfe2ff;}
 
     /* PROJECTS */
-    .projects{background:#fff; padding:50px 0;}
+    .projects{padding:60px 0; background:#0e111a;}
     .project-card{
-      border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:20px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+      border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:20px;
+      background:linear-gradient(180deg,#141a2b,#111625);
+      box-shadow:0 10px 26px rgba(0,0,0,0.25);
+      font-size:16px;
     }
-    .project-card h3{margin:0 0 8px;}
-    .project-card ul{margin:0; padding-left:20px; color:#555;}
+    .project-card h3{margin:0 0 10px; font-size:22px;}
+    .project-card ul{margin:0; padding-left:20px; color:#c9d3e6;}
+    .project-card li{margin:6px 0;}
 
     /* CAREER */
-    .career{background:#fff; padding:50px 0;}
+    .career{padding:60px 0; background:#0b0f18;}
     .career-box{
-      display:grid; grid-template-columns:200px 1fr; gap:30px;
+      display:grid; grid-template-columns:220px 1fr; gap:30px;
       border-top:1px solid var(--line); padding-top:30px;
     }
     .logo{
-      width:180px; height:180px; border-radius:50%; background:#f1f1f1;
-      display:flex; align-items:center; justify-content:center; font-weight:700;
+      width:200px; height:200px; border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #2b3555, #151a2b);
+      display:flex; align-items:center; justify-content:center; font-weight:800;
+      color:#d8e2ff; font-size:18px;
+      border:1px solid #2b3555;
     }
-    .career-list{color:#555;}
+    .career-list{color:#c9d3e6; font-size:16px;}
     .career-item{margin:12px 0;}
 
     .footer{
-      background:#222; color:#aaa; text-align:center; padding:20px 0; font-size:12px;
+      background:#0a0d12; color:#8b93a9; text-align:center; padding:24px 0; font-size:13px;
+      border-top:1px solid var(--line);
     }
 
     @media(max-width:900px){
       .about-grid, .archive-grid{grid-template-columns:1fr;}
       .career-box{grid-template-columns:1fr;}
-      .hero h1{font-size:36px}
+      .hero h1{font-size:40px}
       .hero h2{font-size:26px}
+      .menu{display:none}
     }
   </style>
 </head>
@@ -154,7 +184,7 @@
     <div class="container nav-inner">
       <div class="brand">JEON HYUNWOO</div>
       <div class="menu">
-        <a href="#about">About me</a>
+        <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#archiving">Archiving</a>
         <a href="#projects">Projects</a>
@@ -224,11 +254,11 @@
         <div class="archive-card">
           <h3>GitHub</h3>
           <div><a href="https://github.com/wjsgusdn12">github.com/wjsgusdn12</a></div>
-          <div style="margin-top:6px; color:#bbb;">프로젝트 코드 및 기록</div>
+          <div style="margin-top:6px; color:#aeb8cf;">프로젝트 코드 및 기록</div>
         </div>
         <div class="archive-card">
           <h3>Portfolio PDF</h3>
-          <div style="color:#bbb;">추후 첨부 예정</div>
+          <div style="color:#aeb8cf;">추후 첨부 예정</div>
         </div>
       </div>
     </div>
