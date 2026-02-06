@@ -252,8 +252,8 @@ main {
   background:
     linear-gradient(
       180deg,
-      rgba(255, 254, 251, 0.62),
-      rgba(255, 249, 241, 0.5)
+      rgba(255, 254, 251, 0.5),
+      rgba(255, 249, 241, 0.38)
     ),
     radial-gradient(circle at 12% 12%, rgba(232, 205, 168, 0.18), transparent 52%),
     radial-gradient(circle at 88% 90%, rgba(209, 171, 124, 0.14), transparent 48%);
@@ -393,7 +393,7 @@ main {
 }
 
 .about-card {
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 20px;
@@ -403,6 +403,7 @@ main {
   text-align: center;
   box-shadow: var(--shadow-soft);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  backdrop-filter: blur(4px);
 }
 
 .about-card:hover {
@@ -423,11 +424,12 @@ main {
 }
 
 .skills-card {
-  background: var(--paper-soft);
+  background: rgba(255, 250, 242, 0.92);
   border: 1px solid #ebd8b8;
   border-radius: 20px;
   padding: 26px;
   box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(4px);
 }
 
 .skill-row {
@@ -465,7 +467,7 @@ main {
 }
 
 .archive-card {
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.93);
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 22px;
@@ -473,6 +475,7 @@ main {
   gap: 6px;
   box-shadow: var(--shadow-soft);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  backdrop-filter: blur(4px);
 }
 
 .archive-card:hover {
@@ -508,7 +511,7 @@ main {
 
 .project-brief {
   position: relative;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.93);
   border: 1px solid #e5d3bc;
   border-radius: 18px;
   padding: 20px;
@@ -516,6 +519,7 @@ main {
   transition: transform 0.22s ease, box-shadow 0.22s ease;
   cursor: pointer;
   overflow: hidden;
+  backdrop-filter: blur(5px);
 }
 
 .project-brief::before {
@@ -585,7 +589,7 @@ main {
 }
 
 .project-stack-wrap span {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid #dfcfb4;
   border-radius: 999px;
   padding: 6px 11px;
@@ -611,7 +615,7 @@ main {
 
 .project-btn-ghost {
   color: var(--text);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid #ddc6a8;
 }
 
@@ -649,11 +653,12 @@ main {
 }
 
 .timeline-card {
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.93);
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 18px;
   box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(4px);
 }
 
 .timeline-card h4 {
@@ -684,12 +689,13 @@ main {
 .contact-panel {
   max-width: 760px;
   margin: 0 auto;
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--line);
   border-radius: 22px;
   padding: 28px;
   text-align: center;
   box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(5px);
 }
 
 .contact-panel h3 {
@@ -737,7 +743,7 @@ main {
   max-height: calc(100dvh - 32px);
   overflow-y: auto;
   overflow-x: hidden;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.96);
   border: 1px solid #ecdfce;
   border-radius: 18px;
   padding: 20px;
@@ -745,6 +751,7 @@ main {
   scrollbar-gutter: stable;
   animation: modalSheetIn 420ms cubic-bezier(0.18, 0.8, 0.22, 1);
   transform-origin: center top;
+  backdrop-filter: blur(8px);
 }
 
 .modal-overlay.is-closing .modal-sheet {
@@ -800,7 +807,7 @@ main {
 
 .readme-block {
   margin-top: 14px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   border: 1px solid #efe5d8;
   border-radius: 10px;
   padding: 12px;
@@ -849,7 +856,7 @@ main {
 .setup-box {
   margin: 10px 0 0;
   border: 1px solid #e6d8c4;
-  background: #fffdf8;
+  background: rgba(255, 253, 248, 0.88);
   border-radius: 10px;
   padding: 10px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
@@ -859,7 +866,7 @@ main {
 
 .gallery-preview {
   margin-top: 14px;
-  background: #fffaf3;
+  background: rgba(255, 250, 243, 0.9);
   border: 1px solid #e8d9c5;
   border-radius: 12px;
   min-height: 340px;
@@ -890,7 +897,7 @@ main {
 
 .gallery-btn {
   border: 1px solid #e2ceb1;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   padding: 7px 11px;
   cursor: pointer;
@@ -906,7 +913,7 @@ main {
 .thumb-item {
   border: 1px solid #dec8a8;
   border-radius: 8px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.9);
   min-height: 38px;
   cursor: pointer;
 }
