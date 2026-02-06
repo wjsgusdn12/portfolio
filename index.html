@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>전현우 · 웹개발자</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --card: #161a22;
+      --text: #e8ecf1;
+      --muted: #a7b0be;
+      --accent: #ff7a2f;
+      --line: #232a36;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Pretendard", "Noto Sans KR", system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 48px 20px 80px; }
+    .hero { display: grid; gap: 16px; margin-bottom: 36px; }
+    .title { font-size: 32px; font-weight: 800; }
+    .subtitle { color: var(--muted); font-size: 16px; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; background: #1f2633; color: var(--muted); font-size: 12px; }
+    .grid { display: grid; gap: 16px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+    .section-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .list { margin: 0; padding-left: 18px; color: var(--muted); }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      padding: 6px 10px; border-radius: 8px;
+      background: #1c2230; color: var(--muted); font-size: 13px;
+      border: 1px solid var(--line);
+    }
+    .pill { color: var(--accent); font-weight: 600; }
+    a { color: var(--accent); text-decoration: none; }
+    .project { border-left: 3px solid var(--accent); padding-left: 12px; }
+    .small { font-size: 13px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="badge">신입 · 실무 7개월</div>
+      <div class="title">전현우 · 웹개발자</div>
+      <div class="subtitle">
+        ERP 연동 웹 프로젝트에서 React 프론트를 전담하며 실서비스 기능을 구현해온 신입 개발자입니다.
+      </div>
+      <div class="small">
+        이메일: <a href="mailto:gusdntkd2@naver.com">gusdntkd2@naver.com</a> ·
+        전화: 010-5056-4577 ·
+        GitHub: <a href="https://github.com/wjsgusdn12">github.com/wjsgusdn12</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <div class="section-title">About</div>
+        <p class="small">
+          전표 입력/검토, 결재·권한, 첨부, 대량 처리 UI 등 핵심 흐름을 사용자 관점에서 개선했고,
+          판매·정산 엑셀 업로드의 백엔드 처리까지 맡았습니다.
+          거래처별 분기·다중/병합 헤더·컬럼 매핑 등 복잡한 엑셀 구조를 처리해 안정적인 업로드 흐름을 구축했으며,
+          로컬 → Demo AWS → 운영 AWS 배포까지 경험했습니다.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Skills</div>
+        <div class="tags">
+          <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span>
+          <span class="tag">React Router</span><span class="tag">Axios</span>
+          <span class="tag">Spring Boot</span><span class="tag">Java</span><span class="tag">JPA</span>
+          <span class="tag">PostgreSQL</span><span class="tag">Oracle</span><span class="tag">MSSQL</span>
+          <span class="tag">AWS EC2</span><span class="tag">AWS S3</span><span class="tag">CloudFront</span>
+          <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">IntelliJ</span>
+        </div>
+      </div>
+
+      <div class="card project">
+        <div class="section-title">Project · PioSync (ERP 연동 웹)</div>
+        <div class="small">기간: 2025.09 ~ 2026.03.31 예정 · 역할: React 프론트 전담 / Spring Boot 일부</div>
+        <ul class="list">
+          <li>엑셀형 전표 입력/검토 UI 구현 (헤더·라인 분리, 스플릿 뷰, 컬럼 리사이징)</li>
+          <li>다중 파일 업로드 + SSE 진행률/ETA 표시</li>
+          <li>권한관리 3열 매핑 UI 설계 (사용자–Role–권한)</li>
+          <li>대량 입력/검색 모달 (드롭다운 필터/키보드 탐색/일괄 적용)</li>
+          <li>판매·정산 엑셀 업로드 풀스택 구현 (거래처 분기·헤더 매핑·DB 적재)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="section-title">Deployment</div>
+        <p class="small">
+          로컬 테스트 → Demo AWS 배포 → 운영 AWS 배포 <span class="pill">주 1~2회 배포 경험</span>
+        </p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
