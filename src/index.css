@@ -83,7 +83,7 @@ button {
   height: 28vw;
   left: -6vw;
   top: 16vh;
-  animation: bubbleFloatA 17s ease-in-out infinite alternate;
+  animation: bubbleFloatA 14.2s ease-in-out infinite alternate;
 }
 
 .bg-bubble-2 {
@@ -91,7 +91,7 @@ button {
   height: 22vw;
   right: 2vw;
   top: 10vh;
-  animation: bubbleFloatB 20s ease-in-out infinite alternate;
+  animation: bubbleFloatB 16.7s ease-in-out infinite alternate;
   animation-delay: -2s;
 }
 
@@ -100,7 +100,7 @@ button {
   height: 18vw;
   left: 14vw;
   top: 52vh;
-  animation: bubbleFloatC 15s ease-in-out infinite alternate;
+  animation: bubbleFloatC 12.5s ease-in-out infinite alternate;
   animation-delay: -1.5s;
 }
 
@@ -109,7 +109,7 @@ button {
   height: 24vw;
   right: -4vw;
   top: 44vh;
-  animation: bubbleFloatD 22s ease-in-out infinite alternate;
+  animation: bubbleFloatD 18.3s ease-in-out infinite alternate;
   animation-delay: -3s;
 }
 
@@ -118,7 +118,7 @@ button {
   height: 26vw;
   left: 37vw;
   top: 10vh;
-  animation: bubbleFloatE 14s ease-in-out infinite alternate;
+  animation: bubbleFloatE 11.7s ease-in-out infinite alternate;
   animation-delay: -1s;
 }
 
@@ -127,7 +127,7 @@ button {
   height: 19vw;
   left: 64vw;
   top: 64vh;
-  animation: bubbleFloatF 19s ease-in-out infinite alternate;
+  animation: bubbleFloatF 15.8s ease-in-out infinite alternate;
   animation-delay: -2.4s;
 }
 
@@ -1015,38 +1015,38 @@ main {
 
 @keyframes bubbleFloatA {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(5vw, -6vh, 0) scale(1.08); }
-  100% { transform: translate3d(-2vw, 4vh, 0) scale(0.96); }
+  50% { transform: translate3d(7vw, -8.4vh, 0) scale(1.08); }
+  100% { transform: translate3d(-2.8vw, 5.6vh, 0) scale(0.96); }
 }
 
 @keyframes bubbleFloatB {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-4vw, 5vh, 0) scale(1.1); }
-  100% { transform: translate3d(3vw, -7vh, 0) scale(0.95); }
+  50% { transform: translate3d(-5.6vw, 7vh, 0) scale(1.1); }
+  100% { transform: translate3d(4.2vw, -9.8vh, 0) scale(0.95); }
 }
 
 @keyframes bubbleFloatC {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(4vw, 3vh, 0) scale(1.06); }
-  100% { transform: translate3d(-3vw, -5vh, 0) scale(0.94); }
+  50% { transform: translate3d(5.6vw, 4.2vh, 0) scale(1.06); }
+  100% { transform: translate3d(-4.2vw, -7vh, 0) scale(0.94); }
 }
 
 @keyframes bubbleFloatD {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-5vw, -4vh, 0) scale(1.09); }
-  100% { transform: translate3d(2vw, 6vh, 0) scale(0.95); }
+  50% { transform: translate3d(-7vw, -5.6vh, 0) scale(1.09); }
+  100% { transform: translate3d(2.8vw, 8.4vh, 0) scale(0.95); }
 }
 
 @keyframes bubbleFloatE {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(6vw, -5vh, 0) scale(1.12); }
-  100% { transform: translate3d(-4vw, 4vh, 0) scale(0.93); }
+  50% { transform: translate3d(8.4vw, -7vh, 0) scale(1.12); }
+  100% { transform: translate3d(-5.6vw, 5.6vh, 0) scale(0.93); }
 }
 
 @keyframes bubbleFloatF {
   0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-3vw, 6vh, 0) scale(1.05); }
-  100% { transform: translate3d(4vw, -4vh, 0) scale(0.96); }
+  50% { transform: translate3d(-4.2vw, 8.4vh, 0) scale(1.05); }
+  100% { transform: translate3d(5.6vw, -5.6vh, 0) scale(0.96); }
 }
 
 @media (prefers-reduced-motion: reduce) {
