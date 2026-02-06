@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 
 const profileItems = [
   { label: "이름", value: "전현우" },
@@ -16,7 +16,7 @@ const skillGroups = [
   },
   {
     title: "Backend",
-    tags: ["Spring Boot", "Java", "JPA", "Gradle", "YAML"],
+    tags: ["Spring Boot", "Java", "JPA", "Gradle", "YAML (.yml)"],
   },
   {
     title: "Database",
@@ -32,68 +32,104 @@ const skillGroups = [
   },
 ]
 
-const projectFeatures = [
-  "엑셀형 전표 입력/검토 UI (헤더·라인 분리, 스플릿 뷰, 컬럼 리사이징)",
-  "다중 파일 업로드 + SSE 진행률/ETA 표시",
-  "사용자-Role-권한 3열 매핑 관리 UI",
-  "대량 입력/검색 모달 및 일괄 처리 UX",
-  "판매·정산 엑셀 업로드 풀스택 구현",
-]
+const buildImageList = (dir, count, label) =>
+  Array.from({ length: count }, (_, index) => {
+    const number = String(index + 1).padStart(2, "0")
+    return {
+      id: number,
+      src: `${dir}/${number}.png`,
+      alt: `${label} 캡쳐 ${index + 1}`,
+    }
+  })
 
-const achievements = [
-  "전표/결재/권한/첨부 등 핵심 업무 화면을 단독 설계 및 구현",
-  "주 1~2회 배포 사이클에서 기능 개선 및 운영 반영 경험",
-  "업무 부서 요청을 반영한 UI/UX 개선으로 반복 입력 작업 시간 단축",
-]
-
-const troubleshooting = [
+const projects = [
   {
-    title: "ERP 연동 이슈의 이중 원인 추적",
-    body:
-      "웹 로그만으로 해결되지 않는 케이스에서 ERP 설정/데이터 조건을 분리해 검증했고, 테스트 케이스를 재구성해 누락 설정을 찾아 수정했습니다.",
+    id: "piosync",
+    name: "PioSync",
+    period: "2025.09 ~ 2026.03",
+    team: "2인 실무 프로젝트",
+    category: "ERP Integration Platform",
+    shortSummary:
+      "ERP 연동 업무 웹. 전표/권한/업로드 중심 화면을 설계하고 프론트를 주도 구현했습니다.",
+    stack: ["React", "Spring Boot", "PostgreSQL", "AWS"],
+    contribution: "Frontend 100% / Backend 일부",
+    deploymentUrl: "사내 시스템 (외부 비공개)",
+    readme: {
+      summary: [
+        "실무 운영에서 반복되는 전표 입력/검토 흐름을 웹 화면으로 표준화한 ERP 연동 서비스",
+        "엑셀형 입력, 대량 처리, 업로드 진행률 등 실제 업무 병목 구간을 중심으로 UI/UX 개선",
+        "요구사항 변경이 잦은 환경에서 상태 구조를 분리해 유지보수성과 배포 안정성을 높임",
+      ],
+      background:
+        "기존 운영 방식은 수기 입력과 다중 검토 과정이 길어 반복 작업이 많고, 권한/첨부/결재 흐름에서 사용자 피로도가 높았습니다. 실제 업무 담당자의 요청을 기준으로 입력-검토-반영 플로우를 재설계하고, 화면에서 즉시 현재 상태를 파악할 수 있도록 구조를 단순화하는 것을 목표로 개발했습니다.",
+      meaning:
+        "프론트엔드 전담으로 핵심 도메인 화면을 직접 설계/구현하면서, 단순 UI 개발을 넘어 운영 관점의 문제 정의와 개선 우선순위 설정까지 경험했습니다. 또한 API 연동 이슈를 백엔드와 함께 추적하며 요청/응답 검증 루틴을 표준화했고, 주 1~2회 배포 사이클에서 안정적으로 기능을 확장하는 방법을 체득했습니다.",
+      features: [
+        "엑셀형 전표 입력/검토 UI (헤더-라인 분리, 스플릿 뷰, 컬럼 리사이징)",
+        "다중 파일 업로드 + SSE 기반 진행률/상태 표시",
+        "사용자-Role-권한 3열 매핑 관리 및 적용 상태 시각화",
+        "대량 입력/검색 모달과 일괄 처리 UX",
+        "Swagger 명세 + request/response 검증 기반 API 연동 루틴",
+      ],
+      members: [
+        "전현우 (Frontend): UI 구조 설계, 핵심 화면 구현, 운영 개선",
+        "사내 Backend 개발자 (Backend): API/DB 및 서버 로직 구현",
+      ],
+      setup: [
+        "npm install",
+        "npm run dev",
+        "(백엔드) Gradle 실행 및 API 서버 연결",
+      ],
+    },
+    images: buildImageList("/captures/piosync", 39, "PioSync"),
   },
   {
-    title: "대량 입력 업무의 반복 작업 최소화",
-    body:
-      "필터 조회 -> 대상 선택 -> 벌크 입력/저장 흐름을 설계해 대량 전표 처리 시간을 줄였고, 입력 실수를 줄이기 위한 UI 가이드를 추가했습니다.",
-  },
-  {
-    title: "권한 매핑 화면의 인지부하 완화",
-    body:
-      "사용자/Role/권한 3열 구조에서 적용 상태와 선택 상태를 분리해 사용자가 현재 상태를 빠르게 판단할 수 있도록 개선했습니다.",
-  },
-]
-
-const actionItems = [
-  "신규 기능 구현 시 상태/이벤트 흐름을 먼저 정의하고 컴포넌트를 분리해 재사용성을 높입니다.",
-  "API 연동 이슈는 요청/응답 로깅과 백엔드 코드 확인을 병행해 원인을 빠르게 좁힙니다.",
-  "사용자 피드백을 UI 변경사항으로 연결할 때 영향 범위를 체크리스트로 관리합니다.",
-]
-
-const miniProjectSummary = [
-  {
-    title: "기획 의도",
-    body: "실무 경험을 한 화면에 검증 가능하도록 구조화하고, 채용 담당자가 3분 내 핵심 역량을 파악할 수 있도록 설계했습니다.",
-  },
-  {
-    title: "구현 범위",
-    body: "반응형 레이아웃, 섹션 기반 내비게이션, 스크롤 진입 애니메이션, 프로젝트/성과/트러블슈팅 정보 아키텍처를 직접 구현했습니다.",
-  },
-  {
-    title: "기술 선택 이유",
-    body: "React + Vite로 빠른 개발/빌드 환경을 확보하고, CSS 변수 기반 테마로 시각 일관성과 유지보수성을 높였습니다.",
-  },
-  {
-    title: "운영 방식",
-    body: "GitHub Pages 배포 구조(`docs`)와 GitHub Actions 자동 배포 워크플로를 구성해 커밋 단위 배포 검증이 가능하도록 했습니다.",
-  },
-  {
-    title: "개선 이력",
-    body: "초기 정적 페이지에서 React 구조로 전환한 뒤, 정보 밀도/가독성/모바일 반응형/퍼포먼스를 단계적으로 개선했습니다.",
+    id: "portfolio",
+    name: "Web Portfolio",
+    period: "2026.02 ~ 진행중",
+    team: "1인 개인 프로젝트",
+    category: "Personal Branding Site",
+    shortSummary:
+      "실무 경험을 채용 관점으로 요약한 반응형 포트폴리오 사이트입니다.",
+    stack: ["React", "Vite", "CSS", "GitHub Pages"],
+    contribution: "Planning / Design / Development / Deploy 100%",
+    deploymentUrl: "배포 URL 정리 예정",
+    readme: {
+      summary: [
+        "실무 프로젝트 경험을 빠르게 검증 가능한 정보 구조로 재편한 포트폴리오 웹",
+        "채용 담당자가 짧은 시간 안에 핵심 역량을 파악할 수 있도록 섹션/카드 구조 최적화",
+        "프로젝트별 README/이미지 모달로 상세 맥락까지 탐색 가능한 인터랙션 설계",
+      ],
+      background:
+        "기존 포트폴리오는 정보가 분산되어 있고 프로젝트 맥락 전달력이 약해, 실제 기여 범위와 문제 해결 경험이 충분히 드러나지 않았습니다. 그래서 단순 소개 페이지가 아니라 '읽는 문서 + 보는 데모'의 중간 형태를 목표로, 핵심 정보 우선순위와 탐색 흐름을 다시 설계했습니다.",
+      meaning:
+        "이 프로젝트를 통해 단순한 스타일링을 넘어 정보 아키텍처, 인터랙션 우선순위, 반응형 가독성까지 포함한 UI/UX 설계 역량을 강화했습니다. 또한 GitHub Pages 기반 배포 파이프라인을 유지하며 빠르게 수정-검증-반영하는 운영 루틴을 정착시켰습니다.",
+      features: [
+        "섹션 기반 내비게이션 + 스크롤 진입 애니메이션",
+        "프로젝트 카드형 요약 + README 상세 모달",
+        "PioSync 전용 39장 이미지 모달 확장 구조",
+        "모바일/데스크톱 반응형 레이아웃 및 접근성 고려",
+      ],
+      members: ["전현우 (Solo): 기획, 디자인, 개발, 배포 전 과정 수행"],
+      setup: ["npm install", "npm run dev", "npm run build"],
+    },
+    images: [],
   },
 ]
 
 function App() {
+  const [activeProjectId, setActiveProjectId] = useState(null)
+  const [activeModal, setActiveModal] = useState(null)
+  const [isModalClosing, setIsModalClosing] = useState(false)
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [brokenImages, setBrokenImages] = useState({})
+  const closeTimerRef = useRef(null)
+
+  const activeProject = useMemo(
+    () => projects.find((project) => project.id === activeProjectId) || null,
+    [activeProjectId]
+  )
+
   useEffect(() => {
     const items = Array.from(document.querySelectorAll(".reveal"))
     const observer = new IntersectionObserver(
@@ -101,11 +137,12 @@ function App() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible")
-            observer.unobserve(entry.target)
+          } else {
+            entry.target.classList.remove("is-visible")
           }
         })
       },
-      { threshold: 0.18 }
+      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
     )
 
     items.forEach((item) => observer.observe(item))
@@ -113,8 +150,90 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = activeModal ? "hidden" : ""
+
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [activeModal])
+
+  useEffect(() => {
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        closeModals()
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [activeModal, isModalClosing])
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current)
+      }
+    }
+  }, [])
+
+  const openReadmeModal = (project) => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+    setActiveProjectId(project.id)
+    setIsModalClosing(false)
+    setActiveModal("readme")
+  }
+
+  const openImageModal = (project) => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+    setActiveProjectId(project.id)
+    setSelectedImageIndex(0)
+    setIsModalClosing(false)
+    setActiveModal("image")
+  }
+
+  const closeModals = () => {
+    if (!activeModal || isModalClosing) return
+    setIsModalClosing(true)
+    closeTimerRef.current = setTimeout(() => {
+      setActiveModal(null)
+      setIsModalClosing(false)
+      closeTimerRef.current = null
+    }, 360)
+  }
+
+  const goPrevImage = () => {
+    if (!activeProject) return
+    setSelectedImageIndex((prev) =>
+      prev === 0 ? activeProject.images.length - 1 : prev - 1
+    )
+  }
+
+  const goNextImage = () => {
+    if (!activeProject) return
+    setSelectedImageIndex((prev) =>
+      prev === activeProject.images.length - 1 ? 0 : prev + 1
+    )
+  }
+
+  const markImageBroken = (src) => {
+    setBrokenImages((prev) => ({ ...prev, [src]: true }))
+  }
+
   return (
     <div className="page">
+      <div className="bg-scene" aria-hidden="true">
+        <span className="bg-orb bg-orb-a" />
+        <span className="bg-orb bg-orb-b" />
+        <span className="bg-grid" />
+      </div>
+
       <header className="nav">
         <div className="nav-inner">
           <a className="brand" href="#top">
@@ -126,7 +245,6 @@ function App() {
             <a href="#archiving">Archiving</a>
             <a href="#projects">Projects</a>
             <a href="#career">Career</a>
-            <a href="#hiring">Hiring</a>
           </nav>
           <a className="nav-cta" href="#contact">
             Contact
@@ -140,10 +258,10 @@ function App() {
           <div className="hero-inner reveal is-visible">
             <p className="hero-kicker">PORTFOLIO</p>
             <h1 className="hero-title">전현우</h1>
-            <h2 className="hero-subtitle">Frontend-focused Web Developer</h2>
+            <h2 className="hero-subtitle">Web Developer</h2>
             <p className="hero-desc">
-              실무 프로젝트에서 React 프론트를 주도하고, Spring Boot 일부까지
-              연결하며 화면-API-운영 흐름을 끝까지 완성해온 개발자입니다.
+              실무 프로젝트에서 React 프론트를 주도하고, 운영 반영까지 연결해
+              화면-API-배포 흐름을 완성해온 개발자입니다.
             </p>
             <div className="hero-chips">
               <span>React</span>
@@ -151,23 +269,14 @@ function App() {
               <span>Spring Boot</span>
               <span>AWS Deploy</span>
             </div>
-            <div className="hero-stats">
-              <div>
-                <strong>7개월</strong>
-                <span>실무 경험</span>
-              </div>
-              <div>
-                <strong>5+</strong>
-                <span>핵심 도메인 화면</span>
-              </div>
-              <div>
-                <strong>1~2회/주</strong>
-                <span>배포 운영 사이클</span>
-              </div>
+            <div className="hero-actions">
+              <a className="hero-btn" href="#projects">
+                프로젝트 보기
+              </a>
+              <a className="hero-btn hero-btn-secondary" href="#contact">
+                바로 연락하기
+              </a>
             </div>
-            <a className="hero-btn" href="#projects">
-              프로젝트 보기
-            </a>
           </div>
         </section>
 
@@ -224,66 +333,65 @@ function App() {
             <div className="archive-card">
               <strong>Portfolio PDF</strong>
               <span>업데이트 예정</span>
-              <em>PioSync 기능 흐름/설계/개선 포인트 정리본</em>
+              <em>핵심 기능 흐름과 개선 이력 요약본</em>
             </div>
           </div>
         </section>
 
-        <section id="projects" className="section reveal">
+        <section id="projects" className="section section-projects reveal">
           <div className="section-head">
             <p className="section-eyebrow">Work</p>
             <h3 className="section-title">PROJECTS</h3>
           </div>
-          <article className="project-card">
-            <div className="project-top">
-              <div>
-                <p className="project-meta">PioSync | 2025.09 ~ 2026.03.31 예정</p>
-                <h4 className="project-title">ERP 연동 웹 프로젝트</h4>
-              </div>
-              <span className="project-badge">실무 프로젝트</span>
-            </div>
-            <div className="feature-grid">
-              {projectFeatures.map((feature) => (
-                <div key={feature} className="feature-item">
-                  {feature}
+          <div className="project-brief-list">
+            {projects.map((project) => (
+              <article
+                className="project-brief"
+                key={project.id}
+                onClick={() => openReadmeModal(project)}
+              >
+                <div className="project-brief-head">
+                  <div>
+                    <p className="project-meta">
+                      {project.name} | {project.period}
+                    </p>
+                    <h4 className="project-title">{project.team}</h4>
+                  </div>
+                  <span className="project-badge">{project.contribution}</span>
                 </div>
-              ))}
-            </div>
-            <div className="pill">React · Spring Boot · PostgreSQL · AWS</div>
-
-            <div className="sub-grid">
-              <div className="sub-panel">
-                <h5>주요 성과</h5>
-                <ul>
-                  {achievements.map((item) => (
-                    <li key={item}>{item}</li>
+                <p className="project-label">{project.category}</p>
+                <p className="project-summary">{project.shortSummary}</p>
+                <div className="project-stack-wrap">
+                  {project.stack.map((item) => (
+                    <span key={item}>{item}</span>
                   ))}
-                </ul>
-              </div>
-              <div className="sub-panel">
-                <h5>트러블슈팅</h5>
-                <ul>
-                  {troubleshooting.map((issue) => (
-                    <li key={issue.title}>
-                      <strong>{issue.title}</strong>
-                      <p>{issue.body}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </article>
-
-          <div className="mini-project-note">
-            <h4>1인 미니프로젝트 관점 정리</h4>
-            <div className="mini-project-grid">
-              {miniProjectSummary.map((item) => (
-                <article className="mini-project-item" key={item.title}>
-                  <h5>{item.title}</h5>
-                  <p>{item.body}</p>
-                </article>
-              ))}
-            </div>
+                </div>
+                <div className="project-actions">
+                  <button
+                    className="project-btn"
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      openReadmeModal(project)
+                    }}
+                  >
+                    README
+                  </button>
+                  {project.images.length > 0 && (
+                    <button
+                      className="project-btn project-btn-ghost"
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation()
+                        openImageModal(project)
+                      }}
+                    >
+                      이미지
+                    </button>
+                  )}
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
@@ -301,51 +409,172 @@ function App() {
                 <ul>
                   <li>React 프론트 전담, Spring Boot 일부 기능 개발 참여</li>
                   <li>전표/결재/권한/첨부 등 핵심 업무 화면 설계/구현</li>
-                  <li>로컬 → Demo AWS → 운영 AWS 배포 사이클 운영</li>
+                  <li>로컬 테스트 -&gt; Demo AWS -&gt; 운영 AWS 배포 사이클 운영</li>
                 </ul>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="hiring" className="section reveal">
-          <div className="section-head">
-            <p className="section-eyebrow">Hiring Snapshot</p>
-            <h3 className="section-title">WHY ME</h3>
-          </div>
-          <div className="hiring-card">
-            <p>
-              화면 구현에 그치지 않고 API 연동, 데이터 검증, 운영 배포까지
-              연결해 결과를 만드는 개발자입니다. 실무에서 반복되는 입력 업무와
-              권한 관리 같은 고난도 운영 화면을 직접 개선했고, 요구사항 변화가
-              빠른 환경에서 우선순위를 조정하며 기능을 끝까지 완성했습니다.
-            </p>
-            <ul>
-              {actionItems.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
         <section id="contact" className="section contact reveal">
           <div className="contact-panel">
             <h3>CONTACT</h3>
-            <p>프로젝트/채용 관련 문의는 아래로 연락 부탁드립니다.</p>
             <div className="contact-list">
               <div>gusdntkd2@naver.com</div>
               <div>010-5056-4577</div>
-              <div>github.com/wjsgusdn12</div>
             </div>
           </div>
         </section>
       </main>
 
       <footer className="footer">© 2026 Jeon Hyunwoo. All rights reserved.</footer>
+
+      {activeModal === "readme" && activeProject && (
+        <div
+          className={`modal-overlay ${isModalClosing ? "is-closing" : ""}`}
+          onClick={closeModals}
+        >
+          <div className="modal-sheet" onClick={(event) => event.stopPropagation()}>
+            <div className="modal-head">
+              <div>
+                <p className="modal-kicker">README.md</p>
+                <h4>{activeProject.name}</h4>
+                <p className="modal-meta">
+                  {activeProject.period} ({activeProject.team})
+                </p>
+              </div>
+              <button className="modal-close" type="button" onClick={closeModals}>
+                닫기
+              </button>
+            </div>
+
+            <div className="readme-block">
+              <h5>Deployment URL</h5>
+              <p>{activeProject.deploymentUrl}</p>
+            </div>
+
+            <div className="readme-block">
+              <h5>Summary</h5>
+              <ul className="modal-list">
+                {activeProject.readme.summary.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="readme-block">
+              <h5>Background</h5>
+              <p>{activeProject.readme.background}</p>
+            </div>
+
+            <div className="readme-block">
+              <h5>Meaning</h5>
+              <p>{activeProject.readme.meaning}</p>
+            </div>
+
+            <div className="readme-block">
+              <h5>Main Features</h5>
+              <ul className="modal-list">
+                {activeProject.readme.features.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="readme-grid">
+              <div className="readme-block">
+                <h5>Technology Stack(s)</h5>
+                <div className="modal-stack">
+                  {activeProject.stack.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="readme-block">
+                <h5>Members</h5>
+                <ul className="modal-list">
+                  {activeProject.readme.members.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="readme-block">
+              <h5>Setup & Usage</h5>
+              <pre className="setup-box">
+{activeProject.readme.setup.map((item) => item).join("\n")}
+              </pre>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeModal === "image" && activeProject && (
+        <div
+          className={`modal-overlay ${isModalClosing ? "is-closing" : ""}`}
+          onClick={closeModals}
+        >
+          <div
+            className="modal-sheet modal-sheet-wide"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="modal-head">
+              <div>
+                <p className="modal-kicker">IMAGE GALLERY</p>
+                <h4>
+                  {activeProject.name} ({activeProject.images.length}장)
+                </h4>
+              </div>
+              <button className="modal-close" type="button" onClick={closeModals}>
+                닫기
+              </button>
+            </div>
+
+            <div className="gallery-preview">
+              {brokenImages[activeProject.images[selectedImageIndex].src] ? (
+                <div className="image-fallback">이미지를 추가하면 여기에 표시됩니다.</div>
+              ) : (
+                <img
+                  src={activeProject.images[selectedImageIndex].src}
+                  alt={activeProject.images[selectedImageIndex].alt}
+                  onError={() =>
+                    markImageBroken(activeProject.images[selectedImageIndex].src)
+                  }
+                />
+              )}
+            </div>
+
+            <div className="gallery-controls">
+              <button className="gallery-btn" type="button" onClick={goPrevImage}>
+                이전
+              </button>
+              <span>
+                {selectedImageIndex + 1} / {activeProject.images.length}
+              </span>
+              <button className="gallery-btn" type="button" onClick={goNextImage}>
+                다음
+              </button>
+            </div>
+
+            <div className="thumb-grid">
+              {activeProject.images.map((image, index) => (
+                <button
+                  key={image.id}
+                  type="button"
+                  className={`thumb-item ${selectedImageIndex === index ? "is-active" : ""}`}
+                  onClick={() => setSelectedImageIndex(index)}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
 
 export default App
-
-
