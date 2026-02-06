@@ -54,18 +54,86 @@ button {
 
 .page {
   min-height: 100vh;
+  position: relative;
+  isolation: isolate;
 }
 
 .bg-scene {
   position: fixed;
   inset: 0;
-  z-index: -3;
+  z-index: 0;
   pointer-events: none;
   overflow: hidden;
 }
 
+.bg-bubble {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+  filter: none;
+  opacity: 0.7;
+  background: transparent;
+  border: 1px solid var(--wood-3);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.24) inset;
+  will-change: transform;
+}
+
+.bg-bubble-1 {
+  width: 28vw;
+  height: 28vw;
+  left: -6vw;
+  top: 16vh;
+  animation: bubbleFloatA 17s ease-in-out infinite alternate;
+}
+
+.bg-bubble-2 {
+  width: 22vw;
+  height: 22vw;
+  right: 2vw;
+  top: 10vh;
+  animation: bubbleFloatB 20s ease-in-out infinite alternate;
+  animation-delay: -2s;
+}
+
+.bg-bubble-3 {
+  width: 18vw;
+  height: 18vw;
+  left: 14vw;
+  top: 52vh;
+  animation: bubbleFloatC 15s ease-in-out infinite alternate;
+  animation-delay: -1.5s;
+}
+
+.bg-bubble-4 {
+  width: 24vw;
+  height: 24vw;
+  right: -4vw;
+  top: 44vh;
+  animation: bubbleFloatD 22s ease-in-out infinite alternate;
+  animation-delay: -3s;
+}
+
+.bg-bubble-5 {
+  width: 26vw;
+  height: 26vw;
+  left: 37vw;
+  top: 10vh;
+  animation: bubbleFloatE 14s ease-in-out infinite alternate;
+  animation-delay: -1s;
+}
+
+.bg-bubble-6 {
+  width: 19vw;
+  height: 19vw;
+  left: 64vw;
+  top: 64vh;
+  animation: bubbleFloatF 19s ease-in-out infinite alternate;
+  animation-delay: -2.4s;
+}
+
 .bg-orb {
   position: absolute;
+  z-index: 2;
   border-radius: 50%;
   filter: blur(48px);
   opacity: 0.66;
@@ -92,6 +160,7 @@ button {
 .bg-grid {
   position: absolute;
   inset: 0;
+  z-index: 3;
   opacity: 0.1;
   background:
     linear-gradient(to right, rgba(137, 103, 66, 0.12) 1px, transparent 1px),
@@ -170,6 +239,8 @@ button {
 
 main {
   padding-top: 70px;
+  position: relative;
+  z-index: 1;
 }
 
 .hero {
@@ -179,9 +250,13 @@ main {
   place-items: center;
   padding: 40px 20px;
   background:
-    linear-gradient(180deg, #fffefb, #fff9f1),
-    radial-gradient(circle at 12% 12%, rgba(232, 205, 168, 0.33), transparent 52%),
-    radial-gradient(circle at 88% 90%, rgba(209, 171, 124, 0.22), transparent 48%);
+    linear-gradient(
+      180deg,
+      rgba(255, 254, 251, 0.62),
+      rgba(255, 249, 241, 0.5)
+    ),
+    radial-gradient(circle at 12% 12%, rgba(232, 205, 168, 0.18), transparent 52%),
+    radial-gradient(circle at 88% 90%, rgba(209, 171, 124, 0.14), transparent 48%);
   isolation: isolate;
 }
 
@@ -308,9 +383,7 @@ main {
 .section-accent {
   border-top: 1px solid #ead9be;
   border-bottom: 1px solid #ead9be;
-  background:
-    linear-gradient(180deg, rgba(245, 232, 214, 0.6), rgba(245, 232, 214, 0.6)),
-    linear-gradient(130deg, #fffdf8, #fff8ef);
+  background: transparent;
 }
 
 .about-grid {
@@ -424,7 +497,7 @@ main {
 .section-projects {
   border-top: 1px solid #ead9be;
   border-bottom: 1px solid #ead9be;
-  background: #fff;
+  background: transparent;
 }
 
 .project-brief-list {
@@ -638,6 +711,8 @@ main {
   font-size: 12px;
   border-top: 1px solid var(--line);
   background: #fffdf8;
+  position: relative;
+  z-index: 1;
 }
 
 .modal-overlay {
@@ -938,6 +1013,42 @@ main {
   }
 }
 
+@keyframes bubbleFloatA {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(5vw, -6vh, 0) scale(1.08); }
+  100% { transform: translate3d(-2vw, 4vh, 0) scale(0.96); }
+}
+
+@keyframes bubbleFloatB {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-4vw, 5vh, 0) scale(1.1); }
+  100% { transform: translate3d(3vw, -7vh, 0) scale(0.95); }
+}
+
+@keyframes bubbleFloatC {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4vw, 3vh, 0) scale(1.06); }
+  100% { transform: translate3d(-3vw, -5vh, 0) scale(0.94); }
+}
+
+@keyframes bubbleFloatD {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-5vw, -4vh, 0) scale(1.09); }
+  100% { transform: translate3d(2vw, 6vh, 0) scale(0.95); }
+}
+
+@keyframes bubbleFloatE {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6vw, -5vh, 0) scale(1.12); }
+  100% { transform: translate3d(-4vw, 4vh, 0) scale(0.93); }
+}
+
+@keyframes bubbleFloatF {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-3vw, 6vh, 0) scale(1.05); }
+  100% { transform: translate3d(4vw, -4vh, 0) scale(0.96); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -953,6 +1064,10 @@ main {
   }
 
   .bg-orb {
+    animation: none;
+  }
+
+  .bg-bubble {
     animation: none;
   }
 
