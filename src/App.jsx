@@ -229,6 +229,12 @@ function App() {
   return (
     <div className="page">
       <div className="bg-scene" aria-hidden="true">
+        <span className="bg-bubble bg-bubble-1" />
+        <span className="bg-bubble bg-bubble-2" />
+        <span className="bg-bubble bg-bubble-3" />
+        <span className="bg-bubble bg-bubble-4" />
+        <span className="bg-bubble bg-bubble-5" />
+        <span className="bg-bubble bg-bubble-6" />
         <span className="bg-orb bg-orb-a" />
         <span className="bg-orb bg-orb-b" />
         <span className="bg-grid" />
