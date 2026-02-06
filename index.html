@@ -5,293 +5,177 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>전현우 · 웹개발자</title>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap");
 
     :root{
-      --bg: #0d0f14;
-      --bg-2: #111525;
-      --card: #151a2b;
-      --card-2: #121625;
-      --text: #eef1f7;
-      --muted: #a4aec2;
-      --accent: #8b8dff;
-      --accent-2: #5ad2ff;
-      --line: #242c44;
-      --glow: rgba(139,141,255,0.25);
+      --bg:#f7f2e9;
+      --bg2:#faf7f0;
+      --card:#ffffff;
+      --line:#eadfce;
+      --text:#2a2a2a;
+      --muted:#6f6a60;
+      --accent:#c28a3c;
+      --accent2:#d9a864;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
-      font-family:"Noto Sans KR", sans-serif;
+      font-family:"Manrope","Noto Sans KR",sans-serif;
+      background:linear-gradient(180deg,var(--bg),var(--bg2));
       color:var(--text);
-      background:
-        radial-gradient(800px 400px at 10% -10%, rgba(90,210,255,0.18), transparent 55%),
-        radial-gradient(900px 500px at 90% 0%, rgba(139,141,255,0.20), transparent 60%),
-        linear-gradient(180deg, #0c0f16, #0a0d12 45%, #0b0e14);
-      letter-spacing:0.1px;
     }
-    a{color:var(--accent-2); text-decoration:none}
-    .container{max-width:1100px; margin:0 auto; padding:0 22px;}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:90px 22px 100px}
 
     /* NAV */
     .nav{
-      position:sticky; top:0; z-index:20;
-      background:rgba(13,15,20,0.85);
+      position:fixed; top:0; left:0; right:0; z-index:20;
+      background:rgba(250,247,240,0.95);
       border-bottom:1px solid var(--line);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(6px);
     }
     .nav-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      height:64px;
+      max-width:1100px; margin:0 auto; padding:0 22px;
+      height:64px; display:flex; align-items:center; justify-content:space-between;
     }
-    .brand{
-      font-family:"Space Grotesk", sans-serif;
-      font-weight:700; font-size:18px; letter-spacing:0.8px;
-    }
-    .menu{display:flex; gap:22px; font-size:14px; color:var(--muted);}
-    .menu a{color:var(--muted)}
+    .brand{font-weight:800;letter-spacing:.5px}
+    .menu{display:flex;gap:22px;font-size:14px;color:var(--muted)}
     .menu a:hover{color:var(--text)}
 
     /* HERO */
     .hero{
-      height:440px; display:flex; align-items:center; justify-content:center;
-      text-align:center; position:relative; overflow:hidden;
-      background:
-        linear-gradient(180deg, rgba(17,21,37,0.85), rgba(9,12,18,0.95)),
-        url("hero.jpg") center/cover no-repeat;
-    }
-    .hero::after{
-      content:""; position:absolute; inset:0;
-      background:linear-gradient(120deg, rgba(139,141,255,0.15), rgba(90,210,255,0.1));
-      mix-blend-mode:screen; pointer-events:none;
-    }
-    .hero h1{
-      font-family:"Space Grotesk","Noto Sans KR", sans-serif;
-      font-size:52px; margin:0 0 10px; letter-spacing:1px;
-    }
-    .hero h2{
-      font-size:34px; margin:0 0 18px; font-weight:800;
-    }
-    .hero .intro{font-size:18px; color:#dfe6f5;}
-    .hero .btn{
-      display:inline-block; margin-top:22px; padding:12px 28px;
-      background:linear-gradient(135deg, var(--accent), var(--accent-2));
-      color:#0b0f14; border-radius:26px; font-weight:800;
-      box-shadow:0 10px 30px var(--glow);
-    }
-
-    /* SECTION */
-    .section-title{
-      font-family:"Space Grotesk","Noto Sans KR", sans-serif;
-      font-size:32px; text-align:center; margin:60px 0 22px;
-      letter-spacing:1px;
-    }
-    .section-title::after{
-      content:""; display:block; width:70px; height:4px; margin:12px auto 0;
-      background:linear-gradient(90deg, var(--accent), var(--accent-2));
-      border-radius:4px;
-    }
-
-    /* ABOUT */
-    .about{padding:40px 0;}
-    .about-grid{
-      display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
-    }
-    .about-card{
-      border:1px solid var(--line); border-radius:14px;
-      padding:22px; background:linear-gradient(180deg, var(--card), var(--card-2));
-      text-align:center; min-height:130px; font-size:16px;
-      box-shadow:0 10px 24px rgba(0,0,0,0.25);
-    }
-    .about-card h4{margin:8px 0 6px; font-size:14px; color:var(--muted);}
-    .about-card p{margin:0; font-weight:700; font-size:17px;}
-
-    /* SKILLS */
-    .skills{padding:60px 0; background:linear-gradient(180deg, #0f1322, #0b0f18);}
-    .skills-box{
-      background:linear-gradient(180deg, #1a1f35, #141a2b);
-      border-radius:18px; padding:26px; box-shadow:0 12px 32px rgba(0,0,0,0.35);
+      display:grid;gap:14px;align-items:center;
+      min-height:360px;
+      background:linear-gradient(135deg,#fff6e6,#f4e7d4);
       border:1px solid var(--line);
+      border-radius:18px;
+      padding:40px;
+      box-shadow:0 10px 30px rgba(194,138,60,.15);
     }
-    .skill-row{
-      display:grid; grid-template-columns:140px 1fr; gap:14px; align-items:center; padding:12px 0;
-      border-bottom:1px dashed #2b3555;
+    .badge{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:6px 12px;border-radius:999px;
+      background:#fff; border:1px solid var(--line);
+      color:var(--muted);font-size:12px;
+      width:max-content;
     }
-    .skill-row:last-child{border-bottom:none}
-    .skill-title{font-weight:800; font-size:16px;}
+    .title{font-size:40px;font-weight:800;letter-spacing:-.5px}
+    .subtitle{color:var(--muted);font-size:16px;max-width:720px}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{
+      padding:10px 16px;border-radius:12px;border:1px solid var(--line);
+      background:#fff;color:var(--text);font-weight:600;font-size:14px;
+    }
+    .btn.primary{
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#fff;border:none;box-shadow:0 10px 22px rgba(194,138,60,.25);
+    }
+
+    .grid{display:grid;gap:16px}
+    .section{
+      background:var(--card);border:1px solid var(--line);
+      border-radius:16px;padding:22px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.05);
+    }
+    .section-title{font-size:20px;font-weight:700;margin-bottom:12px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
     .tag{
-      display:inline-block; padding:7px 12px; margin:5px; border-radius:12px;
-      background:#1f2740; border:1px solid #2b3555; color:#cdd6ea; font-size:14px;
+      padding:6px 10px;border-radius:999px;border:1px solid var(--line);
+      background:#fff; font-size:12px; color:var(--muted)
     }
-
-    /* ARCHIVING */
-    .archiving{padding:60px 0; background:#0b0e14;}
-    .archive-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
-    .archive-card{
-      background:linear-gradient(180deg,#171c2d,#121727);
-      border:1px solid var(--line); border-radius:14px; padding:24px; min-height:140px;
-      box-shadow:0 10px 28px rgba(0,0,0,0.3);
-      font-size:16px;
-    }
-    .archive-card h3{margin:0 0 8px; font-size:20px;}
-    .archive-card a{color:#cfe2ff;}
-
-    /* PROJECTS */
-    .projects{padding:60px 0; background:#0e111a;}
-    .project-card{
-      border:1px solid var(--line); border-radius:16px; padding:24px; margin-bottom:20px;
-      background:linear-gradient(180deg,#141a2b,#111625);
-      box-shadow:0 10px 26px rgba(0,0,0,0.25);
-      font-size:16px;
-    }
-    .project-card h3{margin:0 0 10px; font-size:22px;}
-    .project-card ul{margin:0; padding-left:20px; color:#c9d3e6;}
-    .project-card li{margin:6px 0;}
-
-    /* CAREER */
-    .career{padding:60px 0; background:#0b0f18;}
-    .career-box{
-      display:grid; grid-template-columns:220px 1fr; gap:30px;
-      border-top:1px solid var(--line); padding-top:30px;
-    }
-    .logo{
-      width:200px; height:200px; border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, #2b3555, #151a2b);
-      display:flex; align-items:center; justify-content:center; font-weight:800;
-      color:#d8e2ff; font-size:18px;
-      border:1px solid #2b3555;
-    }
-    .career-list{color:#c9d3e6; font-size:16px;}
-    .career-item{margin:12px 0;}
-
-    .footer{
-      background:#0a0d12; color:#8b93a9; text-align:center; padding:24px 0; font-size:13px;
-      border-top:1px solid var(--line);
-    }
+    .split{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+    .list{margin:0;padding-left:18px;color:var(--muted)}
+    .list li{margin:6px 0}
+    .card{border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff}
+    .muted{color:var(--muted)}
+    .footer{margin-top:40px;color:var(--muted);font-size:12px;text-align:center}
 
     @media(max-width:900px){
-      .about-grid, .archive-grid{grid-template-columns:1fr;}
-      .career-box{grid-template-columns:1fr;}
-      .hero h1{font-size:40px}
-      .hero h2{font-size:26px}
+      .split{grid-template-columns:1fr}
       .menu{display:none}
+      .title{font-size:32px}
     }
   </style>
 </head>
 <body>
   <div class="nav">
-    <div class="container nav-inner">
+    <div class="nav-inner">
       <div class="brand">JEON HYUNWOO</div>
       <div class="menu">
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
-        <a href="#archiving">Archiving</a>
         <a href="#projects">Projects</a>
         <a href="#career">Career</a>
       </div>
     </div>
   </div>
 
-  <section class="hero">
-    <div>
-      <h1>- 전현우 -</h1>
-      <h2>웹 개발자 포트폴리오</h2>
-      <div class="intro">ERP 연동 웹 프로젝트에서 실서비스 기능을 구현해온 신입 개발자입니다.</div>
-      <a class="btn" href="#about">더 알아보기 ↓</a>
-    </div>
-  </section>
-
-  <section id="about" class="about container">
-    <div class="section-title">ABOUT ME</div>
-    <div class="about-grid">
-      <div class="about-card"><h4>이름</h4><p>전현우</p></div>
-      <div class="about-card"><h4>이메일</h4><p>gusdntkd2@naver.com</p></div>
-      <div class="about-card"><h4>연락처</h4><p>010-5056-4577</p></div>
-      <div class="about-card"><h4>직무</h4><p>웹 개발자</p></div>
-      <div class="about-card"><h4>학력</h4><p>Shanghai Jiao Tong Univ.</p></div>
-      <div class="about-card"><h4>경력</h4><p>실무 7개월</p></div>
-    </div>
-  </section>
-
-  <section id="skills" class="skills">
-    <div class="container">
-      <div class="section-title">SKILLS</div>
-      <div class="skills-box">
-        <div class="skill-row">
-          <div class="skill-title">Frontend</div>
-          <div>
-            <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span>
-            <span class="tag">React Router</span><span class="tag">Axios</span>
-          </div>
-        </div>
-        <div class="skill-row">
-          <div class="skill-title">Backend</div>
-          <div>
-            <span class="tag">Spring Boot</span><span class="tag">Java</span><span class="tag">JPA</span><span class="tag">Gradle</span><span class="tag">YAML</span>
-          </div>
-        </div>
-        <div class="skill-row">
-          <div class="skill-title">DB</div>
-          <div><span class="tag">PostgreSQL</span><span class="tag">Oracle</span><span class="tag">MSSQL</span></div>
-        </div>
-        <div class="skill-row">
-          <div class="skill-title">DevOps</div>
-          <div><span class="tag">AWS EC2</span><span class="tag">S3</span><span class="tag">CloudFront</span></div>
-        </div>
-        <div class="skill-row">
-          <div class="skill-title">Tools</div>
-          <div><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">IntelliJ</span></div>
-        </div>
+  <div class="wrap">
+    <section class="hero">
+      <div class="badge">신입 · 실무 7개월</div>
+      <div class="title">전현우 · 웹개발자</div>
+      <div class="subtitle">
+        ERP 연동 웹 프로젝트에서 React 프론트를 전담하며 실서비스 기능을 구현해온 신입 개발자입니다.
       </div>
-    </div>
-  </section>
-
-  <section id="archiving" class="archiving">
-    <div class="container">
-      <div class="section-title">ARCHIVING</div>
-      <div class="archive-grid">
-        <div class="archive-card">
-          <h3>GitHub</h3>
-          <div><a href="https://github.com/wjsgusdn12">github.com/wjsgusdn12</a></div>
-          <div style="margin-top:6px; color:#aeb8cf;">프로젝트 코드 및 기록</div>
-        </div>
-        <div class="archive-card">
-          <h3>Portfolio PDF</h3>
-          <div style="color:#aeb8cf;">추후 첨부 예정</div>
-        </div>
+      <div class="cta-row">
+        <a class="btn primary" href="mailto:gusdntkd2@naver.com">메일 보내기</a>
+        <a class="btn" href="https://github.com/wjsgusdn12">GitHub</a>
+        <span class="btn">010-5056-4577</span>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section id="projects" class="projects container">
-    <div class="section-title">PROJECTS</div>
-    <div class="project-card">
-      <h3>PioSync (ERP 연동 웹)</h3>
+    <section id="about" class="section">
+      <div class="section-title">About</div>
+      <p class="muted">
+        전표 입력/검토, 결재·권한, 첨부, 대량 처리 UI를 개선했고 판매·정산 엑셀 업로드의 백엔드 처리까지 맡았습니다.
+        거래처별 분기·다중/병합 헤더·컬럼 매핑 등 복잡한 엑셀 구조를 처리해 안정적인 업로드 흐름을 구축했으며,
+        로컬 → Demo AWS → 운영 AWS 배포까지 경험했습니다.
+      </p>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="section-title">Skills</div>
+      <div class="tags">
+        <span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span>
+        <span class="tag">React Router</span><span class="tag">Axios</span>
+        <span class="tag">Spring Boot</span><span class="tag">Java</span><span class="tag">JPA</span>
+        <span class="tag">PostgreSQL</span><span class="tag">Oracle</span><span class="tag">MSSQL</span>
+        <span class="tag">AWS EC2</span><span class="tag">S3</span><span class="tag">CloudFront</span>
+        <span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">VS Code</span><span class="tag">IntelliJ</span>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="section-title">Project · PioSync</div>
       <div class="muted">2025.09 ~ 2026.03.31 예정 · React 프론트 전담 / Spring Boot 일부</div>
-      <ul>
+      <ul class="list">
         <li>엑셀형 전표 입력/검토 UI 구현 (헤더·라인 분리, 스플릿 뷰, 컬럼 리사이징)</li>
         <li>다중 파일 업로드 + SSE 진행률/ETA 표시</li>
         <li>권한관리 3열 매핑 UI 설계</li>
         <li>대량 입력/검색 모달 개발</li>
         <li>판매·정산 엑셀 업로드 풀스택 구현</li>
       </ul>
-    </div>
-  </section>
+    </section>
 
-  <section id="career" class="career container">
-    <div class="section-title">CAREER</div>
-    <div class="career-box">
-      <div class="logo">PioSolution</div>
-      <div class="career-list">
-        <div class="career-item"><strong>㈜피오솔루션</strong> (2025.07 ~ 2026.03.31 예정)</div>
-        <div class="career-item">React 프론트 전담, Spring Boot 일부 개발</div>
-        <div class="career-item">전표/결재/권한/첨부 등 핵심 업무 화면 설계·구현</div>
-        <div class="career-item">배포: 로컬 → Demo AWS → 운영 AWS (주 1~2회)</div>
+    <section id="career" class="section split">
+      <div class="card">
+        <div class="section-title">Career</div>
+        <div class="muted">㈜피오솔루션 (2025.07 ~ 2026.03.31 예정)</div>
+        <ul class="list">
+          <li>React 프론트 전담, Spring Boot 일부 개발</li>
+          <li>전표/결재/권한/첨부 등 핵심 업무 화면 설계·구현</li>
+          <li>로컬 → Demo AWS → 운영 AWS (주 1~2회 배포)</li>
+        </ul>
       </div>
-    </div>
-  </section>
+      <div class="card">
+        <div class="section-title">Contact</div>
+        <div class="muted">Email: gusdntkd2@naver.com</div>
+        <div class="muted">Phone: 010-5056-4577</div>
+        <div class="muted">GitHub: github.com/wjsgusdn12</div>
+      </div>
+    </section>
 
-  <div class="footer">© 2026 Jeon Hyunwoo. All rights reserved.</div>
+    <div class="footer">© 2026 Jeon Hyunwoo. All rights reserved.</div>
+  </div>
 </body>
 </html>
