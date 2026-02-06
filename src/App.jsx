@@ -86,14 +86,14 @@ const projects = [
   {
     id: "portfolio",
     name: "Web Portfolio",
-    period: "2026.02 ~ 진행중",
+    period: "2026.02",
     team: "1인 개인 프로젝트",
     category: "Personal Branding Site",
     shortSummary:
       "실무 경험을 채용 관점으로 요약한 반응형 포트폴리오 사이트입니다.",
     stack: ["React", "Vite", "CSS", "GitHub Pages"],
     contribution: "Planning / Design / Development / Deploy 100%",
-    deploymentUrl: "배포 URL 정리 예정",
+    deploymentUrl: "https://wjsgusdn12.github.io/portfolio/",
     readme: {
       summary: [
         "실무 프로젝트 경험을 빠르게 검증 가능한 정보 구조로 재편한 포트폴리오 웹",
@@ -351,35 +351,29 @@ function App() {
           </div>
           <div className="project-brief-list">
             {projects.map((project) => (
-              <article
-                className="project-brief"
-                key={project.id}
-                onClick={() => openReadmeModal(project)}
-              >
+              <article className="project-brief" key={project.id}>
                 <div className="project-brief-head">
-                  <div>
-                    <p className="project-meta">
-                      {project.name} | {project.period}
-                    </p>
-                    <h4 className="project-title">{project.team}</h4>
-                  </div>
-                  <span className="project-badge">{project.contribution}</span>
+                  <span className="project-pill">{project.name}</span>
                 </div>
-                <p className="project-label">{project.category}</p>
-                <p className="project-summary">{project.shortSummary}</p>
-                <div className="project-stack-wrap">
-                  {project.stack.map((item) => (
-                    <span key={item}>{item}</span>
+                <p className="project-date">
+                  {project.period} ({project.team})
+                </p>
+                <hr className="project-divider" />
+                <h4 className="project-headline">{project.category}</h4>
+                <ul className="project-bullets">
+                  {project.readme.summary.map((item) => (
+                    <li key={item}>{item}</li>
                   ))}
+                </ul>
+                <div className="project-linkline">{project.deploymentUrl}</div>
+                <div className="project-tech-box">
+                  {project.stack.join(", ")}
                 </div>
                 <div className="project-actions">
                   <button
                     className="project-btn"
                     type="button"
-                    onClick={(event) => {
-                      event.stopPropagation()
-                      openReadmeModal(project)
-                    }}
+                    onClick={() => openReadmeModal(project)}
                   >
                     README
                   </button>
@@ -387,10 +381,7 @@ function App() {
                     <button
                       className="project-btn project-btn-ghost"
                       type="button"
-                      onClick={(event) => {
-                        event.stopPropagation()
-                        openImageModal(project)
-                      }}
+                      onClick={() => openImageModal(project)}
                     >
                       이미지
                     </button>
@@ -411,7 +402,7 @@ function App() {
               <div className="timeline-dot" />
               <div className="timeline-card">
                 <h4>㈜피오솔루션</h4>
-                <p>2025.07 ~ 2026.03.31 예정 (회사 폐업 예정)</p>
+                <p>2025.07 ~ 현재</p>
                 <ul>
                   <li>React 프론트 전담, Spring Boot 일부 기능 개발 참여</li>
                   <li>전표/결재/권한/첨부 등 핵심 업무 화면 설계/구현</li>
@@ -453,65 +444,66 @@ function App() {
                 닫기
               </button>
             </div>
-
-            <div className="readme-block">
-              <h5>Deployment URL</h5>
-              <p>{activeProject.deploymentUrl}</p>
-            </div>
-
-            <div className="readme-block">
-              <h5>Summary</h5>
-              <ul className="modal-list">
-                {activeProject.readme.summary.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="readme-block">
-              <h5>Background</h5>
-              <p>{activeProject.readme.background}</p>
-            </div>
-
-            <div className="readme-block">
-              <h5>Meaning</h5>
-              <p>{activeProject.readme.meaning}</p>
-            </div>
-
-            <div className="readme-block">
-              <h5>Main Features</h5>
-              <ul className="modal-list">
-                {activeProject.readme.features.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="readme-grid">
+            <div className="modal-body">
               <div className="readme-block">
-                <h5>Technology Stack(s)</h5>
-                <div className="modal-stack">
-                  {activeProject.stack.map((item) => (
-                    <span key={item}>{item}</span>
-                  ))}
-                </div>
+                <h5>Deployment URL</h5>
+                <p>{activeProject.deploymentUrl}</p>
               </div>
 
               <div className="readme-block">
-                <h5>Members</h5>
+                <h5>Summary</h5>
                 <ul className="modal-list">
-                  {activeProject.readme.members.map((item) => (
+                  {activeProject.readme.summary.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
               </div>
-            </div>
 
-            <div className="readme-block">
-              <h5>Setup & Usage</h5>
-              <pre className="setup-box">
+              <div className="readme-block">
+                <h5>Background</h5>
+                <p>{activeProject.readme.background}</p>
+              </div>
+
+              <div className="readme-block">
+                <h5>Meaning</h5>
+                <p>{activeProject.readme.meaning}</p>
+              </div>
+
+              <div className="readme-block">
+                <h5>Main Features</h5>
+                <ul className="modal-list">
+                  {activeProject.readme.features.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="readme-grid">
+                <div className="readme-block">
+                  <h5>Technology Stack(s)</h5>
+                  <div className="modal-stack">
+                    {activeProject.stack.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="readme-block">
+                  <h5>Members</h5>
+                  <ul className="modal-list">
+                    {activeProject.readme.members.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="readme-block">
+                <h5>Setup & Usage</h5>
+                <pre className="setup-box">
 {activeProject.readme.setup.map((item) => item).join("\n")}
-              </pre>
+                </pre>
+              </div>
             </div>
           </div>
         </div>
@@ -537,44 +529,45 @@ function App() {
                 닫기
               </button>
             </div>
+            <div className="modal-body">
+              <div className="gallery-preview">
+                {brokenImages[activeProject.images[selectedImageIndex].src] ? (
+                  <div className="image-fallback">이미지를 추가하면 여기에 표시됩니다.</div>
+                ) : (
+                  <img
+                    src={activeProject.images[selectedImageIndex].src}
+                    alt={activeProject.images[selectedImageIndex].alt}
+                    onError={() =>
+                      markImageBroken(activeProject.images[selectedImageIndex].src)
+                    }
+                  />
+                )}
+              </div>
 
-            <div className="gallery-preview">
-              {brokenImages[activeProject.images[selectedImageIndex].src] ? (
-                <div className="image-fallback">이미지를 추가하면 여기에 표시됩니다.</div>
-              ) : (
-                <img
-                  src={activeProject.images[selectedImageIndex].src}
-                  alt={activeProject.images[selectedImageIndex].alt}
-                  onError={() =>
-                    markImageBroken(activeProject.images[selectedImageIndex].src)
-                  }
-                />
-              )}
-            </div>
-
-            <div className="gallery-controls">
-              <button className="gallery-btn" type="button" onClick={goPrevImage}>
-                이전
-              </button>
-              <span>
-                {selectedImageIndex + 1} / {activeProject.images.length}
-              </span>
-              <button className="gallery-btn" type="button" onClick={goNextImage}>
-                다음
-              </button>
-            </div>
-
-            <div className="thumb-grid">
-              {activeProject.images.map((image, index) => (
-                <button
-                  key={image.id}
-                  type="button"
-                  className={`thumb-item ${selectedImageIndex === index ? "is-active" : ""}`}
-                  onClick={() => setSelectedImageIndex(index)}
-                >
-                  {index + 1}
+              <div className="gallery-controls">
+                <button className="gallery-btn" type="button" onClick={goPrevImage}>
+                  이전
                 </button>
-              ))}
+                <span>
+                  {selectedImageIndex + 1} / {activeProject.images.length}
+                </span>
+                <button className="gallery-btn" type="button" onClick={goNextImage}>
+                  다음
+                </button>
+              </div>
+
+              <div className="thumb-grid">
+                {activeProject.images.map((image, index) => (
+                  <button
+                    key={image.id}
+                    type="button"
+                    className={`thumb-item ${selectedImageIndex === index ? "is-active" : ""}`}
+                    onClick={() => setSelectedImageIndex(index)}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>
