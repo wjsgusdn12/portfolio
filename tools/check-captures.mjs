@@ -6,7 +6,7 @@ const checks = [
   {
     label: "PioSync",
     dir: path.join(root, "public", "captures", "piosync"),
-    total: 39,
+    total: 9,
   },
 ]
 

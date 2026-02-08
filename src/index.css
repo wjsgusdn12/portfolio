@@ -1151,6 +1151,48 @@ main {
     min-height: 520px;
   }
 
+  .bg-bubble-1 {
+    width: 46vw;
+    height: 46vw;
+    left: -12vw;
+    top: 8vh;
+  }
+
+  .bg-bubble-2 {
+    width: 38vw;
+    height: 38vw;
+    right: -6vw;
+    top: 12vh;
+  }
+
+  .bg-bubble-3 {
+    width: 34vw;
+    height: 34vw;
+    left: -4vw;
+    top: 52vh;
+  }
+
+  .bg-bubble-4 {
+    width: 42vw;
+    height: 42vw;
+    right: -12vw;
+    top: 56vh;
+  }
+
+  .bg-bubble-5 {
+    width: 44vw;
+    height: 44vw;
+    left: 30vw;
+    top: -4vh;
+  }
+
+  .bg-bubble-6 {
+    width: 36vw;
+    height: 36vw;
+    left: 56vw;
+    top: 72vh;
+  }
+
   .about-grid,
   .archive-grid,
   .project-brief-list,
