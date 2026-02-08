@@ -81,7 +81,7 @@ const projects = [
         "(백엔드) Gradle 실행 및 API 서버 연결",
       ],
     },
-    images: buildImageList("/captures/piosync", 39, "PioSync"),
+    images: buildImageList("/captures/piosync", 9, "PioSync"),
   },
   {
     id: "portfolio",
