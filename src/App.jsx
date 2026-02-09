@@ -232,7 +232,6 @@ function App() {
   const [isImageSliding, setIsImageSliding] = useState(false)
   const [isImageDragging, setIsImageDragging] = useState(false)
   const [dragOffsetX, setDragOffsetX] = useState(0)
-  const [brokenImages, setBrokenImages] = useState({})
   const closeTimerRef = useRef(null)
   const imageSlideTimerRef = useRef(null)
   const dragPointerIdRef = useRef(null)
@@ -387,10 +386,6 @@ function App() {
     activeProject && leavingImageIndex !== null
       ? activeProject.images[leavingImageIndex]
       : null
-
-  const markImageBroken = (src) => {
-    setBrokenImages((prev) => ({ ...prev, [src]: true }))
-  }
 
   const onGalleryPointerDown = (event) => {
     if (isImageSliding) return
@@ -823,7 +818,7 @@ function App() {
                   onPointerUp={endGalleryDrag}
                   onPointerCancel={endGalleryDrag}
                 >
-                  {leavingImage && !brokenImages[leavingImage.src] && (
+                  {leavingImage && (
                     <img
                       draggable={false}
                       className={`gallery-image gallery-image-leave ${
@@ -832,10 +827,9 @@ function App() {
                       src={leavingImage.src}
                       alt={leavingImage.alt}
                       decoding="async"
-                      onError={() => markImageBroken(leavingImage.src)}
                     />
                   )}
-                  {currentImage && !brokenImages[currentImage.src] ? (
+                  {currentImage ? (
                     <img
                       key={currentImage.src}
                       draggable={false}
@@ -854,7 +848,6 @@ function App() {
                           ? { transform: `translateX(${dragOffsetX}px)` }
                           : undefined
                       }
-                      onError={() => markImageBroken(currentImage.src)}
                       onDragStart={(event) => event.preventDefault()}
                     />
                   ) : (
