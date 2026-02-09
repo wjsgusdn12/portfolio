@@ -4,19 +4,23 @@ const profileItems = [
   { label: "이름", value: "전현우" },
   { label: "생년월일", value: "1996.04.10" },
   { label: "위치", value: "서울특별시 서대문구" },
-  { label: "이메일", value: "gusdntkd2@naver.com" },
+  { label: "이메일", value: "gusdntkd0410@gmail.com" },
   { label: "연락처", value: "010-5056-4577" },
   { label: "학력", value: "Shanghai Jiao Tong Univ. (중퇴)" },
 ]
 
 const skillGroups = [
   {
+    title: "Languages",
+    tags: ["JavaScript", "Java", "HTML", "CSS"],
+  },
+  {
     title: "Frontend",
-    tags: ["React", "JavaScript", "HTML/CSS", "React Router", "Axios"],
+    tags: ["React", "Vite", "React Router", "Axios"],
   },
   {
     title: "Backend",
-    tags: ["Spring Boot", "Java", "JPA", "Gradle", "YAML (.yml)"],
+    tags: ["Spring Boot", "JPA", "Swagger"],
   },
   {
     title: "Database",
@@ -28,9 +32,67 @@ const skillGroups = [
   },
   {
     title: "Tools",
-    tags: ["Git", "GitHub", "VS Code", "IntelliJ", "Swagger"],
+    tags: ["Git", "GitHub", "VS Code", "IntelliJ"],
   },
 ]
+
+const renderAboutIcon = (label) => {
+  const commonProps = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "1.7",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": "true",
+  }
+
+  switch (label) {
+    case "이름":
+      return (
+        <svg {...commonProps}>
+          <circle cx="12" cy="8" r="3.2" />
+          <path d="M5.5 18c1.7-2.7 3.8-4 6.5-4s4.8 1.3 6.5 4" />
+        </svg>
+      )
+    case "생년월일":
+      return (
+        <svg {...commonProps}>
+          <rect x="4.5" y="6" width="15" height="13" rx="2.4" />
+          <path d="M8 4.8v2.4M16 4.8v2.4M4.5 10h15" />
+        </svg>
+      )
+    case "위치":
+      return (
+        <svg {...commonProps}>
+          <path d="M12 20s5.3-5.2 5.3-9a5.3 5.3 0 1 0-10.6 0c0 3.8 5.3 9 5.3 9Z" />
+          <circle cx="12" cy="11" r="1.8" />
+        </svg>
+      )
+    case "이메일":
+      return (
+        <svg {...commonProps}>
+          <rect x="4.2" y="6.2" width="15.6" height="11.6" rx="2.2" />
+          <path d="m5.4 8 6.6 4.8L18.6 8" />
+        </svg>
+      )
+    case "연락처":
+      return (
+        <svg {...commonProps}>
+          <path d="M6.8 5.8c.7-.7 2-.7 2.8 0l1.3 1.3c.7.7.8 1.8.2 2.6l-1.1 1.5a12 12 0 0 0 3.9 3.9l1.5-1.1c.8-.6 1.9-.5 2.6.2l1.3 1.3c.7.7.7 2 0 2.8l-.8.8c-.9.9-2.2 1.3-3.4 1-4.8-1.1-8.6-4.9-9.7-9.7-.3-1.2.1-2.5 1-3.4l.4-.4Z" />
+        </svg>
+      )
+    case "학력":
+      return (
+        <svg {...commonProps}>
+          <path d="m4.4 9 7.6-3.4L19.6 9 12 12.4 4.4 9Z" />
+          <path d="M8.2 10.7v3.6c0 1.3 1.9 2.4 3.8 2.4s3.8-1.1 3.8-2.4v-3.6" />
+        </svg>
+      )
+    default:
+      return null
+  }
+}
 
 const buildImageList = (dir, count, label) =>
   Array.from({ length: count }, (_, index) => {
@@ -44,6 +106,46 @@ const buildImageList = (dir, count, label) =>
 
 const assetBase = import.meta.env.BASE_URL || "/"
 const withBase = (path) => `${assetBase}${path.replace(/^\/+/, "")}`
+const HERO_DELAY_FACTOR = 0.72
+
+function ArrowIcon({ direction = "right", double = false }) {
+  const isLeft = direction === "left"
+  const pathOne = "M9 6l6 6-6 6"
+  const pathTwo = "M5 6l6 6-6 6"
+  return (
+    <svg
+      className="arrow-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <g transform={isLeft ? "rotate(180 12 12)" : undefined}>
+        <path d={pathOne} />
+        {double && <path d={pathTwo} />}
+      </g>
+    </svg>
+  )
+}
+
+const renderAnimatedChars = (text, startDelay = 0, step = 22, extraClass = "") =>
+  Array.from(text).map((char, index) => (
+    <span
+      key={`${text}-${index}`}
+      className={`char-reveal ${extraClass}`.trim()}
+      style={{
+        "--char-delay": `${Math.round(
+          (startDelay + index * step) * HERO_DELAY_FACTOR
+        )}ms`,
+        "--char-index": index,
+      }}
+    >
+      {char === " " ? "\u00A0" : char}
+    </span>
+  ))
 
 const projects = [
   {
@@ -53,20 +155,20 @@ const projects = [
     team: "2인 실무 프로젝트",
     category: "ERP Integration Platform",
     shortSummary:
-      "ERP 연동 업무 웹. 전표/권한/업로드 중심 화면을 설계하고 프론트를 주도 구현했습니다.",
+      "ERP 연동 업무 웹. 전표/권한/업로드 흐름을 통합하고 프론트를 주도 구현했습니다.",
     stack: ["React", "Spring Boot", "PostgreSQL", "AWS"],
     contribution: "Frontend 100% / Backend 일부",
     deploymentUrl: "사내 시스템 (외부 비공개)",
     readme: {
       summary: [
-        "실무 운영에서 반복되는 전표 입력/검토 흐름을 웹 화면으로 표준화한 ERP 연동 서비스",
-        "엑셀형 입력, 대량 처리, 업로드 진행률 등 실제 업무 병목 구간을 중심으로 UI/UX 개선",
-        "요구사항 변경이 잦은 환경에서 상태 구조를 분리해 유지보수성과 배포 안정성을 높임",
+        "전표 입력·검토·권한·결재/승인 흐름을 연계된 화면 구조로 설계한 ERP 연동 서비스",
+        "엑셀형 입력, 대량 처리, 업로드 진행률 등 실제 병목 구간 중심으로 UI/UX 개선",
+        "요구사항 변경에 대응하도록 상태 모델 분리와 배포 루틴 표준화로 안정성 강화",
       ],
       background:
         "기존 운영 방식은 수기 입력과 다중 검토 과정이 길어 반복 작업이 많고, 권한/첨부/결재 흐름에서 사용자 피로도가 높았습니다. 실제 업무 담당자의 요청을 기준으로 입력-검토-반영 플로우를 재설계하고, 화면에서 즉시 현재 상태를 파악할 수 있도록 구조를 단순화하는 것을 목표로 개발했습니다.",
       meaning:
-        "프론트엔드 전담으로 핵심 도메인 화면을 직접 설계/구현하면서, 단순 UI 개발을 넘어 운영 관점의 문제 정의와 개선 우선순위 설정까지 경험했습니다. 또한 API 연동 이슈를 백엔드와 함께 추적하며 요청/응답 검증 루틴을 표준화했고, 주 1~2회 배포 사이클에서 안정적으로 기능을 확장하는 방법을 체득했습니다.",
+        "프론트엔드 전담으로 핵심 도메인 화면을 직접 설계/구현하면서, 운영 관점의 문제 정의와 개선 우선순위 설정까지 경험했습니다. 또한 API 연동 이슈를 백엔드와 함께 추적하며 요청/응답 검증 루틴을 표준화했고, 주 1~2회 배포 사이클에서 안정적으로 기능을 확장하는 방법을 체득했습니다.",
       features: [
         "엑셀형 전표 입력/검토 UI (헤더-라인 분리, 스플릿 뷰, 컬럼 리사이징)",
         "다중 파일 업로드 + SSE 기반 진행률/상태 표시",
@@ -125,8 +227,18 @@ function App() {
   const [activeModal, setActiveModal] = useState(null)
   const [isModalClosing, setIsModalClosing] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [slideDirection, setSlideDirection] = useState("next")
+  const [leavingImageIndex, setLeavingImageIndex] = useState(null)
+  const [isImageSliding, setIsImageSliding] = useState(false)
+  const [isImageDragging, setIsImageDragging] = useState(false)
+  const [dragOffsetX, setDragOffsetX] = useState(0)
   const [brokenImages, setBrokenImages] = useState({})
   const closeTimerRef = useRef(null)
+  const imageSlideTimerRef = useRef(null)
+  const dragPointerIdRef = useRef(null)
+  const dragStartXRef = useRef(0)
+  const dragMovedRef = useRef(false)
+  const dragDeltaXRef = useRef(0)
 
   const activeProject = useMemo(
     () => projects.find((project) => project.id === activeProjectId) || null,
@@ -177,6 +289,9 @@ function App() {
       if (closeTimerRef.current) {
         clearTimeout(closeTimerRef.current)
       }
+      if (imageSlideTimerRef.current) {
+        clearTimeout(imageSlideTimerRef.current)
+      }
     }
   }, [])
 
@@ -197,6 +312,12 @@ function App() {
     }
     setActiveProjectId(project.id)
     setSelectedImageIndex(0)
+    setSlideDirection("next")
+    setLeavingImageIndex(null)
+    setIsImageSliding(false)
+    setIsImageDragging(false)
+    setDragOffsetX(0)
+    dragDeltaXRef.current = 0
     setIsModalClosing(false)
     setActiveModal("image")
   }
@@ -211,25 +332,114 @@ function App() {
     }, 360)
   }
 
+  const startImageSlide = (nextIndex, direction) => {
+    if (!activeProject) return
+    if (nextIndex === selectedImageIndex) return
+
+    if (imageSlideTimerRef.current) {
+      clearTimeout(imageSlideTimerRef.current)
+      imageSlideTimerRef.current = null
+    }
+
+    setSlideDirection(direction)
+    setLeavingImageIndex(selectedImageIndex)
+    setIsImageSliding(true)
+    setIsImageDragging(false)
+    setDragOffsetX(0)
+    dragDeltaXRef.current = 0
+    setSelectedImageIndex(nextIndex)
+
+    imageSlideTimerRef.current = setTimeout(() => {
+      setLeavingImageIndex(null)
+      setIsImageSliding(false)
+      imageSlideTimerRef.current = null
+    }, 760)
+  }
+
   const goPrevImage = () => {
     if (!activeProject) return
-    setSelectedImageIndex((prev) =>
-      prev === 0 ? activeProject.images.length - 1 : prev - 1
-    )
+    const prevIndex =
+      selectedImageIndex === 0
+        ? activeProject.images.length - 1
+        : selectedImageIndex - 1
+    startImageSlide(prevIndex, "prev")
   }
 
   const goNextImage = () => {
     if (!activeProject) return
-    setSelectedImageIndex((prev) =>
-      prev === activeProject.images.length - 1 ? 0 : prev + 1
-    )
+    const nextIndex =
+      selectedImageIndex === activeProject.images.length - 1
+        ? 0
+        : selectedImageIndex + 1
+    startImageSlide(nextIndex, "next")
   }
+
+  const goToImage = (nextIndex) => {
+    if (!activeProject) return
+    const total = activeProject.images.length
+    const normalized = Math.max(0, Math.min(total - 1, nextIndex))
+    if (normalized === selectedImageIndex) return
+    const direction = normalized > selectedImageIndex ? "next" : "prev"
+    startImageSlide(normalized, direction)
+  }
+
+  const currentImage = activeProject?.images[selectedImageIndex]
+  const leavingImage =
+    activeProject && leavingImageIndex !== null
+      ? activeProject.images[leavingImageIndex]
+      : null
 
   const markImageBroken = (src) => {
     setBrokenImages((prev) => ({ ...prev, [src]: true }))
   }
 
+  const onGalleryPointerDown = (event) => {
+    if (isImageSliding) return
+    if (event.pointerType === "mouse" && event.button !== 0) return
+    if (event.target.closest(".gallery-nav-btn")) return
+    event.preventDefault()
+    dragPointerIdRef.current = event.pointerId
+    dragStartXRef.current = event.clientX
+    dragMovedRef.current = false
+    dragDeltaXRef.current = 0
+    setIsImageDragging(true)
+    setDragOffsetX(0)
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
+
+  const onGalleryPointerMove = (event) => {
+    if (dragPointerIdRef.current !== event.pointerId) return
+    const delta = event.clientX - dragStartXRef.current
+    if (Math.abs(delta) > 8) dragMovedRef.current = true
+    dragDeltaXRef.current = delta
+    const limited = Math.max(-180, Math.min(180, delta))
+    setDragOffsetX(limited)
+  }
+
+  const endGalleryDrag = (event) => {
+    if (dragPointerIdRef.current !== event.pointerId) return
+    const delta = dragDeltaXRef.current
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId)
+    }
+    dragPointerIdRef.current = null
+    setIsImageDragging(false)
+    setDragOffsetX(0)
+    dragDeltaXRef.current = 0
+    if (delta <= -70) {
+      goNextImage()
+      return
+    }
+    if (delta >= 70) {
+      goPrevImage()
+    }
+  }
+
   const pageGroupSize = 10
+  const heroDescLine1 =
+    "사용자 경험 개선으로 이어지는 구조적 문제 해결에 가장 큰 보람을 느낍니다."
+  const heroDescLine2 =
+    "실무에서는 이슈를 재현해 핵심 원인을 좁히고, 화면과 API·데이터 흐름을 함께 고려해 우선순위대로 반영하며 결과까지 책임지고 있습니다."
 
   return (
     <div className="page">
@@ -267,25 +477,53 @@ function App() {
         <section className="hero" id="top">
           <div className="hero-pattern" />
           <div className="hero-inner reveal is-visible">
-            <p className="hero-kicker">PORTFOLIO</p>
-            <h1 className="hero-title">전현우</h1>
-            <h2 className="hero-subtitle">Web Developer</h2>
+            <p className="hero-kicker">{renderAnimatedChars("PORTFOLIO", 20, 16)}</p>
+            <h1 className="hero-title">{renderAnimatedChars("전현우", 120, 26)}</h1>
+            <h2 className="hero-subtitle">
+              {renderAnimatedChars("Web Developer", 260, 20)}
+            </h2>
             <p className="hero-desc">
-              실무 프로젝트에서 React 프론트를 주도하고, 운영 반영까지 연결해
-              화면-API-배포 흐름을 완성해온 개발자입니다.
+              <span className="hero-desc-content">
+                <span className="hero-desc-line">
+                  {renderAnimatedChars(heroDescLine1, 380, 14, "char-reveal-desc")}
+                </span>
+                <span className="hero-desc-line">
+                  {renderAnimatedChars(heroDescLine2, 820, 14, "char-reveal-desc")}
+                </span>
+              </span>
+              <span className="hero-desc-gradient" aria-hidden="true">
+                <span className="hero-desc-line">{heroDescLine1}</span>
+                <span className="hero-desc-line">{heroDescLine2}</span>
+              </span>
             </p>
             <div className="hero-chips">
-              <span>React</span>
-              <span>UI Architecture</span>
-              <span>Spring Boot</span>
-              <span>AWS Deploy</span>
+              <span className="hero-chip" style={{ "--chip-delay": "820ms" }}>
+                {renderAnimatedChars("React", 1260, 18)}
+              </span>
+              <span className="hero-chip" style={{ "--chip-delay": "910ms" }}>
+                {renderAnimatedChars("UI Architecture", 1350, 14)}
+              </span>
+              <span className="hero-chip" style={{ "--chip-delay": "1000ms" }}>
+                {renderAnimatedChars("Spring Boot", 1510, 15)}
+              </span>
+              <span className="hero-chip" style={{ "--chip-delay": "1090ms" }}>
+                {renderAnimatedChars("AWS Deploy", 1650, 15)}
+              </span>
             </div>
             <div className="hero-actions">
-              <a className="hero-btn" href="#projects">
-                프로젝트 보기
+              <a
+                className="hero-btn hero-action-btn"
+                href="#projects"
+                style={{ "--btn-delay": "900ms" }}
+              >
+                {renderAnimatedChars("프로젝트 보기", 1180, 16)}
               </a>
-              <a className="hero-btn hero-btn-secondary" href="#contact">
-                바로 연락하기
+              <a
+                className="hero-btn hero-btn-secondary hero-action-btn"
+                href="#contact"
+                style={{ "--btn-delay": "980ms" }}
+              >
+                {renderAnimatedChars("바로 연락하기", 1280, 16)}
               </a>
             </div>
           </div>
@@ -299,8 +537,11 @@ function App() {
           <div className="about-grid">
             {profileItems.map((item) => (
               <div className="about-card" key={item.label}>
-                <span>{item.label}</span>
-                <strong>{item.value}</strong>
+                <div className="about-meta">
+                  <span className="about-icon">{renderAboutIcon(item.label)}</span>
+                  <span className="about-label">{item.label}</span>
+                </div>
+                <strong className="about-value">{item.value}</strong>
               </div>
             ))}
           </div>
@@ -314,10 +555,14 @@ function App() {
           <div className="skills-card">
             {skillGroups.map((group) => (
               <div className="skill-row" key={group.title}>
-                <div className="skill-title">{group.title}</div>
-                <div className="tags">
+                <div className="skill-title-wrap">
+                  <div className="skill-title">{group.title}</div>
+                </div>
+                <div className="skill-items">
                   {group.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
+                    <span className="skill-item-token" key={tag}>
+                      {tag}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -422,7 +667,7 @@ function App() {
           <div className="contact-panel">
             <h3>CONTACT</h3>
             <div className="contact-list">
-              <div>gusdntkd2@naver.com</div>
+              <div>gusdntkd0410@gmail.com</div>
               <div>010-5056-4577</div>
             </div>
           </div>
@@ -446,7 +691,19 @@ function App() {
                 </p>
               </div>
               <button className="modal-close" type="button" onClick={closeModals}>
-                닫기
+                <svg
+                  className="close-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+                <span className="sr-only">닫기</span>
               </button>
             </div>
             <div className="modal-body">
@@ -506,7 +763,7 @@ function App() {
               <div className="readme-block">
                 <h5>Setup & Usage</h5>
                 <pre className="setup-box">
-{activeProject.readme.setup.map((item) => item).join("\n")}
+                  {activeProject.readme.setup.map((item) => item).join("\n")}
                 </pre>
               </div>
             </div>
@@ -527,50 +784,106 @@ function App() {
               <div>
                 <p className="modal-kicker">IMAGE GALLERY</p>
                 <h4>
-                  {activeProject.name} ({activeProject.images.length}장)
+                  {activeProject.name} ({selectedImageIndex + 1}/
+                  {activeProject.images.length})
                 </h4>
               </div>
               <button className="modal-close" type="button" onClick={closeModals}>
-                닫기
+                <svg
+                  className="close-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M6 6l12 12M18 6 6 18" />
+                </svg>
+                <span className="sr-only">닫기</span>
               </button>
             </div>
             <div className="modal-body">
               <div className="gallery-preview">
-                {brokenImages[activeProject.images[selectedImageIndex].src] ? (
-                  <div className="image-fallback">이미지를 추가하면 여기에 표시됩니다.</div>
-                ) : (
-                  <img
-                    src={activeProject.images[selectedImageIndex].src}
-                    alt={activeProject.images[selectedImageIndex].alt}
-                    onClick={() =>
-                      window.open(activeProject.images[selectedImageIndex].src, "_blank")
-                    }
-                    onError={() =>
-                      markImageBroken(activeProject.images[selectedImageIndex].src)
-                    }
-                  />
-                )}
-              </div>
-              <div className="gallery-controls">
-                <button className="gallery-btn" type="button" onClick={goPrevImage}>
-                  이전
+                <button
+                  className="gallery-nav-btn is-prev"
+                  type="button"
+                  onClick={goPrevImage}
+                  aria-label="이전 이미지"
+                >
+                  <ArrowIcon direction="left" />
                 </button>
-                <span>
-                  {selectedImageIndex + 1} / {activeProject.images.length}
-                </span>
-                <button className="gallery-btn" type="button" onClick={goNextImage}>
-                  다음
+                <div
+                  className={`gallery-image-stage ${
+                    isImageDragging ? "is-dragging" : ""
+                  }`}
+                  onPointerDown={onGalleryPointerDown}
+                  onPointerMove={onGalleryPointerMove}
+                  onPointerUp={endGalleryDrag}
+                  onPointerCancel={endGalleryDrag}
+                >
+                  {leavingImage && !brokenImages[leavingImage.src] && (
+                    <img
+                      draggable={false}
+                      className={`gallery-image gallery-image-leave ${
+                        slideDirection === "prev" ? "to-right" : "to-left"
+                      }`}
+                      src={leavingImage.src}
+                      alt={leavingImage.alt}
+                      onError={() => markImageBroken(leavingImage.src)}
+                    />
+                  )}
+                  {currentImage && !brokenImages[currentImage.src] ? (
+                    <img
+                      key={currentImage.src}
+                      draggable={false}
+                      className={`gallery-image gallery-image-enter ${
+                        isImageSliding
+                          ? slideDirection === "prev"
+                            ? "from-left"
+                            : "from-right"
+                          : ""
+                      }`}
+                      src={currentImage.src}
+                      alt={currentImage.alt}
+                      style={
+                        isImageDragging && !isImageSliding
+                          ? { transform: `translateX(${dragOffsetX}px)` }
+                          : undefined
+                      }
+                      onClick={() => {
+                        if (dragMovedRef.current) {
+                          dragMovedRef.current = false
+                          return
+                        }
+                        window.open(currentImage.src, "_blank")
+                      }}
+                      onError={() => markImageBroken(currentImage.src)}
+                      onDragStart={(event) => event.preventDefault()}
+                    />
+                  ) : (
+                    <div className="image-fallback">이미지를 추가하면 여기에 표시됩니다.</div>
+                  )}
+                </div>
+                <button
+                  className="gallery-nav-btn is-next"
+                  type="button"
+                  onClick={goNextImage}
+                  aria-label="다음 이미지"
+                >
+                  <ArrowIcon direction="right" />
                 </button>
               </div>
-
-              {(() => {
+              <div className="gallery-nav-bar">
+                {(() => {
                 const total = activeProject.images.length
                 const current = selectedImageIndex + 1
                 const groupIndex = Math.floor((current - 1) / pageGroupSize)
                 const start = groupIndex * pageGroupSize + 1
                 const end = Math.min(start + pageGroupSize - 1, total)
 
-                const goToPage = (page) => setSelectedImageIndex(page - 1)
+                const goToPage = (page) => goToImage(page - 1)
                 const goFirst = () => goToPage(1)
                 const goLast = () => goToPage(total)
                 const goPrevGroup = () => {
@@ -582,39 +895,40 @@ function App() {
                   goToPage(nextStart)
                 }
 
-                return (
-                  <div className="page-controls">
-                    <button className="page-btn" type="button" onClick={goFirst}>
-                      {"<<"}
-                    </button>
-                    <button className="page-btn" type="button" onClick={goPrevGroup}>
-                      {"<"}
-                    </button>
-                    <div className="page-numbers">
-                      {Array.from({ length: end - start + 1 }, (_, idx) => {
-                        const page = start + idx
-                        const isActive = page === current
-                        return (
-                          <button
-                            key={page}
-                            type="button"
-                            className={`page-number ${isActive ? "is-active" : ""}`}
-                            onClick={() => goToPage(page)}
-                          >
-                            {page}
-                          </button>
-                        )
-                      })}
+                  return (
+                    <div className="page-controls">
+                      <button className="page-btn" type="button" onClick={goFirst}>
+                        <ArrowIcon direction="left" double />
+                      </button>
+                      <button className="page-btn" type="button" onClick={goPrevGroup}>
+                        <ArrowIcon direction="left" />
+                      </button>
+                      <div className="page-numbers">
+                        {Array.from({ length: end - start + 1 }, (_, idx) => {
+                          const page = start + idx
+                          const isActive = page === current
+                          return (
+                            <button
+                              key={page}
+                              type="button"
+                              className={`page-number ${isActive ? "is-active" : ""}`}
+                              onClick={() => goToPage(page)}
+                            >
+                              {page}
+                            </button>
+                          )
+                        })}
+                      </div>
+                      <button className="page-btn" type="button" onClick={goNextGroup}>
+                        <ArrowIcon direction="right" />
+                      </button>
+                      <button className="page-btn" type="button" onClick={goLast}>
+                        <ArrowIcon direction="right" double />
+                      </button>
                     </div>
-                    <button className="page-btn" type="button" onClick={goNextGroup}>
-                      {">"}
-                    </button>
-                    <button className="page-btn" type="button" onClick={goLast}>
-                      {">>"}
-                    </button>
-                  </div>
-                )
-              })()}
+                  )
+                })()}
+              </div>
             </div>
           </div>
         </div>
