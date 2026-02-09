@@ -79,54 +79,54 @@ button {
 }
 
 .bg-bubble-1 {
-  width: 28vw;
-  height: 28vw;
-  left: -6vw;
-  top: 16vh;
+  width: 36vw;
+  height: 36vw;
+  left: -10vw;
+  top: 12vh;
   animation: bubbleFloatA 14.2s ease-in-out infinite alternate;
 }
 
 .bg-bubble-2 {
-  width: 22vw;
-  height: 22vw;
-  right: 2vw;
-  top: 10vh;
+  width: 30vw;
+  height: 30vw;
+  right: -2vw;
+  top: 8vh;
   animation: bubbleFloatB 16.7s ease-in-out infinite alternate;
   animation-delay: -2s;
 }
 
 .bg-bubble-3 {
-  width: 18vw;
-  height: 18vw;
-  left: 14vw;
+  width: 26vw;
+  height: 26vw;
+  left: 8vw;
   top: 52vh;
   animation: bubbleFloatC 12.5s ease-in-out infinite alternate;
   animation-delay: -1.5s;
 }
 
 .bg-bubble-4 {
-  width: 24vw;
-  height: 24vw;
-  right: -4vw;
-  top: 44vh;
+  width: 34vw;
+  height: 34vw;
+  right: -10vw;
+  top: 46vh;
   animation: bubbleFloatD 18.3s ease-in-out infinite alternate;
   animation-delay: -3s;
 }
 
 .bg-bubble-5 {
-  width: 26vw;
-  height: 26vw;
-  left: 37vw;
-  top: 10vh;
+  width: 34vw;
+  height: 34vw;
+  left: 32vw;
+  top: 6vh;
   animation: bubbleFloatE 11.7s ease-in-out infinite alternate;
   animation-delay: -1s;
 }
 
 .bg-bubble-6 {
-  width: 19vw;
-  height: 19vw;
-  left: 64vw;
-  top: 64vh;
+  width: 28vw;
+  height: 28vw;
+  left: 60vw;
+  top: 66vh;
   animation: bubbleFloatF 15.8s ease-in-out infinite alternate;
   animation-delay: -2.4s;
 }
@@ -904,6 +904,8 @@ main {
   display: grid;
   place-items: center;
   overflow: hidden;
+  position: relative;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .gallery-preview img {
@@ -911,6 +913,7 @@ main {
   max-height: 62vh;
   object-fit: contain;
   display: block;
+  cursor: zoom-in;
 }
 
 .image-fallback {
@@ -935,19 +938,70 @@ main {
 }
 
 .gallery-btn {
-  border: 1px solid rgba(196, 154, 107, 0.55);
-  background: rgba(255, 255, 255, 0.92);
+  border: 0;
+  background: transparent;
   border-radius: 999px;
   padding: 7px 12px;
   cursor: pointer;
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  transition: color 0.16s ease;
+  color: #7a5a38;
+  font-weight: 700;
 }
 
 .gallery-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 14px rgba(122, 84, 42, 0.18);
+  color: #b67f47;
 }
 
+.page-controls {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.page-numbers {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-btn {
+  border: 0;
+  background: transparent;
+  color: #7a5a38;
+  font-weight: 700;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: color 0.16s ease;
+}
+
+.page-btn:hover {
+  color: #b67f47;
+}
+
+.page-number {
+  border: 0;
+  background: transparent;
+  color: #7a5a38;
+  font-weight: 700;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: color 0.16s ease, background 0.16s ease;
+  border-radius: 999px;
+}
+
+.page-number:hover {
+  color: #b67f47;
+}
+
+.page-number.is-active {
+  background: rgba(196, 154, 107, 0.18);
+  color: #3f2b17;
+  box-shadow: inset 0 0 0 1px rgba(196, 154, 107, 0.55);
+}
 .thumb-grid {
   margin-top: 14px;
   display: grid;
@@ -1157,45 +1211,45 @@ main {
   }
 
   .bg-bubble-1 {
-    width: 60vw;
-    height: 60vw;
-    left: -12vw;
-    top: 8vh;
+    width: 72vw;
+    height: 72vw;
+    left: -18vw;
+    top: 6vh;
   }
 
   .bg-bubble-2 {
-    width: 52vw;
-    height: 52vw;
-    right: -6vw;
-    top: 12vh;
+    width: 64vw;
+    height: 64vw;
+    right: -14vw;
+    top: 10vh;
   }
 
   .bg-bubble-3 {
-    width: 48vw;
-    height: 48vw;
-    left: -4vw;
-    top: 52vh;
+    width: 62vw;
+    height: 62vw;
+    left: -10vw;
+    top: 54vh;
   }
 
   .bg-bubble-4 {
-    width: 58vw;
-    height: 58vw;
-    right: -12vw;
-    top: 56vh;
+    width: 70vw;
+    height: 70vw;
+    right: -20vw;
+    top: 58vh;
   }
 
   .bg-bubble-5 {
-    width: 62vw;
-    height: 62vw;
-    left: 30vw;
-    top: -4vh;
+    width: 74vw;
+    height: 74vw;
+    left: 26vw;
+    top: -8vh;
   }
 
   .bg-bubble-6 {
-    width: 50vw;
-    height: 50vw;
-    left: 56vw;
-    top: 72vh;
+    width: 62vw;
+    height: 62vw;
+    left: 50vw;
+    top: 76vh;
   }
 
   .about-grid,

@@ -42,6 +42,9 @@ const buildImageList = (dir, count, label) =>
     }
   })
 
+const assetBase = import.meta.env.BASE_URL || "/"
+const withBase = (path) => `${assetBase}${path.replace(/^\/+/, "")}`
+
 const projects = [
   {
     id: "piosync",
@@ -81,7 +84,7 @@ const projects = [
         "(백엔드) Gradle 실행 및 API 서버 연결",
       ],
     },
-    images: buildImageList("/captures/piosync", 9, "PioSync"),
+    images: buildImageList(withBase("captures/piosync"), 39, "PioSync"),
   },
   {
     id: "portfolio",
@@ -225,6 +228,8 @@ function App() {
   const markImageBroken = (src) => {
     setBrokenImages((prev) => ({ ...prev, [src]: true }))
   }
+
+  const pageGroupSize = 10
 
   return (
     <div className="page">
@@ -537,13 +542,15 @@ function App() {
                   <img
                     src={activeProject.images[selectedImageIndex].src}
                     alt={activeProject.images[selectedImageIndex].alt}
+                    onClick={() =>
+                      window.open(activeProject.images[selectedImageIndex].src, "_blank")
+                    }
                     onError={() =>
                       markImageBroken(activeProject.images[selectedImageIndex].src)
                     }
                   />
                 )}
               </div>
-
               <div className="gallery-controls">
                 <button className="gallery-btn" type="button" onClick={goPrevImage}>
                   이전
@@ -556,18 +563,58 @@ function App() {
                 </button>
               </div>
 
-              <div className="thumb-grid">
-                {activeProject.images.map((image, index) => (
-                  <button
-                    key={image.id}
-                    type="button"
-                    className={`thumb-item ${selectedImageIndex === index ? "is-active" : ""}`}
-                    onClick={() => setSelectedImageIndex(index)}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
+              {(() => {
+                const total = activeProject.images.length
+                const current = selectedImageIndex + 1
+                const groupIndex = Math.floor((current - 1) / pageGroupSize)
+                const start = groupIndex * pageGroupSize + 1
+                const end = Math.min(start + pageGroupSize - 1, total)
+
+                const goToPage = (page) => setSelectedImageIndex(page - 1)
+                const goFirst = () => goToPage(1)
+                const goLast = () => goToPage(total)
+                const goPrevGroup = () => {
+                  const prevStart = Math.max(1, start - pageGroupSize)
+                  goToPage(prevStart)
+                }
+                const goNextGroup = () => {
+                  const nextStart = Math.min(total, start + pageGroupSize)
+                  goToPage(nextStart)
+                }
+
+                return (
+                  <div className="page-controls">
+                    <button className="page-btn" type="button" onClick={goFirst}>
+                      {"<<"}
+                    </button>
+                    <button className="page-btn" type="button" onClick={goPrevGroup}>
+                      {"<"}
+                    </button>
+                    <div className="page-numbers">
+                      {Array.from({ length: end - start + 1 }, (_, idx) => {
+                        const page = start + idx
+                        const isActive = page === current
+                        return (
+                          <button
+                            key={page}
+                            type="button"
+                            className={`page-number ${isActive ? "is-active" : ""}`}
+                            onClick={() => goToPage(page)}
+                          >
+                            {page}
+                          </button>
+                        )
+                      })}
+                    </div>
+                    <button className="page-btn" type="button" onClick={goNextGroup}>
+                      {">"}
+                    </button>
+                    <button className="page-btn" type="button" onClick={goLast}>
+                      {">>"}
+                    </button>
+                  </div>
+                )
+              })()}
             </div>
           </div>
         </div>
