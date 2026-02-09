@@ -10,7 +10,7 @@ const checks = [
   },
 ]
 
-const expectedName = (index) => `${String(index).padStart(2, "0")}.png`
+const expectedName = (index) => `${String(index).padStart(2, "0")}.webp`
 
 let hasError = false
 
