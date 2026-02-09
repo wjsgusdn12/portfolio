@@ -1140,7 +1140,12 @@ main {
 
 @media (max-width: 980px) {
   .menu {
-    display: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 16px;
+    max-width: 520px;
+    text-align: center;
   }
 
   .nav-cta {
@@ -1152,43 +1157,43 @@ main {
   }
 
   .bg-bubble-1 {
-    width: 46vw;
-    height: 46vw;
+    width: 60vw;
+    height: 60vw;
     left: -12vw;
     top: 8vh;
   }
 
   .bg-bubble-2 {
-    width: 38vw;
-    height: 38vw;
+    width: 52vw;
+    height: 52vw;
     right: -6vw;
     top: 12vh;
   }
 
   .bg-bubble-3 {
-    width: 34vw;
-    height: 34vw;
+    width: 48vw;
+    height: 48vw;
     left: -4vw;
     top: 52vh;
   }
 
   .bg-bubble-4 {
-    width: 42vw;
-    height: 42vw;
+    width: 58vw;
+    height: 58vw;
     right: -12vw;
     top: 56vh;
   }
 
   .bg-bubble-5 {
-    width: 44vw;
-    height: 44vw;
+    width: 62vw;
+    height: 62vw;
     left: 30vw;
     top: -4vh;
   }
 
   .bg-bubble-6 {
-    width: 36vw;
-    height: 36vw;
+    width: 50vw;
+    height: 50vw;
     left: 56vw;
     top: 72vh;
   }
