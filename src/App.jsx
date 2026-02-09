@@ -94,12 +94,12 @@ const renderAboutIcon = (label) => {
   }
 }
 
-const buildImageList = (dir, count, label) =>
+const buildImageList = (dir, count, label, ext = "png") =>
   Array.from({ length: count }, (_, index) => {
     const number = String(index + 1).padStart(2, "0")
     return {
       id: number,
-      src: `${dir}/${number}.png`,
+      src: `${dir}/${number}.${ext}`,
       alt: `${label} 캡쳐 ${index + 1}`,
     }
   })
@@ -186,7 +186,7 @@ const projects = [
         "(백엔드) Gradle 실행 및 API 서버 연결",
       ],
     },
-    images: buildImageList(withBase("captures/piosync"), 39, "PioSync"),
+    images: buildImageList(withBase("captures/piosync"), 39, "PioSync", "webp"),
   },
   {
     id: "portfolio",
@@ -237,7 +237,6 @@ function App() {
   const imageSlideTimerRef = useRef(null)
   const dragPointerIdRef = useRef(null)
   const dragStartXRef = useRef(0)
-  const dragMovedRef = useRef(false)
   const dragDeltaXRef = useRef(0)
 
   const activeProject = useMemo(
@@ -397,10 +396,8 @@ function App() {
     if (isImageSliding) return
     if (event.pointerType === "mouse" && event.button !== 0) return
     if (event.target.closest(".gallery-nav-btn")) return
-    event.preventDefault()
     dragPointerIdRef.current = event.pointerId
     dragStartXRef.current = event.clientX
-    dragMovedRef.current = false
     dragDeltaXRef.current = 0
     setIsImageDragging(true)
     setDragOffsetX(0)
@@ -410,7 +407,6 @@ function App() {
   const onGalleryPointerMove = (event) => {
     if (dragPointerIdRef.current !== event.pointerId) return
     const delta = event.clientX - dragStartXRef.current
-    if (Math.abs(delta) > 8) dragMovedRef.current = true
     dragDeltaXRef.current = delta
     const limited = Math.max(-180, Math.min(180, delta))
     setDragOffsetX(limited)
@@ -426,6 +422,10 @@ function App() {
     setIsImageDragging(false)
     setDragOffsetX(0)
     dragDeltaXRef.current = 0
+    if (Math.abs(delta) < 8 && activeProject?.images[selectedImageIndex]) {
+      window.open(activeProject.images[selectedImageIndex].src, "_blank")
+      return
+    }
     if (delta <= -70) {
       goNextImage()
       return
@@ -831,6 +831,7 @@ function App() {
                       }`}
                       src={leavingImage.src}
                       alt={leavingImage.alt}
+                      decoding="async"
                       onError={() => markImageBroken(leavingImage.src)}
                     />
                   )}
@@ -847,18 +848,12 @@ function App() {
                       }`}
                       src={currentImage.src}
                       alt={currentImage.alt}
+                      decoding="async"
                       style={
                         isImageDragging && !isImageSliding
                           ? { transform: `translateX(${dragOffsetX}px)` }
                           : undefined
                       }
-                      onClick={() => {
-                        if (dragMovedRef.current) {
-                          dragMovedRef.current = false
-                          return
-                        }
-                        window.open(currentImage.src, "_blank")
-                      }}
                       onError={() => markImageBroken(currentImage.src)}
                       onDragStart={(event) => event.preventDefault()}
                     />
