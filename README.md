@@ -1,16 +1,70 @@
-# React + Vite
+# 전현우 포트폴리오
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite 기반 개인 포트폴리오 웹사이트입니다.  
+실무 프로젝트 경험을 채용 관점으로 구조화해 빠르게 검토할 수 있도록 구성했습니다.
 
-Currently, two official plugins are available:
+## 배포 URL
+- https://wjsgusdn12.github.io/portfolio/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 기술 스택
+- React 19
+- Vite 7
+- Vanilla CSS
+- GitHub Pages
+- GitHub Actions (CI/CD)
 
-## React Compiler
+## 주요 기능
+- 섹션 기반 싱글 페이지 포트폴리오
+- 프로젝트 카드 요약 + README 상세 모달
+- 이미지 갤러리 모달
+  - 페이지네이션
+  - 좌/우 전환
+  - 드래그(스와이프) 전환
+- 반응형 UI (Desktop / Mobile)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 프로젝트 구조
+```text
+src/
+  components/
+    modals/
+      ImageModal.jsx
+      ReadmeModal.jsx
+    icons.jsx
+    ProjectCard.jsx
+  data/
+    portfolioData.js
+  App.jsx
+  index.css
+tools/
+  check-captures.mjs
+  optimize-captures.mjs
+  clean-png-captures.mjs
+```
 
-## Expanding the ESLint configuration
+## 로컬 실행
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 빌드/검증
+```bash
+npm run lint
+npm run check:captures
+npm run build
+```
+
+## 이미지 자산 관리
+- 갤러리 캡쳐 경로: `public/captures/piosync`
+- 최적화 실행:
+```bash
+npm run optimize:captures
+```
+- PNG 정리 실행:
+```bash
+npm run clean:captures:png
+```
+
+## CI/CD
+- `main` 브랜치 push 시 GitHub Actions가 자동 실행됩니다.
+- 빌드 결과(`docs`)를 GitHub Pages에 배포합니다.
