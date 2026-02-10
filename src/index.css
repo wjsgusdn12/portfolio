@@ -73,8 +73,8 @@ button {
   filter: none;
   opacity: 0.7;
   background: transparent;
-  border: 1px solid var(--wood-3);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.24) inset;
+  border: 1px solid rgba(196, 154, 107, 0.52);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
   will-change: auto;
 }
 
