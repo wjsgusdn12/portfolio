@@ -1,4 +1,10 @@
 export default function ReadmeModal({ activeProject, isModalClosing, onClose }) {
+  const toSentenceLines = (text = "") =>
+    text
+      .split(/(?<=[.?!]|다\.)\s+/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+
   return (
     <div
       className={`modal-overlay ${isModalClosing ? "is-closing" : ""}`}
@@ -46,12 +52,20 @@ export default function ReadmeModal({ activeProject, isModalClosing, onClose }) 
 
           <div className="readme-block">
             <h5>Background</h5>
-            <p>{activeProject.readme.background}</p>
+            <ul className="modal-paragraph-list">
+              {toSentenceLines(activeProject.readme.background).map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
           </div>
 
           <div className="readme-block">
             <h5>Meaning</h5>
-            <p>{activeProject.readme.meaning}</p>
+            <ul className="modal-paragraph-list">
+              {toSentenceLines(activeProject.readme.meaning).map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
           </div>
 
           <div className="readme-block">
