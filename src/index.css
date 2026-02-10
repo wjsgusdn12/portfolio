@@ -761,30 +761,6 @@ main {
   pointer-events: none;
 }
 
-.project-brief:hover::after {
-  animation: projectCardSweep 520ms ease-out 1;
-}
-
-@keyframes projectCardSweep {
-  from {
-    transform: translateX(-135%);
-    opacity: 0;
-  }
-
-  12% {
-    opacity: 0.95;
-  }
-
-  32% {
-    opacity: 1;
-  }
-
-  to {
-    transform: translateX(135%);
-    opacity: 0;
-  }
-}
-
 .project-brief-head {
   margin-bottom: 8px;
 }
@@ -837,6 +813,8 @@ main {
 }
 
 .project-linkline {
+  display: inline-flex;
+  align-items: center;
   margin-top: 12px;
   color: #7a5a38;
   font-weight: 700;
@@ -844,6 +822,15 @@ main {
   padding-left: 11px;
   line-height: 1.35;
   font-size: 15px;
+  transition: color 0.16s ease, border-left-color 0.16s ease, transform 0.16s ease;
+}
+
+a.project-linkline:hover {
+  color: #4f341d;
+  border-left-color: rgba(159, 115, 68, 0.95);
+  transform: translateX(2px);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .project-tech-box {
