@@ -11,6 +11,37 @@ import {
 } from "./data/portfolioData"
 
 const HERO_DELAY_FACTOR = 0.72
+const SKILL_ICON_COLOR = "9f7344"
+const iconUrl = (iconName, useColor = true) =>
+  `https://api.iconify.design/${encodeURIComponent(iconName)}.svg${
+    useColor ? `?color=%23${SKILL_ICON_COLOR}` : ""
+  }`
+
+const SKILL_ICON_MAP = {
+  JavaScript: iconUrl("simple-icons:javascript"),
+  Java: iconUrl("mdi:language-java"),
+  HTML: iconUrl("simple-icons:html5"),
+  CSS: iconUrl("simple-icons:css"),
+  React: iconUrl("simple-icons:react"),
+  Vite: iconUrl("simple-icons:vite"),
+  "React Router": iconUrl("simple-icons:reactrouter"),
+  Axios: iconUrl("simple-icons:axios"),
+  "Spring Boot": iconUrl("simple-icons:springboot"),
+  JPA: iconUrl("mdi:database-cog-outline"),
+  Swagger: iconUrl("simple-icons:swagger"),
+  PostgreSQL: iconUrl("simple-icons:postgresql"),
+  Oracle: iconUrl("simple-icons:oracle"),
+  MSSQL: iconUrl("simple-icons:microsoftsqlserver"),
+  "AWS EC2": iconUrl("simple-icons:amazonec2"),
+  S3: iconUrl("simple-icons:amazons3"),
+  CloudFront: iconUrl("mdi:cloud-outline"),
+  Git: iconUrl("simple-icons:git"),
+  GitHub: iconUrl("simple-icons:github"),
+  "VS Code": iconUrl("simple-icons:visualstudiocode"),
+  IntelliJ: iconUrl("simple-icons:intellijidea"),
+}
+
+const getSkillIcon = (tag) => SKILL_ICON_MAP[tag] ?? iconUrl("mdi:code-tags")
 
 const renderAnimatedChars = (text, startDelay = 0, step = 22, extraClass = "") =>
   Array.from(text).map((char, index) => (
@@ -364,6 +395,13 @@ function App() {
                 <div className="skill-items">
                   {group.tags.map((tag) => (
                     <span className="skill-item-token" key={tag}>
+                      <img
+                        className="skill-item-icon"
+                        src={getSkillIcon(tag)}
+                        alt=""
+                        loading="lazy"
+                        aria-hidden="true"
+                      />
                       {tag}
                     </span>
                   ))}
