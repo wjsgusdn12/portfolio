@@ -867,10 +867,15 @@ main {
 .project-btn {
   border: 1px solid rgba(196, 154, 107, 0.55);
   border-radius: 10px;
-  padding: 9px 14px;
+  padding: 8px 12px;
   color: #fff;
   background: linear-gradient(135deg, var(--wood-4), var(--wood-3));
   font-weight: 800;
+  font-size: 14px;
+  line-height: 1.1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
@@ -884,6 +889,17 @@ main {
   color: var(--text);
   background: rgba(255, 255, 255, 0.9);
   border-color: rgba(196, 154, 107, 0.55);
+}
+
+.action-icon {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+}
+
+.action-icon-github {
+  width: 18px;
+  height: 18px;
 }
 
 .timeline {
