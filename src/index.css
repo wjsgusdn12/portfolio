@@ -1631,34 +1631,6 @@ a.project-linkline:hover {
   100% { transform: translate3d(5.6vw, -5.6vh, 0) scale(0.96); }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .reveal,
-  .reveal.is-visible {
-    opacity: 1;
-    transform: none;
-  }
-
-  .bg-orb {
-    animation: none;
-  }
-
-  .bg-bubble {
-    animation: none;
-  }
-
-  .modal-overlay,
-  .modal-sheet {
-    animation: none !important;
-  }
-}
-
 @media (max-width: 980px) {
   .menu {
     display: flex;
