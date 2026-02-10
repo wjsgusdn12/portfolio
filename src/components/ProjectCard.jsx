@@ -1,6 +1,9 @@
 import { ActionIcon } from "./icons"
 
 export default function ProjectCard({ project, onOpenReadme, onOpenImage }) {
+  const isExternalLink = /^https?:\/\//i.test(project.deploymentUrl)
+  const cardSummary = project.cardSummary ?? project.readme.summary
+
   return (
     <article className="project-brief">
       <div className="project-brief-head">
@@ -12,11 +15,22 @@ export default function ProjectCard({ project, onOpenReadme, onOpenImage }) {
       <hr className="project-divider" />
       <h4 className="project-headline">{project.category}</h4>
       <ul className="project-bullets">
-        {project.readme.summary.map((item) => (
+        {cardSummary.map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
-      <div className="project-linkline">{project.deploymentUrl}</div>
+      {isExternalLink ? (
+        <a
+          className="project-linkline"
+          href={project.deploymentUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {project.deploymentUrl}
+        </a>
+      ) : (
+        <div className="project-linkline">{project.deploymentUrl}</div>
+      )}
       <div className="project-tech-box">{project.stack.join(", ")}</div>
       <div className="project-actions">
         <button className="project-btn" type="button" onClick={() => onOpenReadme(project)}>
@@ -30,7 +44,7 @@ export default function ProjectCard({ project, onOpenReadme, onOpenImage }) {
             onClick={() => onOpenImage(project)}
           >
             <ActionIcon type="image" />
-            이미지
+            Image
           </button>
         )}
         {project.githubUrl && (
