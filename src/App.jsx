@@ -67,8 +67,15 @@ function App() {
   const [isImageSliding, setIsImageSliding] = useState(false)
   const [isImageDragging, setIsImageDragging] = useState(false)
   const [dragOffsetX, setDragOffsetX] = useState(0)
+  const [projectWave, setProjectWave] = useState({
+    active: false,
+    x: 0,
+    y: 0,
+  })
   const closeTimerRef = useRef(null)
   const imageSlideTimerRef = useRef(null)
+  const projectWaveTimerRef = useRef(null)
+  const projectScrollTimerRef = useRef(null)
   const dragPointerIdRef = useRef(null)
   const dragStartXRef = useRef(0)
   const dragDeltaXRef = useRef(0)
@@ -137,6 +144,8 @@ function App() {
     return () => {
       if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
       if (imageSlideTimerRef.current) clearTimeout(imageSlideTimerRef.current)
+      if (projectWaveTimerRef.current) clearTimeout(projectWaveTimerRef.current)
+      if (projectScrollTimerRef.current) clearTimeout(projectScrollTimerRef.current)
     }
   }, [])
 
@@ -273,8 +282,56 @@ function App() {
   const heroDescLine2 =
     "실무에서는 이슈를 재현해 핵심 원인을 좁히고, 화면과 API·데이터 흐름을 함께 고려해 우선순위대로 반영하며 결과까지 책임지고 있습니다."
 
+  const triggerHeroBtnBurst = useCallback((event) => {
+    const target = event.currentTarget
+    target.classList.remove("is-click-burst")
+    // Force reflow so repeated clicks can replay the animation.
+    void target.offsetWidth
+    target.classList.add("is-click-burst")
+    window.setTimeout(() => {
+      target.classList.remove("is-click-burst")
+    }, 620)
+  }, [])
+
+  const onProjectCtaClick = useCallback((event) => {
+    event.preventDefault()
+
+    if (projectWaveTimerRef.current) clearTimeout(projectWaveTimerRef.current)
+    if (projectScrollTimerRef.current) clearTimeout(projectScrollTimerRef.current)
+
+    const rect = event.currentTarget.getBoundingClientRect()
+    const x = rect.left + rect.width / 2
+    const y = rect.top + rect.height / 2
+
+    setProjectWave({ active: false, x, y })
+    requestAnimationFrame(() => {
+      setProjectWave({ active: true, x, y })
+    })
+
+    projectScrollTimerRef.current = setTimeout(() => {
+      document.querySelector("#projects")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+      projectScrollTimerRef.current = null
+    }, 90)
+
+    projectWaveTimerRef.current = setTimeout(() => {
+      setProjectWave((prev) => ({ ...prev, active: false }))
+      projectWaveTimerRef.current = null
+    }, 430)
+  }, [])
+
   return (
     <div className="page">
+      <span
+        className={`project-wave ${projectWave.active ? "is-active" : ""}`}
+        style={{
+          "--wave-x": `${projectWave.x}px`,
+          "--wave-y": `${projectWave.y}px`,
+        }}
+        aria-hidden="true"
+      />
       <div className="bg-scene" aria-hidden="true">
         <span className="bg-bubble bg-bubble-1" />
         <span className="bg-bubble bg-bubble-2" />
@@ -299,9 +356,6 @@ function App() {
             <a href="#projects">Projects</a>
             <a href="#career">Career</a>
           </nav>
-          <a className="nav-cta" href="#contact">
-            Contact
-          </a>
         </div>
       </header>
 
@@ -347,15 +401,10 @@ function App() {
                 className="hero-btn hero-action-btn"
                 href="#projects"
                 style={{ "--btn-delay": "900ms" }}
+                onPointerDown={triggerHeroBtnBurst}
+                onClick={onProjectCtaClick}
               >
                 {renderAnimatedChars("프로젝트 보기", 1180, 16)}
-              </a>
-              <a
-                className="hero-btn hero-btn-secondary hero-action-btn"
-                href="#contact"
-                style={{ "--btn-delay": "980ms" }}
-              >
-                {renderAnimatedChars("바로 연락하기", 1280, 16)}
               </a>
             </div>
           </div>
@@ -473,15 +522,6 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="section contact reveal">
-          <div className="contact-panel">
-            <h3>CONTACT</h3>
-            <div className="contact-list">
-              <div>gusdntkd0410@gmail.com</div>
-              <div>010-5056-4577</div>
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="footer">© 2026 Jeon Hyunwoo. All rights reserved.</footer>
