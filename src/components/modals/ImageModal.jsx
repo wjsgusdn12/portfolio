@@ -42,7 +42,10 @@ export default function ImageModal({
       className={`modal-overlay ${isModalClosing ? "is-closing" : ""}`}
       onClick={onClose}
     >
-      <div className="modal-sheet modal-sheet-wide" onClick={(event) => event.stopPropagation()}>
+      <div
+        className="modal-sheet modal-sheet-project"
+        onClick={(event) => event.stopPropagation()}
+      >
         <div className="modal-head">
           <div>
             <p className="modal-kicker">IMAGE GALLERY</p>

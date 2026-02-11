@@ -27,9 +27,15 @@ export default function HeroSection({
             </span>
           </span>
           <span className="hero-desc-gradient" aria-hidden="true">
-            <span className="hero-desc-line">{heroDescLine1}</span>
-            <span className="hero-desc-line">{heroDescLine2}</span>
-            <span className="hero-desc-line">{heroDescLine3}</span>
+            <span className="hero-desc-line">
+              {renderAnimatedChars(heroDescLine1, 380, 14, "char-reveal-desc-static")}
+            </span>
+            <span className="hero-desc-line">
+              {renderAnimatedChars(heroDescLine2, 820, 14, "char-reveal-desc-static")}
+            </span>
+            <span className="hero-desc-line">
+              {renderAnimatedChars(heroDescLine3, 1240, 14, "char-reveal-desc-static")}
+            </span>
           </span>
         </p>
         <div className="hero-chips">
