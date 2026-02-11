@@ -1980,27 +1980,4 @@ a.project-linkline:hover {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .bg-bubble,
-  .bg-orb,
-  .hero-desc-gradient,
-  .reveal,
-  .char-reveal {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-    filter: none !important;
-  }
-}
-
-
 

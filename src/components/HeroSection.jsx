@@ -1,6 +1,7 @@
 export default function HeroSection({
   heroDescLine1,
   heroDescLine2,
+  heroDescLine3,
   renderAnimatedChars,
   onProjectCtaClick,
 }) {
@@ -21,10 +22,14 @@ export default function HeroSection({
             <span className="hero-desc-line">
               {renderAnimatedChars(heroDescLine2, 820, 14, "char-reveal-desc")}
             </span>
+            <span className="hero-desc-line">
+              {renderAnimatedChars(heroDescLine3, 1240, 14, "char-reveal-desc")}
+            </span>
           </span>
           <span className="hero-desc-gradient" aria-hidden="true">
             <span className="hero-desc-line">{heroDescLine1}</span>
             <span className="hero-desc-line">{heroDescLine2}</span>
+            <span className="hero-desc-line">{heroDescLine3}</span>
           </span>
         </p>
         <div className="hero-chips">
