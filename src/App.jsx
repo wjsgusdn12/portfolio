@@ -272,9 +272,11 @@ function App() {
 
   const pageGroupSize = 10
   const heroDescLine1 =
-    "사용자 경험 개선으로 이어지는 구조적 문제 해결에 가장 큰 보람을 느낍니다."
+    "사용자 경험을 개선하는 구조적 문제 해결에서 가장 큰 보람을 느낍니다."
   const heroDescLine2 =
-    "실무에서는 이슈를 재현해 핵심 원인을 좁히고, 화면과 API·데이터 흐름을 함께 고려해 우선순위대로 반영하며 결과까지 책임지고 있습니다."
+    "이슈를 재현해 원인을 좁히고, 화면–API–데이터 흐름을 함께 보며 우선순위를 정해 반영합니다."
+  const heroDescLine3 =
+    "단순 구현보다 “업무가 더 빨라지고 덜 헷갈리게” 만드는 것을 목표로, 결과까지 책임지고 운영해왔습니다."
 
   const onProjectCtaClick = useCallback((event) => {
     event.preventDefault()
@@ -317,6 +319,7 @@ function App() {
         <HeroSection
           heroDescLine1={heroDescLine1}
           heroDescLine2={heroDescLine2}
+          heroDescLine3={heroDescLine3}
           renderAnimatedChars={renderAnimatedChars}
           onProjectCtaClick={onProjectCtaClick}
         />
@@ -387,7 +390,7 @@ function App() {
                 <ul>
                   <li>React 프론트 전담, Spring Boot 일부 기능 개발 참여</li>
                   <li>전표/결재/권한/첨부 등 핵심 업무 화면 설계/구현</li>
-                  <li>로컬 테스트 -&gt; Demo AWS -&gt; 운영 AWS 배포 사이클 운영</li>
+                  <li>로컬 → Demo AWS → 운영 AWS 배포 사이클 운영 및 운영 이슈 대응</li>
                 </ul>
               </div>
             </div>

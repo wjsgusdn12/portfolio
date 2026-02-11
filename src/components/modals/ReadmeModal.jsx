@@ -77,6 +77,37 @@ export default function ReadmeModal({ activeProject, isModalClosing, onClose }) 
             </ul>
           </div>
 
+          {Array.isArray(activeProject.readme.architecture) &&
+            activeProject.readme.architecture.length > 0 && (
+              <div className="readme-block">
+                <h5>Architecture Overview</h5>
+                <ul className="modal-list">
+                  {activeProject.readme.architecture.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+          {Array.isArray(activeProject.readme.troubleshooting) &&
+            activeProject.readme.troubleshooting.length > 0 && (
+              <div className="readme-block">
+                <h5>Troubleshooting</h5>
+                <div className="readme-troubleshooting">
+                  {activeProject.readme.troubleshooting.map((caseItem) => (
+                    <div key={caseItem.title} className="readme-case">
+                      <p className="readme-case-title">{caseItem.title}</p>
+                      <ul className="modal-paragraph-list">
+                        {caseItem.items.map((line) => (
+                          <li key={line}>{line}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
           <div className="readme-grid">
             <div className="readme-block">
               <h5>Technology Stack(s)</h5>
