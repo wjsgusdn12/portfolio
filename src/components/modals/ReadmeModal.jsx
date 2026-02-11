@@ -1,9 +1,31 @@
-export default function ReadmeModal({ activeProject, isModalClosing, onClose }) {
+export default function ReadmeModal({
+  activeProject,
+  isModalClosing,
+  onClose,
+  onOpenImage,
+}) {
   const toSentenceLines = (text = "") =>
     text
       .split(/(?<=[.?!]|다\.)\s+/)
       .map((line) => line.trim())
       .filter(Boolean)
+
+  const highlights = Array.isArray(activeProject.readme.highlights)
+    ? activeProject.readme.highlights
+    : []
+  const resolvedHighlights = highlights
+    .map((item) => {
+      if (!item) return null
+      const highlight = typeof item === "string" ? { id: item } : item
+      const image = activeProject.images?.find((img) => img.id === highlight.id)
+      if (!image?.src) return null
+      return {
+        ...highlight,
+        src: image.src,
+        alt: image.alt || highlight.caption || activeProject.name,
+      }
+    })
+    .filter(Boolean)
 
   return (
     <div
@@ -41,6 +63,31 @@ export default function ReadmeModal({ activeProject, isModalClosing, onClose }) 
             <p>{activeProject.deploymentUrl}</p>
           </div>
 
+          {resolvedHighlights.length > 0 && (
+            <div className="readme-block">
+              <h5>Key Screens</h5>
+              <div className="readme-highlights">
+                {resolvedHighlights.map((item) => (
+                  <div key={item.id} className="readme-highlight-card">
+                    <div className="readme-highlight-media">
+                      <img src={item.src} alt={item.alt} loading="lazy" />
+                    </div>
+                    {item.caption && (
+                      <p className="readme-highlight-caption">{item.caption}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="readme-highlight-cta"
+                onClick={() => onOpenImage?.(activeProject)}
+              >
+                전체 화면 {activeProject.images.length}장 보기
+              </button>
+            </div>
+          )}
+
           <div className="readme-block">
             <h5>Summary</h5>
             <ul className="modal-list">
@@ -49,6 +96,30 @@ export default function ReadmeModal({ activeProject, isModalClosing, onClose }) 
               ))}
             </ul>
           </div>
+
+          {Array.isArray(activeProject.readme.performance) &&
+            activeProject.readme.performance.length > 0 && (
+              <div className="readme-block">
+                <h5>Performance (Upload)</h5>
+                <ul className="modal-list">
+                  {activeProject.readme.performance.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+          {Array.isArray(activeProject.readme.validationParsing) &&
+            activeProject.readme.validationParsing.length > 0 && (
+              <div className="readme-block">
+                <h5>Validation & Parsing</h5>
+                <ul className="modal-list">
+                  {activeProject.readme.validationParsing.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
           <div className="readme-block">
             <h5>Background</h5>
@@ -137,6 +208,13 @@ export default function ReadmeModal({ activeProject, isModalClosing, onClose }) 
                 </pre>
               </div>
             )}
+
+          {activeProject.readme.notice && (
+            <div className="readme-block">
+              <h5>Note</h5>
+              <p>{activeProject.readme.notice}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

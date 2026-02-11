@@ -160,6 +160,9 @@ export default function ImageModal({
               </button>
             </div>
           </div>
+          {activeProject.readme?.notice && (
+            <p className="modal-note">{activeProject.readme.notice}</p>
+          )}
         </div>
       </div>
     </div>
