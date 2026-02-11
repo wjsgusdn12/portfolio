@@ -109,9 +109,32 @@ function App() {
   }, [])
 
   useEffect(() => {
-    document.body.style.overflow = activeModal ? "hidden" : ""
-    return () => {
-      document.body.style.overflow = ""
+    const timer = setTimeout(() => {
+      document.body.classList.add("hero-ready")
+    }, 3200)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    if (activeModal) {
+      const scrollY = window.scrollY
+      document.body.dataset.scrollY = String(scrollY)
+      document.body.classList.add("modal-open")
+      document.documentElement.classList.add("modal-open")
+      document.body.style.top = `-${scrollY}px`
+      return
+    }
+    const savedY = Number(document.body.dataset.scrollY || 0)
+    document.body.classList.remove("modal-open")
+    document.documentElement.classList.remove("modal-open")
+    document.body.style.top = ""
+    document.body.dataset.scrollY = ""
+    if (!Number.isNaN(savedY)) {
+      const root = document.documentElement
+      const prevBehavior = root.style.scrollBehavior
+      root.style.scrollBehavior = "auto"
+      window.scrollTo(0, savedY)
+      root.style.scrollBehavior = prevBehavior
     }
   }, [activeModal])
 
@@ -406,6 +429,7 @@ function App() {
           activeProject={activeProject}
           isModalClosing={isModalClosing}
           onClose={closeModals}
+          onOpenImage={openImageModal}
         />
       )}
 

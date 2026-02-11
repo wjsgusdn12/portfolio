@@ -31,9 +31,10 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  scrollbar-gutter: stable;
 }
 
-section[id] {
+.section[id] {
   scroll-margin-top: 92px;
 }
 
@@ -41,6 +42,15 @@ body {
   margin: 0;
   background: var(--bg);
   overflow-x: clip;
+}
+
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  touch-action: none;
 }
 
 a {
@@ -177,7 +187,7 @@ button {
   left: 0;
   right: 0;
   z-index: 60;
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffffff;
   border-bottom: 1px solid var(--line);
   backdrop-filter: none;
 }
@@ -315,7 +325,7 @@ main {
   position: relative;
   z-index: 2;
   display: block;
-  animation: heroDescContentHide 1ms linear 2.28s forwards;
+  animation: heroDescContentFade 1ms linear 2.7s forwards;
 }
 
 .hero-desc-line {
@@ -350,6 +360,18 @@ main {
   }
 }
 
+@keyframes heroDescContentFade {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes heroDescGradientShow {
+  to {
+    opacity: 0.95;
+  }
+}
+
 .hero-desc-gradient {
   position: absolute;
   inset: 0;
@@ -378,29 +400,16 @@ main {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   opacity: 0;
-  visibility: hidden;
+  mix-blend-mode: screen;
   animation:
-    heroDescGradientShow 1ms linear 2.29s forwards,
-    heroDescGlassShine 3s linear 2.3s infinite;
+    heroDescGradientShow 160ms ease 2.7s forwards,
+    heroDescGlassShine 3.2s linear 2.9s infinite;
 }
 
 .hero-desc-gradient .hero-desc-line {
   text-shadow: none;
 }
 
-@keyframes heroDescContentHide {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-@keyframes heroDescGradientShow {
-  to {
-    opacity: 0.95;
-    visibility: visible;
-  }
-}
 
 .hero-chips {
   display: flex;
@@ -483,8 +492,8 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 144px;
-  padding: 12px 22px;
+  min-width: 132px;
+  padding: 10px 18px;
   border-radius: 11px;
   border: 1px solid rgba(171, 126, 77, 0.45);
   background: linear-gradient(135deg, var(--wood-4), var(--wood-3));
@@ -543,6 +552,16 @@ main {
     0 14px 24px rgba(134, 92, 47, 0.26),
     0 0 0 2px rgba(190, 144, 91, 0.45),
     inset 0 1px 0 rgba(255, 248, 238, 0.52);
+}
+
+body.hero-ready .hero .char-reveal,
+body.hero-ready .hero .hero-chip,
+body.hero-ready .hero .hero-action-btn {
+  animation: none;
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: none;
 }
 
 .char-reveal {
@@ -1081,15 +1100,13 @@ a.project-linkline:hover {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle at 20% 8%, rgba(219, 182, 133, 0.18), rgba(38, 28, 18, 0.44)),
-    rgba(38, 28, 18, 0.44);
   z-index: 120;
   padding: 16px;
   display: grid;
   place-items: center;
   overflow: hidden;
   overscroll-behavior: contain;
+  touch-action: none;
   animation: modalOverlayIn 220ms ease-out;
 }
 
@@ -1141,6 +1158,8 @@ a.project-linkline:hover {
   padding-right: 8px;
   padding-bottom: max(18px, env(safe-area-inset-bottom));
   scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .modal-head {
@@ -1238,6 +1257,67 @@ a.project-linkline:hover {
   margin: 8px 0 0;
   color: #40372f;
   line-height: 1.75;
+}
+
+.readme-highlights {
+  margin-top: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+.readme-highlight-card {
+  border: 1px solid rgba(220, 196, 164, 0.72);
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 10px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.readme-highlight-media {
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(225, 200, 168, 0.7);
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+}
+
+.readme-highlight-media img {
+  width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+.readme-highlight-caption {
+  margin: 0;
+  color: #4b3f32;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.readme-highlight-cta {
+  margin-top: 12px;
+  border: 1px solid rgba(196, 154, 107, 0.6);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 800;
+  font-size: 13px;
+  color: #5a3f24;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
+}
+
+.readme-highlight-cta:hover {
+  transform: translateY(-1px);
+  color: #3d2a16;
+  box-shadow: 0 8px 14px rgba(122, 84, 42, 0.18);
 }
 
 .modal-paragraph-list {
@@ -1515,6 +1595,20 @@ a.project-linkline:hover {
   background: rgba(196, 154, 107, 0.22);
   color: #3f2b17;
   box-shadow: inset 0 0 0 1px rgba(196, 154, 107, 0.55);
+}
+
+.modal-note {
+  margin: 12px 0 0;
+  color: #5a4328;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.01em;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(196, 154, 107, 0.45);
+  border-radius: 999px;
+  padding: 6px 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 @keyframes galleryEnterFromRight {
@@ -1933,6 +2027,10 @@ a.project-linkline:hover {
   .skill-items {
     grid-template-columns: 1fr;
     gap: 4px 0;
+  }
+
+  .readme-highlight-card {
+    grid-template-columns: 1fr;
   }
 }
 

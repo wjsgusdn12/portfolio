@@ -8,7 +8,7 @@ export default function HeroSection({
   return (
     <section className="hero" id="top">
       <div className="hero-pattern" />
-      <div className="hero-inner reveal is-visible">
+      <div className="hero-inner">
         <p className="hero-kicker">{renderAnimatedChars("PORTFOLIO", 20, 16)}</p>
         <h1 className="hero-title">{renderAnimatedChars("전현우", 120, 26)}</h1>
         <h2 className="hero-subtitle">
