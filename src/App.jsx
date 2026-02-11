@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import ProjectCard from "./components/ProjectCard"
+import HeroSection from "./components/HeroSection"
+import SkillsSection from "./components/SkillsSection"
+import ProjectsSection from "./components/ProjectsSection"
 import { AboutIcon } from "./components/icons"
 import ImageModal from "./components/modals/ImageModal"
 import ReadmeModal from "./components/modals/ReadmeModal"
@@ -67,15 +70,8 @@ function App() {
   const [isImageSliding, setIsImageSliding] = useState(false)
   const [isImageDragging, setIsImageDragging] = useState(false)
   const [dragOffsetX, setDragOffsetX] = useState(0)
-  const [projectWave, setProjectWave] = useState({
-    active: false,
-    x: 0,
-    y: 0,
-  })
   const closeTimerRef = useRef(null)
   const imageSlideTimerRef = useRef(null)
-  const projectWaveTimerRef = useRef(null)
-  const projectScrollTimerRef = useRef(null)
   const dragPointerIdRef = useRef(null)
   const dragStartXRef = useRef(0)
   const dragDeltaXRef = useRef(0)
@@ -144,8 +140,6 @@ function App() {
     return () => {
       if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
       if (imageSlideTimerRef.current) clearTimeout(imageSlideTimerRef.current)
-      if (projectWaveTimerRef.current) clearTimeout(projectWaveTimerRef.current)
-      if (projectScrollTimerRef.current) clearTimeout(projectScrollTimerRef.current)
     }
   }, [])
 
@@ -282,56 +276,16 @@ function App() {
   const heroDescLine2 =
     "실무에서는 이슈를 재현해 핵심 원인을 좁히고, 화면과 API·데이터 흐름을 함께 고려해 우선순위대로 반영하며 결과까지 책임지고 있습니다."
 
-  const triggerHeroBtnBurst = useCallback((event) => {
-    const target = event.currentTarget
-    target.classList.remove("is-click-burst")
-    // Force reflow so repeated clicks can replay the animation.
-    void target.offsetWidth
-    target.classList.add("is-click-burst")
-    window.setTimeout(() => {
-      target.classList.remove("is-click-burst")
-    }, 620)
-  }, [])
-
   const onProjectCtaClick = useCallback((event) => {
     event.preventDefault()
-
-    if (projectWaveTimerRef.current) clearTimeout(projectWaveTimerRef.current)
-    if (projectScrollTimerRef.current) clearTimeout(projectScrollTimerRef.current)
-
-    const rect = event.currentTarget.getBoundingClientRect()
-    const x = rect.left + rect.width / 2
-    const y = rect.top + rect.height / 2
-
-    setProjectWave({ active: false, x, y })
-    requestAnimationFrame(() => {
-      setProjectWave({ active: true, x, y })
+    document.querySelector("#projects")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
     })
-
-    projectScrollTimerRef.current = setTimeout(() => {
-      document.querySelector("#projects")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      })
-      projectScrollTimerRef.current = null
-    }, 90)
-
-    projectWaveTimerRef.current = setTimeout(() => {
-      setProjectWave((prev) => ({ ...prev, active: false }))
-      projectWaveTimerRef.current = null
-    }, 430)
   }, [])
 
   return (
     <div className="page">
-      <span
-        className={`project-wave ${projectWave.active ? "is-active" : ""}`}
-        style={{
-          "--wave-x": `${projectWave.x}px`,
-          "--wave-y": `${projectWave.y}px`,
-        }}
-        aria-hidden="true"
-      />
       <div className="bg-scene" aria-hidden="true">
         <span className="bg-bubble bg-bubble-1" />
         <span className="bg-bubble bg-bubble-2" />
@@ -360,55 +314,12 @@ function App() {
       </header>
 
       <main>
-        <section className="hero" id="top">
-          <div className="hero-pattern" />
-          <div className="hero-inner reveal is-visible">
-            <p className="hero-kicker">{renderAnimatedChars("PORTFOLIO", 20, 16)}</p>
-            <h1 className="hero-title">{renderAnimatedChars("전현우", 120, 26)}</h1>
-            <h2 className="hero-subtitle">
-              {renderAnimatedChars("Web Developer", 260, 20)}
-            </h2>
-            <p className="hero-desc">
-              <span className="hero-desc-content">
-                <span className="hero-desc-line">
-                  {renderAnimatedChars(heroDescLine1, 380, 14, "char-reveal-desc")}
-                </span>
-                <span className="hero-desc-line">
-                  {renderAnimatedChars(heroDescLine2, 820, 14, "char-reveal-desc")}
-                </span>
-              </span>
-              <span className="hero-desc-gradient" aria-hidden="true">
-                <span className="hero-desc-line">{heroDescLine1}</span>
-                <span className="hero-desc-line">{heroDescLine2}</span>
-              </span>
-            </p>
-            <div className="hero-chips">
-              <span className="hero-chip" style={{ "--chip-delay": "820ms" }}>
-                {renderAnimatedChars("React", 1260, 18)}
-              </span>
-              <span className="hero-chip" style={{ "--chip-delay": "910ms" }}>
-                {renderAnimatedChars("UI Architecture", 1350, 14)}
-              </span>
-              <span className="hero-chip" style={{ "--chip-delay": "1000ms" }}>
-                {renderAnimatedChars("Spring Boot", 1510, 15)}
-              </span>
-              <span className="hero-chip" style={{ "--chip-delay": "1090ms" }}>
-                {renderAnimatedChars("AWS Deploy", 1650, 15)}
-              </span>
-            </div>
-            <div className="hero-actions">
-              <a
-                className="hero-btn hero-action-btn"
-                href="#projects"
-                style={{ "--btn-delay": "900ms" }}
-                onPointerDown={triggerHeroBtnBurst}
-                onClick={onProjectCtaClick}
-              >
-                {renderAnimatedChars("프로젝트 보기", 1180, 16)}
-              </a>
-            </div>
-          </div>
-        </section>
+        <HeroSection
+          heroDescLine1={heroDescLine1}
+          heroDescLine2={heroDescLine2}
+          renderAnimatedChars={renderAnimatedChars}
+          onProjectCtaClick={onProjectCtaClick}
+        />
 
         <section id="about" className="section reveal">
           <div className="section-head">
@@ -430,35 +341,7 @@ function App() {
           </div>
         </section>
 
-        <section id="skills" className="section section-accent reveal">
-          <div className="section-head">
-            <p className="section-eyebrow">Tech</p>
-            <h3 className="section-title">SKILLS</h3>
-          </div>
-          <div className="skills-card">
-            {skillGroups.map((group) => (
-              <div className="skill-row" key={group.title}>
-                <div className="skill-title-wrap">
-                  <div className="skill-title">{group.title}</div>
-                </div>
-                <div className="skill-items">
-                  {group.tags.map((tag) => (
-                    <span className="skill-item-token" key={tag}>
-                      <img
-                        className="skill-item-icon"
-                        src={getSkillIcon(tag)}
-                        alt=""
-                        loading="lazy"
-                        aria-hidden="true"
-                      />
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <SkillsSection skillGroups={skillGroups} getSkillIcon={getSkillIcon} />
 
         <section id="archiving" className="section reveal">
           <div className="section-head">
@@ -484,22 +367,11 @@ function App() {
           </div>
         </section>
 
-        <section id="projects" className="section section-projects reveal">
-          <div className="section-head">
-            <p className="section-eyebrow">Work</p>
-            <h3 className="section-title">PROJECTS</h3>
-          </div>
-          <div className="project-brief-list">
-            {sortedProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                onOpenReadme={openReadmeModal}
-                onOpenImage={openImageModal}
-              />
-            ))}
-          </div>
-        </section>
+        <ProjectsSection
+          sortedProjects={sortedProjects}
+          onOpenReadme={openReadmeModal}
+          onOpenImage={openImageModal}
+        />
 
         <section id="career" className="section reveal">
           <div className="section-head">
