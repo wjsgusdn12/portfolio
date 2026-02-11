@@ -97,12 +97,15 @@ export default function ReadmeModal({ activeProject, isModalClosing, onClose }) 
             </div>
           </div>
 
-          <div className="readme-block">
-            <h5>Setup & Usage</h5>
-            <pre className="setup-box">
-              {activeProject.readme.setup.map((item) => item).join("\n")}
-            </pre>
-          </div>
+          {Array.isArray(activeProject.readme.setup) &&
+            activeProject.readme.setup.length > 0 && (
+              <div className="readme-block">
+                <h5>Setup & Usage</h5>
+                <pre className="setup-box">
+                  {activeProject.readme.setup.map((item) => item).join("\n")}
+                </pre>
+              </div>
+            )}
         </div>
       </div>
     </div>
