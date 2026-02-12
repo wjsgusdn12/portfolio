@@ -104,10 +104,10 @@ button {
   border-radius: 50%;
   z-index: 1;
   filter: none;
-  opacity: 0.7;
+  opacity: 0.56;
   background: transparent;
-  border: 1px solid rgba(196, 154, 107, 0.52);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+  border: 1px solid rgba(196, 154, 107, 0.46);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.26) inset;
   will-change: auto;
 }
 
