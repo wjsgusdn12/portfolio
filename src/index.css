@@ -1326,16 +1326,40 @@ a.project-linkline:hover {
 }
 
 .readme-highlights-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: auto;
+  gap: 8px;
+}
+
+.readme-highlights-tools {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  margin-left: 0;
+  min-width: 0;
+}
+
+.readme-inline-note {
+  color: #5a4328;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(196, 154, 107, 0.45);
+  border-radius: 999px;
+  padding: 4px 10px;
+  max-width: min(54vw, 460px);
+  white-space: normal;
 }
 
 .readme-highlights-actions {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
+  margin-left: 0;
+  flex-shrink: 0;
 }
 
 .readme-toggle-btn {
@@ -1385,13 +1409,13 @@ a.project-linkline:hover {
 
 .readme-highlight-slider {
   margin-top: 12px;
-  display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) 40px;
-  align-items: center;
-  gap: 10px;
+  position: relative;
 }
 
 .readme-highlight-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
   width: 38px;
   height: 38px;
   border-radius: 999px;
@@ -1402,12 +1426,32 @@ a.project-linkline:hover {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+  transform: translateY(-50%);
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    transform 0.16s ease,
+    opacity 0.18s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.readme-highlight-nav.is-prev {
+  left: 10px;
+}
+
+.readme-highlight-nav.is-next {
+  right: 10px;
+}
+
+.readme-highlight-media:hover .readme-highlight-nav,
+.readme-highlight-media:focus-within .readme-highlight-nav {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .readme-highlight-nav:hover {
-  transform: translateY(-1px);
+  transform: translateY(-50%) scale(1.03);
   background: rgba(196, 154, 107, 0.22);
   color: #5a3f24;
 }
@@ -1456,8 +1500,22 @@ a.project-linkline:hover {
   max-height: clamp(180px, 33vh, 280px);
 }
 
+.readme-highlight-text {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.readme-highlight-title {
+  margin: 0;
+  color: var(--wood-4);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
 .readme-highlight-caption {
-  margin: 10px 0 0;
+  margin: 0;
   color: var(--wood-4);
   font-size: 15px;
   line-height: 1.55;
@@ -1473,10 +1531,6 @@ a.project-linkline:hover {
   padding: 0 6px;
 }
 
-.readme-highlight-card.is-slider .readme-highlight-caption {
-  margin: 0;
-}
-
 .readme-highlight-pages {
   margin-top: 10px;
   display: flex;
@@ -1490,6 +1544,10 @@ a.project-linkline:hover {
   align-items: stretch;
   gap: 12px;
   padding: 8px 8px 4px 4px;
+}
+
+.readme-highlight-card.is-slider .readme-highlight-text {
+  gap: 10px;
 }
 
 .readme-highlight-card.is-slider .readme-highlight-pages {
@@ -1570,19 +1628,19 @@ a.project-linkline:hover {
 }
 
 .readme-highlight-anim-next .readme-highlight-media,
-.readme-highlight-anim-next .readme-highlight-caption {
+.readme-highlight-anim-next .readme-highlight-text {
   animation: readmeHighlightInnerNext 280ms cubic-bezier(0.22, 0.78, 0.2, 1)
     both;
 }
 
 .readme-highlight-anim-prev .readme-highlight-media,
-.readme-highlight-anim-prev .readme-highlight-caption {
+.readme-highlight-anim-prev .readme-highlight-text {
   animation: readmeHighlightInnerPrev 280ms cubic-bezier(0.22, 0.78, 0.2, 1)
     both;
 }
 
-.readme-highlight-anim-next .readme-highlight-caption,
-.readme-highlight-anim-prev .readme-highlight-caption {
+.readme-highlight-anim-next .readme-highlight-text,
+.readme-highlight-anim-prev .readme-highlight-text {
   animation-delay: 40ms;
 }
 
@@ -1610,10 +1668,16 @@ a.project-linkline:hover {
   }
 }
 
+.readme-highlight-card.is-slider .readme-highlight-title {
+  color: var(--wood-4);
+  font-size: 14px;
+  font-weight: 820;
+}
+
 .readme-highlight-card.is-slider .readme-highlight-caption {
-  margin-top: 10px;
-  color: #8f6336;
+  color: var(--wood-4);
   font-weight: 650;
+  line-height: 1.58;
 }
 
 .readme-highlight-cta {
@@ -1621,9 +1685,13 @@ a.project-linkline:hover {
   border: 1px solid rgba(196, 154, 107, 0.6);
   background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 8px 12px;
   font-weight: 800;
   font-size: 13px;
+  white-space: nowrap;
   color: #5a3f24;
   cursor: pointer;
   transition: transform 0.18s ease, box-shadow 0.18s ease, color 0.18s ease;
@@ -2353,15 +2421,29 @@ a.project-linkline:hover {
     grid-template-columns: 1fr;
   }
 
+  .readme-highlight-card.is-slider {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
   .readme-highlight-slider {
     margin-top: 10px;
-    grid-template-columns: 32px minmax(0, 1fr) 32px;
-    gap: 6px;
+    position: relative;
   }
 
   .readme-highlight-nav {
     width: 30px;
     height: 30px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .readme-highlight-nav.is-prev {
+    left: 6px;
+  }
+
+  .readme-highlight-nav.is-next {
+    right: 6px;
   }
 
   .readme-highlight-card.is-slider .readme-highlight-media {
@@ -2372,9 +2454,27 @@ a.project-linkline:hover {
     max-height: clamp(140px, 24vh, 190px);
   }
 
+  .readme-highlight-card.is-slider .readme-highlight-copy {
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 0;
+  }
+
+  .readme-highlight-card.is-slider .readme-highlight-text {
+    gap: 6px;
+  }
+
+  .readme-highlight-card.is-slider .readme-highlight-title {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
   .readme-highlight-card.is-slider .readme-highlight-caption {
-    margin-top: 8px;
     display: block;
+    font-size: 14px;
+    line-height: 1.6;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
   }
 
   .readme-highlight-copy {
@@ -2389,11 +2489,27 @@ a.project-linkline:hover {
 
   .readme-highlights-title-row {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .readme-highlights-tools {
+    flex: 0 1 auto;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
+  .readme-inline-note {
+    max-width: 100%;
+    border-radius: 10px;
+    padding: 6px 8px;
+    font-size: 11px;
+    line-height: 1.4;
   }
 
   .readme-highlights-actions {
-    width: 100%;
+    width: auto;
+    margin-left: auto;
     justify-content: flex-end;
   }
 
