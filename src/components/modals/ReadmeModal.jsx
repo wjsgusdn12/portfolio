@@ -20,16 +20,44 @@ export default function ReadmeModal({
     const highlights = Array.isArray(activeProject.readme.highlights)
       ? activeProject.readme.highlights
       : []
+
+    const splitCaption = (highlight) => {
+      const title = typeof highlight.title === "string" ? highlight.title.trim() : ""
+      const description =
+        typeof highlight.description === "string"
+          ? highlight.description.trim()
+          : ""
+      if (title || description) {
+        return { title, description }
+      }
+
+      const caption = typeof highlight.caption === "string" ? highlight.caption.trim() : ""
+      if (!caption) return { title: "", description: "" }
+
+      const colonIndex = caption.indexOf(":")
+      if (colonIndex > -1) {
+        return {
+          title: caption.slice(0, colonIndex).trim(),
+          description: caption.slice(colonIndex + 1).trim(),
+        }
+      }
+
+      return { title: "", description: caption }
+    }
+
     return highlights
       .map((item) => {
         if (!item) return null
         const highlight = typeof item === "string" ? { id: item } : item
         const image = activeProject.images?.find((img) => img.id === highlight.id)
         if (!image?.src) return null
+        const { title, description } = splitCaption(highlight)
         return {
           ...highlight,
+          title,
+          description,
           src: image.src,
-          alt: image.alt || highlight.caption || activeProject.name,
+          alt: image.alt || title || description || activeProject.name,
         }
       })
       .filter(Boolean)
@@ -116,35 +144,40 @@ export default function ReadmeModal({
               <div className="readme-highlights-head">
                 <div className="readme-highlights-title-row">
                   <h5>Key Screens</h5>
-                  <button
-                    type="button"
-                    className="readme-toggle-btn"
-                    onClick={() => setIsHighlightsExpanded((prev) => !prev)}
-                  >
-                    <svg
-                      className="readme-toggle-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.1"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
+                  <div className="readme-highlights-tools">
+                    <button
+                      type="button"
+                      className="readme-toggle-btn"
+                      onClick={() => setIsHighlightsExpanded((prev) => !prev)}
                     >
-                      {isHighlightsExpanded ? (
-                        <>
-                          <path d="m7 17 5-5 5 5" />
-                          <path d="m7 11 5-5 5 5" />
-                        </>
-                      ) : (
-                        <>
-                          <path d="m7 7 5 5 5-5" />
-                          <path d="m7 13 5 5 5-5" />
-                        </>
-                      )}
-                    </svg>
-                    <span>{isHighlightsExpanded ? "접기" : "펼치기"}</span>
-                  </button>
+                      <svg
+                        className="readme-toggle-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.1"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        {isHighlightsExpanded ? (
+                          <>
+                            <path d="m7 17 5-5 5 5" />
+                            <path d="m7 11 5-5 5 5" />
+                          </>
+                        ) : (
+                          <>
+                            <path d="m7 7 5 5 5-5" />
+                            <path d="m7 13 5 5 5-5" />
+                          </>
+                        )}
+                      </svg>
+                      <span>{isHighlightsExpanded ? "접기" : "펼치기"}</span>
+                    </button>
+                    {activeProject.readme.notice && (
+                      <span className="readme-inline-note">{activeProject.readme.notice}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="readme-highlights-actions">
                   <button
@@ -159,36 +192,62 @@ export default function ReadmeModal({
 
               {!isHighlightsExpanded && currentHighlight && (
                 <div className="readme-highlight-slider">
-                  <button
-                    type="button"
-                    className="readme-highlight-nav is-prev"
-                    onClick={goPrevHighlight}
-                    aria-label="이전 키스크린"
-                  >
-                    <svg
-                      className="arrow-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="m15 18-6-6 6-6" />
-                    </svg>
-                  </button>
                   <div
                     key={currentHighlight.id}
                     className={`readme-highlight-card is-slider readme-highlight-anim readme-highlight-anim-${highlightMotion}`}
                   >
                     <div className="readme-highlight-media">
+                      <button
+                        type="button"
+                        className="readme-highlight-nav is-prev"
+                        onClick={goPrevHighlight}
+                        aria-label="이전 키스크린"
+                      >
+                        <svg
+                          className="arrow-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="m15 18-6-6 6-6" />
+                        </svg>
+                      </button>
                       <img src={currentHighlight.src} alt={currentHighlight.alt} loading="lazy" />
+                      <button
+                        type="button"
+                        className="readme-highlight-nav is-next"
+                        onClick={goNextHighlight}
+                        aria-label="다음 키스크린"
+                      >
+                        <svg
+                          className="arrow-icon"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="m9 18 6-6-6-6" />
+                        </svg>
+                      </button>
                     </div>
                     <div className="readme-highlight-copy">
-                      {currentHighlight.caption && (
-                        <p className="readme-highlight-caption">{currentHighlight.caption}</p>
-                      )}
+                      <div className="readme-highlight-text">
+                        {currentHighlight.title && (
+                          <p className="readme-highlight-title">{currentHighlight.title}</p>
+                        )}
+                        {currentHighlight.description && (
+                          <p className="readme-highlight-caption">
+                            {currentHighlight.description}
+                          </p>
+                        )}
+                      </div>
                       <div className="readme-highlight-pages">
                         {resolvedHighlights.map((item, idx) => (
                           <button
@@ -205,25 +264,6 @@ export default function ReadmeModal({
                       </div>
                     </div>
                   </div>
-                  <button
-                    type="button"
-                    className="readme-highlight-nav is-next"
-                    onClick={goNextHighlight}
-                    aria-label="다음 키스크린"
-                  >
-                    <svg
-                      className="arrow-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="m9 18 6-6-6-6" />
-                    </svg>
-                  </button>
                 </div>
               )}
 
@@ -234,9 +274,16 @@ export default function ReadmeModal({
                       <div className="readme-highlight-media">
                         <img src={item.src} alt={item.alt} loading="lazy" />
                       </div>
-                      {item.caption && (
-                        <p className="readme-highlight-caption">{item.caption}</p>
-                      )}
+                      <div className="readme-highlight-copy">
+                        <div className="readme-highlight-text">
+                          {item.title && (
+                            <p className="readme-highlight-title">{item.title}</p>
+                          )}
+                          {item.description && (
+                            <p className="readme-highlight-caption">{item.description}</p>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -262,18 +309,6 @@ export default function ReadmeModal({
               </div>
             )}
 
-          {Array.isArray(activeProject.readme.validationParsing) &&
-            activeProject.readme.validationParsing.length > 0 && (
-              <div className="readme-block">
-                <h5>Validation & Parsing</h5>
-                <ul className="modal-list">
-                  {activeProject.readme.validationParsing.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
           <div className="readme-block">
             <h5>Background</h5>
             <ul className="modal-paragraph-list">
@@ -291,27 +326,6 @@ export default function ReadmeModal({
               ))}
             </ul>
           </div>
-
-          <div className="readme-block">
-            <h5>Main Features</h5>
-            <ul className="modal-list">
-              {activeProject.readme.features.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          {Array.isArray(activeProject.readme.architecture) &&
-            activeProject.readme.architecture.length > 0 && (
-              <div className="readme-block">
-                <h5>Architecture Overview</h5>
-                <ul className="modal-list">
-                  {activeProject.readme.architecture.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
 
           {Array.isArray(activeProject.readme.troubleshooting) &&
             activeProject.readme.troubleshooting.length > 0 && (
@@ -351,23 +365,6 @@ export default function ReadmeModal({
               </ul>
             </div>
           </div>
-
-          {Array.isArray(activeProject.readme.setup) &&
-            activeProject.readme.setup.length > 0 && (
-              <div className="readme-block">
-                <h5>Setup & Usage</h5>
-                <pre className="setup-box">
-                  {activeProject.readme.setup.map((item) => item).join("\n")}
-                </pre>
-              </div>
-            )}
-
-          {activeProject.readme.notice && (
-            <div className="readme-block">
-              <h5>Note</h5>
-              <p>{activeProject.readme.notice}</p>
-            </div>
-          )}
         </div>
       </div>
     </div>
