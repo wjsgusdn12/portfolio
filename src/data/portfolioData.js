@@ -17,7 +17,7 @@ export const profileItems = [
   { label: "위치", value: "서울특별시 서대문구" },
   { label: "이메일", value: "gusdntkd0410@gmail.com" },
   { label: "연락처", value: "010-5056-4577" },
-  { label: "학력", value: "Shanghai Jiao Tong Univ. (중퇴)" },
+  { label: "GitHub", value: "github.com/wjsgusdn12" },
 ]
 
 export const skillGroups = [
@@ -182,8 +182,8 @@ export const projects = [
       summary: [
         "실무 경험과 프로젝트를 채용 담당자가 짧은 시간 안에 파악할 수 있도록 설계한 포트폴리오 웹사이트",
         "기존 포트폴리오 자료를 웹 문서 구조로 재정리해 핵심 정보의 탐색 흐름을 개선",
-        "프로젝트별 README/이미지 모달, 페이지네이션, 드래그 전환 등 탐색 중심 인터랙션 구현",
-        "주요 기능: 자기소개, 인적 사항, 기술 스택, 링크 아카이빙, 프로젝트/경력 정리",
+        "프로젝트별 README/이미지 모달과 페이지네이션 중심 인터랙션을 구현",
+        "주요 기능: 자기소개, 인적 사항, 기술 스택, 프로젝트/경력 정리",
       ],
       background:
         "Notion/PDF 형태도 검토했지만, 웹 개발자로서 가장 설득력 있게 역량을 전달하는 방식은 직접 구현한 웹 포트폴리오라고 판단했습니다. 단순 나열보다 읽는 순서와 정보 밀도를 직접 설계해, 채용 담당자가 필요한 정보를 빠르게 확인할 수 있는 구조를 목표로 개발했습니다.",

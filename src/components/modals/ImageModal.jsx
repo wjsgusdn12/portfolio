@@ -5,15 +5,7 @@ export default function ImageModal({
   isModalClosing,
   onClose,
   selectedImageIndex,
-  isImageDragging,
-  dragOffsetX,
-  isImageSliding,
-  slideDirection,
-  leavingImage,
   currentImage,
-  onGalleryPointerDown,
-  onGalleryPointerMove,
-  endGalleryDrag,
   goPrevImage,
   goNextImage,
   goToImage,
@@ -79,43 +71,15 @@ export default function ImageModal({
             >
               <ArrowIcon direction="left" />
             </button>
-            <div
-              className={`gallery-image-stage ${isImageDragging ? "is-dragging" : ""}`}
-              onPointerDown={onGalleryPointerDown}
-              onPointerMove={onGalleryPointerMove}
-              onPointerUp={endGalleryDrag}
-              onPointerCancel={endGalleryDrag}
-            >
-              {leavingImage && (
-                <img
-                  draggable={false}
-                  className={`gallery-image gallery-image-leave ${
-                    slideDirection === "prev" ? "to-right" : "to-left"
-                  }`}
-                  src={leavingImage.src}
-                  alt={leavingImage.alt}
-                  decoding="async"
-                />
-              )}
+            <div className="gallery-image-stage">
               {currentImage ? (
                 <img
                   key={currentImage.src}
                   draggable={false}
-                  className={`gallery-image gallery-image-enter ${
-                    isImageSliding
-                      ? slideDirection === "prev"
-                        ? "from-left"
-                        : "from-right"
-                      : ""
-                  }`}
+                  className="gallery-image"
                   src={currentImage.src}
                   alt={currentImage.alt}
                   decoding="async"
-                  style={
-                    isImageDragging && !isImageSliding
-                      ? { transform: `translateX(${dragOffsetX}px)` }
-                      : undefined
-                  }
                   onDragStart={(event) => event.preventDefault()}
                 />
               ) : (

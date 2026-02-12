@@ -1,0 +1,205 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap");
+
+:root {
+  --bg: #ffffff;
+  --paper: #ffffff;
+  --paper-soft: #fffaf2;
+  --line: #eadcc9;
+  --text: #1f1a14;
+  --muted: #7c6c59;
+  --wood-1: #f5e8d6;
+  --wood-2: #ecd2af;
+  --wood-3: #c49a6b;
+  --wood-4: #9f7344;
+  --shadow-soft: 0 10px 22px rgba(88, 62, 29, 0.065);
+  --shadow-hover: 0 14px 26px rgba(88, 62, 29, 0.1);
+
+  font-family: "Manrope", "Noto Sans KR", sans-serif;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  scrollbar-gutter: stable;
+}
+
+html,
+body {
+  scrollbar-color: rgba(201, 158, 105, 0.88) transparent;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #dcbf98, #c99e69);
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.82);
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.section[id] {
+  scroll-margin-top: 92px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  overflow-x: clip;
+}
+
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  touch-action: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font: inherit;
+}
+
+.page {
+  min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+}
+
+
+.bg-scene {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bg-bubble {
+  position: absolute;
+  border-radius: 50%;
+  z-index: 1;
+  filter: none;
+  opacity: 0.7;
+  background: transparent;
+  border: 1px solid rgba(196, 154, 107, 0.52);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3) inset;
+  will-change: auto;
+}
+
+.bg-bubble-1 {
+  width: 36vw;
+  height: 36vw;
+  left: -10vw;
+  top: 12vh;
+  animation: bubbleFloatA 14.2s ease-in-out infinite alternate;
+}
+
+.bg-bubble-2 {
+  width: 30vw;
+  height: 30vw;
+  right: -2vw;
+  top: 8vh;
+  animation: bubbleFloatB 16.7s ease-in-out infinite alternate;
+  animation-delay: -2s;
+}
+
+.bg-bubble-3 {
+  width: 26vw;
+  height: 26vw;
+  left: 8vw;
+  top: 52vh;
+  animation: bubbleFloatC 12.5s ease-in-out infinite alternate;
+  animation-delay: -1.5s;
+}
+
+.bg-bubble-4 {
+  width: 34vw;
+  height: 34vw;
+  right: -10vw;
+  top: 46vh;
+  animation: bubbleFloatD 18.3s ease-in-out infinite alternate;
+  animation-delay: -3s;
+}
+
+.bg-bubble-5 {
+  width: 34vw;
+  height: 34vw;
+  left: 32vw;
+  top: 6vh;
+  animation: bubbleFloatE 11.7s ease-in-out infinite alternate;
+  animation-delay: -1s;
+}
+
+.bg-bubble-6 {
+  width: 28vw;
+  height: 28vw;
+  left: 60vw;
+  top: 66vh;
+  animation: bubbleFloatF 15.8s ease-in-out infinite alternate;
+  animation-delay: -2.4s;
+}
+
+.bg-orb {
+  position: absolute;
+  z-index: 2;
+  border-radius: 50%;
+  filter: none;
+  display: none;
+  opacity: 0.66;
+}
+
+.bg-orb-a {
+  width: 42vw;
+  height: 42vw;
+  top: -16vw;
+  left: -12vw;
+  background: radial-gradient(circle, rgba(227, 196, 159, 0.4), rgba(227, 196, 159, 0));
+  animation: orbFloatA 16s ease-in-out infinite alternate;
+}
+
+.bg-orb-b {
+  width: 36vw;
+  height: 36vw;
+  right: -12vw;
+  top: 24vh;
+  background: radial-gradient(circle, rgba(206, 165, 118, 0.32), rgba(206, 165, 118, 0));
+  animation: orbFloatB 24s ease-in-out infinite alternate;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  opacity: 0.1;
+  background:
+    linear-gradient(to right, rgba(137, 103, 66, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(137, 103, 66, 0.09) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: none;
+}
+

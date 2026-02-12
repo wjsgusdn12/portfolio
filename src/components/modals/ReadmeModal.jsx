@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 
 export default function ReadmeModal({
   activeProject,
@@ -62,12 +62,6 @@ export default function ReadmeModal({
       })
       .filter(Boolean)
   }, [activeProject])
-
-  useEffect(() => {
-    setHighlightIndex(0)
-    setIsHighlightsExpanded(false)
-    setHighlightMotion("next")
-  }, [activeProject.id])
 
   const hasHighlights = resolvedHighlights.length > 0
   const currentHighlight = hasHighlights ? resolvedHighlights[highlightIndex] : null

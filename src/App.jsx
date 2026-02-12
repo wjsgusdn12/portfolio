@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import ProjectCard from "./components/ProjectCard"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import HeroSection from "./components/HeroSection"
 import SkillsSection from "./components/SkillsSection"
 import ProjectsSection from "./components/ProjectsSection"
@@ -45,7 +44,7 @@ const SKILL_ICON_MAP = {
 }
 
 const getSkillIcon = (tag) => SKILL_ICON_MAP[tag] ?? iconUrl("mdi:code-tags")
-const NAV_SECTION_IDS = ["about", "skills", "archiving", "projects", "career"]
+const NAV_SECTION_IDS = ["about", "skills", "projects", "career"]
 
 const renderAnimatedChars = (text, startDelay = 0, step = 22, extraClass = "") =>
   Array.from(text).map((char, index) => (
@@ -67,18 +66,9 @@ function App() {
   const [isReadmePinned, setIsReadmePinned] = useState(false)
   const [isModalClosing, setIsModalClosing] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-  const [slideDirection, setSlideDirection] = useState("next")
-  const [leavingImageIndex, setLeavingImageIndex] = useState(null)
-  const [isImageSliding, setIsImageSliding] = useState(false)
-  const [isImageDragging, setIsImageDragging] = useState(false)
-  const [dragOffsetX, setDragOffsetX] = useState(0)
   const [activeNavSection, setActiveNavSection] = useState("")
   const isModalOpen = activeModal !== null
   const closeTimerRef = useRef(null)
-  const imageSlideTimerRef = useRef(null)
-  const dragPointerIdRef = useRef(null)
-  const dragStartXRef = useRef(0)
-  const dragDeltaXRef = useRef(0)
 
   const activeProject = useMemo(
     () => projects.find((project) => project.id === activeProjectId) || null,
@@ -219,7 +209,6 @@ function App() {
   useEffect(() => {
     return () => {
       if (closeTimerRef.current) clearTimeout(closeTimerRef.current)
-      if (imageSlideTimerRef.current) clearTimeout(imageSlideTimerRef.current)
     }
   }, [])
 
@@ -243,38 +232,8 @@ function App() {
     setActiveProjectId(project.id)
     setIsReadmePinned(fromReadme)
     setSelectedImageIndex(0)
-    setSlideDirection("next")
-    setLeavingImageIndex(null)
-    setIsImageSliding(false)
-    setIsImageDragging(false)
-    setDragOffsetX(0)
-    dragDeltaXRef.current = 0
     setIsModalClosing(false)
     setActiveModal("image")
-  }
-
-  const startImageSlide = (nextIndex, direction) => {
-    if (!activeProject) return
-    if (nextIndex === selectedImageIndex) return
-
-    if (imageSlideTimerRef.current) {
-      clearTimeout(imageSlideTimerRef.current)
-      imageSlideTimerRef.current = null
-    }
-
-    setSlideDirection(direction)
-    setLeavingImageIndex(selectedImageIndex)
-    setIsImageSliding(true)
-    setIsImageDragging(false)
-    setDragOffsetX(0)
-    dragDeltaXRef.current = 0
-    setSelectedImageIndex(nextIndex)
-
-    imageSlideTimerRef.current = setTimeout(() => {
-      setLeavingImageIndex(null)
-      setIsImageSliding(false)
-      imageSlideTimerRef.current = null
-    }, 760)
   }
 
   const goPrevImage = () => {
@@ -283,7 +242,7 @@ function App() {
       selectedImageIndex === 0
         ? activeProject.images.length - 1
         : selectedImageIndex - 1
-    startImageSlide(prevIndex, "prev")
+    setSelectedImageIndex(prevIndex)
   }
 
   const goNextImage = () => {
@@ -292,66 +251,17 @@ function App() {
       selectedImageIndex === activeProject.images.length - 1
         ? 0
         : selectedImageIndex + 1
-    startImageSlide(nextIndex, "next")
+    setSelectedImageIndex(nextIndex)
   }
 
   const goToImage = (nextIndex) => {
     if (!activeProject) return
     const total = activeProject.images.length
     const normalized = Math.max(0, Math.min(total - 1, nextIndex))
-    if (normalized === selectedImageIndex) return
-    const direction = normalized > selectedImageIndex ? "next" : "prev"
-    startImageSlide(normalized, direction)
+    setSelectedImageIndex(normalized)
   }
 
   const currentImage = activeProject?.images[selectedImageIndex]
-  const leavingImage =
-    activeProject && leavingImageIndex !== null
-      ? activeProject.images[leavingImageIndex]
-      : null
-
-  const onGalleryPointerDown = (event) => {
-    if (isImageSliding) return
-    if (event.pointerType === "mouse" && event.button !== 0) return
-    if (event.target.closest(".gallery-nav-btn")) return
-    dragPointerIdRef.current = event.pointerId
-    dragStartXRef.current = event.clientX
-    dragDeltaXRef.current = 0
-    setIsImageDragging(true)
-    setDragOffsetX(0)
-    event.currentTarget.setPointerCapture(event.pointerId)
-  }
-
-  const onGalleryPointerMove = (event) => {
-    if (dragPointerIdRef.current !== event.pointerId) return
-    const delta = event.clientX - dragStartXRef.current
-    dragDeltaXRef.current = delta
-    const limited = Math.max(-180, Math.min(180, delta))
-    setDragOffsetX(limited)
-  }
-
-  const endGalleryDrag = (event) => {
-    if (dragPointerIdRef.current !== event.pointerId) return
-    const delta = dragDeltaXRef.current
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId)
-    }
-    dragPointerIdRef.current = null
-    setIsImageDragging(false)
-    setDragOffsetX(0)
-    dragDeltaXRef.current = 0
-    if (Math.abs(delta) < 8 && activeProject?.images[selectedImageIndex]) {
-      window.open(activeProject.images[selectedImageIndex].src, "_blank")
-      return
-    }
-    if (delta <= -70) {
-      goNextImage()
-      return
-    }
-    if (delta >= 70) {
-      goPrevImage()
-    }
-  }
 
   const pageGroupSize = 10
   const heroDescLine1 =
@@ -394,12 +304,6 @@ function App() {
             </a>
             <a href="#skills" className={activeNavSection === "skills" ? "is-active" : ""}>
               Skills
-            </a>
-            <a
-              href="#archiving"
-              className={activeNavSection === "archiving" ? "is-active" : ""}
-            >
-              Archiving
             </a>
             <a
               href="#projects"
@@ -445,30 +349,6 @@ function App() {
 
         <SkillsSection skillGroups={skillGroups} getSkillIcon={getSkillIcon} />
 
-        <section id="archiving" className="section reveal">
-          <div className="section-head">
-            <p className="section-eyebrow">Link</p>
-            <h3 className="section-title">ARCHIVING</h3>
-          </div>
-          <div className="archive-grid">
-            <a
-              className="archive-card"
-              href="https://github.com/wjsgusdn12"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <strong>GitHub</strong>
-              <span>github.com/wjsgusdn12</span>
-              <em>프로젝트 코드, 커밋 이력, 브랜치 히스토리</em>
-            </a>
-            <div className="archive-card">
-              <strong>Portfolio PDF</strong>
-              <span>업데이트 예정</span>
-              <em>핵심 기능 흐름과 개선 이력 요약본</em>
-            </div>
-          </div>
-        </section>
-
         <ProjectsSection
           sortedProjects={sortedProjects}
           onOpenReadme={openReadmeModal}
@@ -504,6 +384,7 @@ function App() {
 
       {activeModal === "readme" && activeProject && (
         <ReadmeModal
+          key={activeProject.id}
           activeProject={activeProject}
           isModalClosing={isModalClosing}
           onClose={closeModals}
@@ -517,15 +398,7 @@ function App() {
           isModalClosing={isModalClosing}
           onClose={closeModals}
           selectedImageIndex={selectedImageIndex}
-          isImageDragging={isImageDragging}
-          dragOffsetX={dragOffsetX}
-          isImageSliding={isImageSliding}
-          slideDirection={slideDirection}
-          leavingImage={leavingImage}
           currentImage={currentImage}
-          onGalleryPointerDown={onGalleryPointerDown}
-          onGalleryPointerMove={onGalleryPointerMove}
-          endGalleryDrag={endGalleryDrag}
           goPrevImage={goPrevImage}
           goNextImage={goNextImage}
           goToImage={goToImage}
