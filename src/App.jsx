@@ -18,6 +18,7 @@ const iconUrl = (iconName, useColor = true) =>
   `https://api.iconify.design/${encodeURIComponent(iconName)}.svg${
     useColor ? `?color=%23${SKILL_ICON_COLOR}` : ""
   }`
+const assetUrl = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`
 
 const SKILL_ICON_MAP = {
   JavaScript: iconUrl("simple-icons:javascript"),
@@ -28,6 +29,8 @@ const SKILL_ICON_MAP = {
   Vite: iconUrl("simple-icons:vite"),
   "React Router": iconUrl("simple-icons:reactrouter"),
   Axios: iconUrl("simple-icons:axios"),
+  jQuery: iconUrl("simple-icons:jquery"),
+  Ajax: assetUrl("icons/ajax.svg"),
   "Spring Boot": iconUrl("simple-icons:springboot"),
   "Spring Framework": iconUrl("simple-icons:spring"),
   MyBatis: iconUrl("mdi:database-settings"),
@@ -42,11 +45,14 @@ const SKILL_ICON_MAP = {
   "AWS EC2": iconUrl("simple-icons:amazonec2"),
   S3: iconUrl("simple-icons:amazons3"),
   CloudFront: iconUrl("mdi:cloud-outline"),
+  "Apache Tomcat": iconUrl("simple-icons:apachetomcat"),
   Git: iconUrl("simple-icons:git"),
   GitHub: iconUrl("simple-icons:github"),
   "VS Code": iconUrl("simple-icons:visualstudiocode"),
   IntelliJ: iconUrl("simple-icons:intellijidea"),
   Eclipse: iconUrl("simple-icons:eclipseide"),
+  Maven: iconUrl("simple-icons:apachemaven"),
+  Gradle: iconUrl("simple-icons:gradle"),
 }
 
 const getSkillIcon = (tag) => SKILL_ICON_MAP[tag] ?? iconUrl("mdi:code-tags")
