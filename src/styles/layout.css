@@ -28,13 +28,16 @@
 
 .menu {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   font-size: 14px;
   color: var(--muted);
 }
 
 .menu a {
   position: relative;
+  padding: 4px 2px;
+  border-radius: 6px;
+  font-weight: 600;
   transition: color 0.2s ease;
 }
 
@@ -55,6 +58,7 @@
 
 .menu a.is-active {
   color: var(--text);
+  font-weight: 800;
 }
 
 .menu a:hover::after {
@@ -63,6 +67,11 @@
 
 .menu a.is-active::after {
   width: 100%;
+}
+
+.menu a:focus-visible {
+  outline: 2px solid rgba(196, 154, 107, 0.5);
+  outline-offset: 2px;
 }
 
 .nav-cta {

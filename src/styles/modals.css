@@ -1007,14 +1007,14 @@
 
 .reveal {
   opacity: 0;
-  transform: translateY(10px) scale(0.995);
-  filter: blur(0.8px);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out, filter 0.3s ease-out;
+  transform: translateY(14px);
+  filter: blur(0.9px);
+  transition: opacity 0.46s ease-out, transform 0.46s ease-out, filter 0.46s ease-out;
 }
 
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
   filter: blur(0);
 }
 

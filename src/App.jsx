@@ -103,12 +103,11 @@ function App() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible")
-          } else {
-            entry.target.classList.remove("is-visible")
+            observer.unobserve(entry.target)
           }
         })
       },
-      { threshold: 0.2, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
     )
 
     items.forEach((item) => observer.observe(item))
@@ -121,40 +120,39 @@ function App() {
     )
     if (!sections.length) return
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries.filter((entry) => entry.isIntersecting)
-        if (!visibleEntries.length) return
+    const navOffset = 118
+    const getActiveSection = () => {
+      const markerY = window.scrollY + navOffset
+      if (markerY < sections[0].offsetTop) return ""
 
-        visibleEntries.sort((a, b) => {
-          const aDistance = Math.abs(a.boundingClientRect.top - 88)
-          const bDistance = Math.abs(b.boundingClientRect.top - 88)
-          if (aDistance !== bDistance) return aDistance - bDistance
-          return b.intersectionRatio - a.intersectionRatio
-        })
-
-        setActiveNavSection(visibleEntries[0].target.id)
-      },
-      {
-        threshold: [0.15, 0.35, 0.55],
-        rootMargin: "-18% 0px -60% 0px",
+      let currentId = sections[0].id
+      for (let index = 0; index < sections.length; index += 1) {
+        if (markerY >= sections[index].offsetTop) {
+          currentId = sections[index].id
+        } else {
+          break
+        }
       }
-    )
-
-    sections.forEach((section) => observer.observe(section))
-
-    const onScroll = () => {
-      if (window.scrollY < sections[0].offsetTop - 120) {
-        setActiveNavSection("")
-      }
+      return currentId
     }
 
-    window.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
+    let rafId = null
+    const queueSync = () => {
+      if (rafId !== null) return
+      rafId = window.requestAnimationFrame(() => {
+        setActiveNavSection(getActiveSection())
+        rafId = null
+      })
+    }
+
+    window.addEventListener("scroll", queueSync, { passive: true })
+    window.addEventListener("resize", queueSync)
+    queueSync()
 
     return () => {
-      observer.disconnect()
-      window.removeEventListener("scroll", onScroll)
+      if (rafId !== null) window.cancelAnimationFrame(rafId)
+      window.removeEventListener("scroll", queueSync)
+      window.removeEventListener("resize", queueSync)
     }
   }, [])
 
