@@ -16,6 +16,8 @@ export default function ReadmeModal({
       .map((line) => line.trim())
       .filter(Boolean)
 
+  const toMultilineText = (text = "") => toSentenceLines(text).join("\n")
+
   const resolvedHighlights = useMemo(() => {
     const highlights = Array.isArray(activeProject.readme.highlights)
       ? activeProject.readme.highlights
@@ -55,7 +57,7 @@ export default function ReadmeModal({
         return {
           ...highlight,
           title,
-          description,
+          description: toMultilineText(description),
           src: image.src,
           alt: image.alt || title || description || activeProject.name,
         }

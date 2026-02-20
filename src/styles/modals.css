@@ -360,7 +360,7 @@
   margin: 0;
   color: var(--wood-4);
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: 0.01em;
 }
 
@@ -370,7 +370,8 @@
   font-size: 15px;
   line-height: 1.55;
   text-align: left;
-  font-weight: 600;
+  font-weight: 400;
+  white-space: pre-line;
 }
 
 .readme-highlight-copy {
@@ -521,12 +522,12 @@
 .readme-highlight-card.is-slider .readme-highlight-title {
   color: var(--wood-4);
   font-size: 14px;
-  font-weight: 820;
+  font-weight: 500;
 }
 
 .readme-highlight-card.is-slider .readme-highlight-caption {
   color: var(--wood-4);
-  font-weight: 650;
+  font-weight: 400;
   line-height: 1.58;
 }
 
