@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local imported projects / archives
+external-projects/
+*.zip

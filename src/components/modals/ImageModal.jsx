@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react"
 import { ArrowIcon } from "../icons"
 
 export default function ImageModal({
@@ -6,11 +7,53 @@ export default function ImageModal({
   onClose,
   selectedImageIndex,
   currentImage,
+  imageTransitionDirection,
   goPrevImage,
   goNextImage,
   goToImage,
   pageGroupSize,
 }) {
+  const GALLERY_TRANSITION_MS = 760
+  const [leavingImage, setLeavingImage] = useState(null)
+  const [transitionTick, setTransitionTick] = useState(0)
+  const prevImageRef = useRef(currentImage ?? null)
+  const leaveTimerRef = useRef(null)
+
+  useEffect(() => {
+    return () => {
+      if (leaveTimerRef.current) {
+        clearTimeout(leaveTimerRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!currentImage?.src) {
+      setLeavingImage(null)
+      prevImageRef.current = null
+      return
+    }
+
+    const previous = prevImageRef.current
+    if (previous?.src && previous.src !== currentImage.src) {
+      setLeavingImage(previous)
+      setTransitionTick((value) => value + 1)
+      if (leaveTimerRef.current) {
+        clearTimeout(leaveTimerRef.current)
+      }
+      leaveTimerRef.current = setTimeout(() => {
+        setLeavingImage(null)
+        leaveTimerRef.current = null
+      }, GALLERY_TRANSITION_MS)
+    }
+    prevImageRef.current = currentImage
+  }, [currentImage])
+
+  const openOriginalImage = () => {
+    if (!currentImage?.src) return
+    window.open(currentImage.src, "_blank", "noopener,noreferrer")
+  }
+
   const total = activeProject.images.length
   const current = selectedImageIndex + 1
   const groupIndex = Math.floor((current - 1) / pageGroupSize)
@@ -72,16 +115,43 @@ export default function ImageModal({
               <ArrowIcon direction="left" />
             </button>
             <div className="gallery-image-stage">
-              {currentImage ? (
+              {leavingImage && (
                 <img
-                  key={currentImage.src}
+                  key={`leave-${leavingImage.src}-${transitionTick}`}
                   draggable={false}
-                  className="gallery-image"
-                  src={currentImage.src}
-                  alt={currentImage.alt}
+                  className={`gallery-image gallery-image-leave ${
+                    imageTransitionDirection === "next" ? "to-left" : "to-right"
+                  }`}
+                  src={leavingImage.src}
+                  alt={leavingImage.alt}
                   decoding="async"
-                  onDragStart={(event) => event.preventDefault()}
                 />
+              )}
+              {currentImage ? (
+                <button
+                  type="button"
+                  className="gallery-image-origin-btn"
+                  onClick={openOriginalImage}
+                  title="원본 이미지 새 탭으로 열기"
+                >
+                  <img
+                    key={`enter-${currentImage.src}-${transitionTick}`}
+                    draggable={false}
+                    className={`gallery-image ${
+                      leavingImage
+                        ? `gallery-image-enter ${
+                            imageTransitionDirection === "next"
+                              ? "from-right"
+                              : "from-left"
+                          }`
+                        : ""
+                    }`.trim()}
+                    src={currentImage.src}
+                    alt={currentImage.alt}
+                    decoding="async"
+                    onDragStart={(event) => event.preventDefault()}
+                  />
+                </button>
               ) : (
                 <div className="image-fallback">이미지를 추가하면 여기에 표시됩니다.</div>
               )}
@@ -95,6 +165,7 @@ export default function ImageModal({
               <ArrowIcon direction="right" />
             </button>
           </div>
+          <p className="gallery-origin-hint">이미지를 클릭하면 원본을 새 탭에서 볼 수 있습니다.</p>
           <div className="gallery-nav-bar">
             <div className="page-controls">
               <button className="page-btn" type="button" onClick={goFirst}>

@@ -29,6 +29,11 @@ const SKILL_ICON_MAP = {
   "React Router": iconUrl("simple-icons:reactrouter"),
   Axios: iconUrl("simple-icons:axios"),
   "Spring Boot": iconUrl("simple-icons:springboot"),
+  "Spring Framework": iconUrl("simple-icons:spring"),
+  MyBatis: iconUrl("mdi:database-settings"),
+  JSP: iconUrl("mdi:file-document-outline"),
+  Thymeleaf: iconUrl("mdi:leaf"),
+  "Spring Security": iconUrl("simple-icons:springsecurity"),
   JPA: iconUrl("mdi:database-cog-outline"),
   Swagger: iconUrl("simple-icons:swagger"),
   PostgreSQL: iconUrl("simple-icons:postgresql"),
@@ -41,6 +46,7 @@ const SKILL_ICON_MAP = {
   GitHub: iconUrl("simple-icons:github"),
   "VS Code": iconUrl("simple-icons:visualstudiocode"),
   IntelliJ: iconUrl("simple-icons:intellijidea"),
+  Eclipse: iconUrl("simple-icons:eclipseide"),
 }
 
 const getSkillIcon = (tag) => SKILL_ICON_MAP[tag] ?? iconUrl("mdi:code-tags")
@@ -66,6 +72,7 @@ function App() {
   const [isReadmePinned, setIsReadmePinned] = useState(false)
   const [isModalClosing, setIsModalClosing] = useState(false)
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const [imageTransitionDirection, setImageTransitionDirection] = useState("next")
   const [activeNavSection, setActiveNavSection] = useState("")
   const isModalOpen = activeModal !== null
   const closeTimerRef = useRef(null)
@@ -231,6 +238,7 @@ function App() {
     }
     setActiveProjectId(project.id)
     setIsReadmePinned(fromReadme)
+    setImageTransitionDirection("next")
     setSelectedImageIndex(0)
     setIsModalClosing(false)
     setActiveModal("image")
@@ -238,6 +246,7 @@ function App() {
 
   const goPrevImage = () => {
     if (!activeProject) return
+    setImageTransitionDirection("prev")
     const prevIndex =
       selectedImageIndex === 0
         ? activeProject.images.length - 1
@@ -247,6 +256,7 @@ function App() {
 
   const goNextImage = () => {
     if (!activeProject) return
+    setImageTransitionDirection("next")
     const nextIndex =
       selectedImageIndex === activeProject.images.length - 1
         ? 0
@@ -258,6 +268,9 @@ function App() {
     if (!activeProject) return
     const total = activeProject.images.length
     const normalized = Math.max(0, Math.min(total - 1, nextIndex))
+    if (normalized !== selectedImageIndex) {
+      setImageTransitionDirection(normalized > selectedImageIndex ? "next" : "prev")
+    }
     setSelectedImageIndex(normalized)
   }
 
@@ -399,6 +412,7 @@ function App() {
           onClose={closeModals}
           selectedImageIndex={selectedImageIndex}
           currentImage={currentImage}
+          imageTransitionDirection={imageTransitionDirection}
           goPrevImage={goPrevImage}
           goNextImage={goNextImage}
           goToImage={goToImage}
