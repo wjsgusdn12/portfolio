@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+KR:wght@400;500;700;800&display=swap");
-
 :root {
   --bg: #ffffff;
   --paper: #ffffff;
@@ -202,4 +200,3 @@ button {
   background-size: 44px 44px;
   mask-image: none;
 }
-
